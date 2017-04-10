@@ -1,0 +1,117 @@
+#########################################################################
+# Basic plugin configuration added by extension "tx_timezones"
+#########################################################################
+plugin.tx_timezones = USER
+plugin.tx_timezones {
+	userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+	pluginName = Pi1
+	extensionName = Timezones
+	vendorName = Thucke
+	controller = Timezones
+	mvc.callDefaultActionIfActionCantBeResolved = 1
+	switchableControllerActions {
+		Timezones {
+			1 = index
+			2 = show
+			3 = select
+		}
+	}
+	settings {
+	}
+	
+	view {
+		templateRootPath >
+		templateRootPaths {
+			0 = EXT:timezones/Resources/Private/Templates/
+		}
+		partialRootPath >
+		partialRootPaths {
+			0 = EXT:timezones/Resources/Private/Partials/
+		}
+		layoutRootPath >
+		layoutRootPaths {
+			0 = EXT:timezones/Resources/Private/Layouts/
+		}
+	}
+	
+	# This is an example how to modify the translation
+	_LOCAL_LANG {
+		default {
+			read_more = more >>
+		}
+	}
+}
+
+
+#########################################################################
+# Static extension configuration - do not override!!					#
+#########################################################################
+plugin.tx_timezones {
+	persistence.enhancedLazyLoadingStrategy = 0
+	settings {
+		logging {
+			emergency {
+				file = typo3temp/logs/Timezones.log
+				table = sys_log
+			}
+			alert {
+				table = sys_log
+			}
+			critical {
+				table = sys_log
+			}
+			error {
+				table = sys_log
+			}
+			warning {
+			}
+			notice {
+			}
+			info {
+			}
+			debug {
+			}
+		}
+	}
+}
+#########################################################################
+# Include all needed javascript and CSS styles
+#########################################################################
+#include only if it is wanted by configuration
+[globalVar = LIT:1 = {$plugin.tx_timezones.config.loadJQuery}]
+page.includeJSFooterlibs {
+	jquery = //ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
+	jquery.compressed = 1
+	jquery.external = 1
+	jquery.forceOnTop = 1
+}
+
+[global]
+page {
+	includeJSFooter {
+		jQueryFormPlugin = EXT:tx_timezones/Resources/Public/JavaScript/jquery.form.min.js
+		jQueryFormPlugin.async = 0
+		actions = EXT:tx_timezones/Resources/Public/JavaScript/actions.js
+		actions.async = 0
+	}
+	includeCSS {
+	}
+}
+
+
+
+#########################################################################
+# Page configuration for AJAX requests
+#########################################################################
+timezones_ajax = PAGE
+timezones_ajax {
+	typeNum = 1349058975
+	config {
+		disableAllHeaderCode = 1 
+        no_cache = 1
+		admPanel = 0
+		debug = 0
+		metaCharset = UTF-8
+	}
+	10 < plugin.tx_timezones
+}

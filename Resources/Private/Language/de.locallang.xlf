@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-02-05T17:33:10Z" product-name="timezones" target-language="de">
+		<header/>
+		<body>
+			<trans-unit id="info_label" xml:space="preserve">
+				<source>All times for:</source>
+				<target state="translated">Alle Zeitangaben in:</target>
+				<note></note>
+			</trans-unit>
+			<trans-unit id="form_label" xml:space="preserve">
+				<source>Your current timezone is set to:</source>
+				<target state="translated">Deine Zeitzone ist gesetzt auf:</target>
+			</trans-unit>
+			<trans-unit id="select_label" xml:space="preserve">
+				<source>Please select:</source>
+				<target state="translated">Bitte auswählen:</target>
+			</trans-unit>
+			<trans-unit id="submit" xml:space="preserve">
+				<source>Set Timezone</source>
+				<target state="translated">Setze Zeitzone</target>
+			</trans-unit>
+			<trans-unit id="curdate_label" xml:space="preserve">
+				<source>Current time:</source>
+				<target state="translated">Aktuelle Uhrzeit:</target>
+			</trans-unit>
+			<trans-unit id="locale" xml:space="preserve">
+				<source>en_US</source>
+				<target state="translated">de_DE</target>
+			</trans-unit>			
+		</body>
+	</file>
+</xliff>
