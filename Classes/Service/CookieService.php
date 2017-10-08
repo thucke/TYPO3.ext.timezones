@@ -96,7 +96,7 @@ class CookieService extends \Thucke\Timezones\Service\AbstractExtensionService {
 				setcookie(
 					$cookieName,
 					$cookieValue,
-					$cookieExpire,
+					(integer) $cookieExpire,
 					$cookiePath,
 					$cookieDomain,
 					$cookieSecure,

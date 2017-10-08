@@ -14,11 +14,9 @@ plugin.tx_timezones {
 			1 = index
 			2 = show
 			3 = select
+			4 = tzset
 		}
-	}
-	settings {
-	}
-	
+	}	
 	view {
 		templateRootPath >
 		templateRootPaths {
@@ -39,6 +37,20 @@ plugin.tx_timezones {
 		default {
 			read_more = more >>
 		}
+	}
+}
+
+
+#########################################################################
+# Define library part which should be included on every page			#
+# Generates a link that shows the current selected timezone				#
+#  
+#########################################################################
+lib.timezone < plugin.tx_timezones
+lib.timezone {
+	action = index
+	settings {
+		pluginPage = {$plugin.tx_timezones.settings.pluginPage}
 	}
 }
 
@@ -74,44 +86,13 @@ plugin.tx_timezones {
 		}
 	}
 }
-#########################################################################
-# Include all needed javascript and CSS styles
-#########################################################################
-#include only if it is wanted by configuration
-[globalVar = LIT:1 = {$plugin.tx_timezones.config.loadJQuery}]
-page.includeJSFooterlibs {
-	jquery = //ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
-	jquery.compressed = 1
-	jquery.external = 1
-	jquery.forceOnTop = 1
-}
 
 [global]
+#########################################################################
+# Include all needed CSS styles
+#########################################################################
 page {
-	includeJSFooter {
-		jQueryFormPlugin = EXT:tx_timezones/Resources/Public/JavaScript/jquery.form.min.js
-		jQueryFormPlugin.async = 0
-		actions = EXT:tx_timezones/Resources/Public/JavaScript/actions.js
-		actions.async = 0
-	}
 	includeCSS {
+		timezones = EXT:timezones/Resources/Public/Css/timezones.css
 	}
-}
-
-
-
-#########################################################################
-# Page configuration for AJAX requests
-#########################################################################
-timezones_ajax = PAGE
-timezones_ajax {
-	typeNum = 1349058975
-	config {
-		disableAllHeaderCode = 1 
-        no_cache = 1
-		admPanel = 0
-		debug = 0
-		metaCharset = UTF-8
-	}
-	10 < plugin.tx_timezones
 }

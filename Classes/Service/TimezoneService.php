@@ -1,9 +1,7 @@
 <?php
 namespace Thucke\Timezones\Service;
-use \DateTime;
-use \DateTimeZone;
-use \IntlDateFormatter;
-use \Locale;
+use DateTime;
+use DateTimeZone;
 /***************************************************************
 *  Copyright notice
 *
@@ -39,7 +37,7 @@ class TimezoneService extends \Thucke\Timezones\Service\AbstractExtensionService
 	 * List of all timezones
 	 * @var array
 	 */
-	protected $timezoneArray = false;
+	protected $timezoneArray = array();
 
 	/**
 	 * List of all timezones
@@ -60,16 +58,22 @@ class TimezoneService extends \Thucke\Timezones\Service\AbstractExtensionService
 	protected $locale;
 
 	/**
+	 * @var $logger \TYPO3\CMS\Core\Log\Logger
+	 */
+	protected $logger;
+	
+	/**
 	 * Constructor
 	 * @return void
 	 */
-	public function __construct(  ) {
-		parent::__construct();
-		$this->locale = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('locale', 'Timezones');
+	public function initializeObject(  ) {
+	    $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager')->get('Thucke\\Timezones\\Service\\ExtensionHelperService')->getLogger(__CLASS__);
+	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry point', array());
+	    $this->locale = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('locale', 'Timezones');
 		$this->setCurrentTimezone(date_default_timezone_get());
 		//create instance of IntlDateFormatter for best localized date conversions
 		//TODO: make format settings configurable
-		$this->intlDateFormatter = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('IntlDateFormatter', $this->locale, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT, null, null);
+		$this->intlDateFormatter = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('IntlDateFormatter', $this->locale, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT);
 		$this->setTimezoneArray();
 	}
 
@@ -79,9 +83,17 @@ class TimezoneService extends \Thucke\Timezones\Service\AbstractExtensionService
 	 * @param	string	$timezoneName
 	 * @return	void
 	 */
-	public function setCurrentTimezone($timezoneName) {
-		date_default_timezone_set($timezoneName);
+	public function setCurrentTimezone($timezoneName = null) {
+	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry setCurrentTimezone', array('timezoneName' => $timezoneName));
+	    if (!$timezoneName) {
+			$timezoneName = $this->getCurrentTimezone()->getName();
+		}
+		$result = date_default_timezone_set($timezoneName);
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'date_default_timezone_set', array('result' => $result,
+		    'timezone' => $timezoneName
+		));
 		$this->currentTimezone = new DateTimeZone($timezoneName);
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit setCurrentTimezone', array());
 	}
 
 	/**
@@ -102,6 +114,9 @@ class TimezoneService extends \Thucke\Timezones\Service\AbstractExtensionService
 	 * @return	\IntlDateFormatter	Gives back the current IntlDateFormatter object
 	 */
 	public function getIntlDateFormatter() {
+	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry getIntlDateFormatter', array());	    
+		$this->intlDateFormatter->setTimeZone($this->getIcuTimezoneString());
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit getIntlDateFormatter', array($this->intlDateFormatter));
 		return $this->intlDateFormatter;
 	}
 
@@ -111,7 +126,7 @@ class TimezoneService extends \Thucke\Timezones\Service\AbstractExtensionService
 	 * @return	string	Gives back the current DateTimeZone object
 	 */
 	public function getCurrentTimezoneAbbreviation() {
-		return $this->intlDateFormatter->formatObject(new DateTime('now', $this->getCurrentTimezone()), 'zzzz', $this->locale);
+		return $this->getIntlDateFormatter()->formatObject(new DateTime('now', $this->getCurrentTimezone()), 'zzzz', $this->locale);
 	}
 
 	/**
@@ -132,11 +147,9 @@ class TimezoneService extends \Thucke\Timezones\Service\AbstractExtensionService
 	 * @return	void
 	 */
 	public function setTimezoneArray() {
-		$this->timezoneArray = array();
 		$timezone_identifiers_list = DateTimeZone::listIdentifiers();
 		foreach($timezone_identifiers_list as $timezone_identifier){
 			$dateTimeZone = new DateTimeZone($timezone_identifier);
-			//\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($dateTimeZone->getTransitions(),get_class($this).' loop '.$dateTimeZone->getName());
 			$dateTime = new DateTime('now', $dateTimeZone);
 			$abbreviation = $this->intlDateFormatter->formatObject($dateTime,'zzzz', $this->locale);
 			$hours = floor($dateTimeZone->getOffset($dateTime) / 3600);
@@ -158,12 +171,29 @@ class TimezoneService extends \Thucke\Timezones\Service\AbstractExtensionService
 	}
 
 	/**
+	 * Get the ICU representation of the timezone
+	 * e.g. GMT+2 
+	 *
+	 * @return	string
+	 */
+	public function getIcuTimezoneString() {
+	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry getIcuTimezoneString', array());
+	    $timezone = $this->currentTimezone->getName();
+		$dt = new DateTime('now', new DateTimeZone($timezone));
+		$icuTimezoneString = 'GMT';
+		if ($this->getOffset() != 0) {
+		    $icuTimezoneString = $icuTimezoneString.$dt->format('P');
+		}
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit getIcuTimezoneString', array($icuTimezoneString));
+		return $icuTimezoneString;
+	}
+	
+	/**
 	 * Check if daylight saving time is active
 	 *
 	 * @return	boolean
 	 */
 	public function isDst() {
-		//$dateTime = new DateTime('2017-06-01', $this->currentTimezone);
 		$dateTime = new DateTime('now', $this->currentTimezone);
 		$dstAbbrevation = $this->intlDateFormatter->formatObject($dateTime,'zzz','en_GB');
 		$gmtAbbrevation = $this->intlDateFormatter->formatObject($dateTime,'v','en_GB');

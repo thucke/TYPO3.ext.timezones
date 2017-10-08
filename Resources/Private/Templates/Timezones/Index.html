@@ -1,3 +1,7 @@
-<div class='tx-timezones-pi1' id='tx-thrating-pi1-index'>
-	<a href="{change_url}" title="{label}">{tz_name}</a>
+<div class='tx-timezones-pi1' id='tx-timezones-pi1-index'>
+	<f:if condition="{change_url}"><f:then>
+	<a href="{change_url}" title="{f:translate(key:'form_label')}">{tz_name}</a>
+	</f:then><f:else>
+	<span title="{f:translate(key:'error.noPluginPageSet')}">{tz_name}</span>
+	</f:else></f:if>
 </div>

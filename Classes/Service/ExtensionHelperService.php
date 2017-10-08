@@ -3,7 +3,7 @@ namespace Thucke\Timezones\Service;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2017 Thomas Hucke <thucke@web.de>
+*  (c) 2013 Thomas Hucke <thucke@web.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,36 +24,22 @@ namespace Thucke\Timezones\Service;
 ***************************************************************/
 
 /**
- * An access control service
+ * Factory for model objects
  *
  * @version $Id:$
  * @license http://opensource.org/licenses/gpl-license.php GNU protected License, version 2
  */
-class AbstractExtensionService implements \TYPO3\CMS\Core\SingletonInterface {
+class ExtensionHelperService extends \Thucke\Timezones\Service\AbstractExtensionService {
 
 	/**
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-	 */
-	protected $objectManager;
-	/**
-	 * @var \Thucke\Timezones\Service\LoggingService 
-	 */
-	protected $loggingService;
-	/**
-	 * @var \TYPO3\CMS\Core\Log\Logger
-	 */
-	protected $logger;
-
-	/**
-	 * Constructor
-	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
-	 * @param \Thucke\Timezones\Service\LoggingService $loggingService
+	 * Get a logger instance
+	 * The configuration of the logger is modified by extension typoscript config
+	 *
+	 * @param	string	$name the class name which this logger is for
 	 * @return void
 	 */
-	public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager, \Thucke\Timezones\Service\LoggingService $loggingService) {
-		$this->objectManager = $objectManager;
-		$this->loggingService = $loggingService;
-		$this->logger = $loggingService->getLogger(get_class($this));
+	public function getLogger( $name ) {
+		return $this->loggingService->getLogger(__CLASS__);
 	}
 }
 ?>

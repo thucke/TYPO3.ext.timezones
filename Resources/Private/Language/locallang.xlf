@@ -3,6 +3,36 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2017-02-05T17:33:10Z" product-name="timezones">
 		<header/>
 		<body>
+			<trans-unit id="flexform.sheet_general" xml:space="preserve">
+				<source>General</source>
+			</trans-unit>
+			<trans-unit id="flexform.general_actions" xml:space="preserve">
+				<source>Plugin action</source>
+			</trans-unit>
+			<trans-unit id="flexform.general_actions_1" xml:space="preserve">
+				<source>Index</source>
+			</trans-unit>
+			<trans-unit id="flexform.general_actions_2" xml:space="preserve">
+				<source>Show</source>
+			</trans-unit>
+			<trans-unit id="flexform.general_actions_3" xml:space="preserve">
+				<source>Select</source>
+			</trans-unit>
+			<trans-unit id="flexform.general_cookieLifetime" xml:space="preserve">
+				<source>Enter value to activate cookie protection for anonymous votes</source>
+			</trans-unit>
+			<trans-unit id="flexform.sheet_paths" xml:space="preserve">
+				<source>Paths</source>
+			</trans-unit>
+			<trans-unit id="flexform.paths_templateRootPath" xml:space="preserve">
+				<source>Template root path</source>
+			</trans-unit>
+			<trans-unit id="flexform.paths_partialRootPath" xml:space="preserve">
+				<source>Partial root path</source>
+			</trans-unit>
+			<trans-unit id="flexform.paths_layoutRootPath" xml:space="preserve">
+				<source>Layout root path</source>
+			</trans-unit>
 			<trans-unit id="info_label" xml:space="preserve">
 				<source>All times for:</source>
 			</trans-unit>
@@ -20,6 +50,9 @@
 			</trans-unit>
 			<trans-unit id="locale" xml:space="preserve">
 				<source>en_US</source>
+			</trans-unit>
+			<trans-unit id="error.noPluginPageSet" xml:space="preserve">
+				<source>Please set plugin.tx_timezones.settings.pluginPage to generate link</source>
 			</trans-unit>
 		</body>
 	</file>

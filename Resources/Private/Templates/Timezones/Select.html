@@ -1,10 +1,10 @@
-<div class='tx-timezones-pi1' id='tx-thrating-pi1-select'>
-	<form action="{action}" method="POST">
+<div class='tx-timezones-pi1' id='tx-timezones-pi1-select'>
+	<f:form method="post" controller="Timezones" action="tzset" id="tzset">
 	   <fieldset>
-		  <legend>{select_label}</legend>
-		  <f:form.select property="country" options="{selector}" value="{selected}" />
+		  <legend><f:translate key="select_label" htmlEscape="false" /></legend>
+		  <f:form.select name="timezone" options="{selector}" value="{selected}" />
 		  <br />
-		  <input type="submit" value="{submit}"/>
+		  <input type="submit" value="{f:translate(key:'submit')}" />
 	   </fieldset>
-	</form>
+	</f:form>
 </div>

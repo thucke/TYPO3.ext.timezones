@@ -28,6 +28,10 @@
 				<source>en_US</source>
 				<target state="translated">de_DE</target>
 			</trans-unit>			
+			<trans-unit id="error.noPluginPageSet" xml:space="preserve">
+				<source>Please set plugin.tx_timezones.settings.pluginPage to show a hyperlink</source>
+				<target state="translated">Konfiguriere plugin.tx_timezones.settings.pluginPage, zur Anzeige eines Links</target>
+			</trans-unit>			
 		</body>
 	</file>
 </xliff>

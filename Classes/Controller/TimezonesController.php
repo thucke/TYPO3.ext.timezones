@@ -1,5 +1,7 @@
 <?php
 namespace Thucke\Timezones\Controller;
+
+
 /***************************************************************
  *  Copyright notice
  *
@@ -24,7 +26,7 @@ namespace Thucke\Timezones\Controller;
  ***************************************************************/
 
 /**
- * The Vote Controller
+ * The Timezones Controller
  *
  * @version $Id:$
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
@@ -35,14 +37,11 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	 * @var int
 	 */
 	protected $cookieLifetime;
+
 	/**
 	 * @var $logger \TYPO3\CMS\Core\Log\Logger
 	 */
 	protected $logger;
-	/**
-	 * @var string
-	 */
-	protected $prefixId;
 
 	/**
 	 * @var \Thucke\Timezones\Service\CookieService
@@ -65,25 +64,17 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 		$this->timezoneService = $timezoneService;
 	}
 	/**
-	 * @var \Thucke\Timezones\Service\ObjectFactoryService $objectFactoryService
+	 * @var \Thucke\Timezones\Service\ExtensionHelperService $extensionHelperService
 	 */
-	protected $objectFactoryService;
+	protected $extensionHelperService;
 	/**
-	 * @param	\Thucke\Timezones\Service\ObjectFactoryService $objectFactoryService
+	 * @param	\Thucke\Timezones\Service\ExtensionHelperService $extensionHelperService
 	 * @return	void
 	 */
-	public function injectObjectFactoryService( \Thucke\Timezones\Service\ObjectFactoryService $objectFactoryService ) {
-		$this->objectFactoryService = $objectFactoryService;
+	public function injectExtensionHelperService( \Thucke\Timezones\Service\ExtensionHelperService $extensionHelperService ) {
+		$this->extensionHelperService = $extensionHelperService;
 	}
 	 
-	/**
-	 * Lifecycle-Event
-	 * wird nach der Initialisierung des Objekts und nach dem Auflösen der Dependencies aufgerufen.
-	 * 
-	 */
-	public function initializeObject() {
-	}
-
 	/**
 	 * Initializes the current action
 	 *
@@ -91,15 +82,16 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	 */
 	public function initializeAction() {
 		//instantiate the logger
-		$this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager')->get('Thucke\\Timezones\\Service\\ObjectFactoryService')->getLogger(__CLASS__);
+		$this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager')->get('Thucke\\Timezones\\Service\\ExtensionHelperService')->getLogger(__CLASS__);
 		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry point', array());
 
 		$this->prefixId = strtolower('tx_' . $this->request->getControllerExtensionName(). '_' . $this->request->getPluginName());
 		$frameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 		$this->cookieLifetime = time()+60*60*24*365;
 
+		$this->timezoneService->setCurrentTimezone($this->cookieService->getCookie($this->prefixId));
+		
 		//\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($this->settings,get_class($this).' settings');
-		//\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($this,get_class($this).' initializeAction');
 	}
 
 
@@ -110,17 +102,21 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	 */
 	public function indexAction() {
 		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry indexAction', array());
-		$this->view->assign('label',\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('form_label', 'Timezones'));
 		$this->view->assign('tz_name',$this->timezoneService->getCurrentTimezoneAbbreviation());
-		//generate URI to this page
-		$selfUri = $this->controllerContext->getUriBuilder()->reset()
-					->setArguments([
-						'tx_timezones_pi1[action]'=>'select'])
-					->setTargetPageUid($GLOBALS["TSFE"]->id)
-					->setCreateAbsoluteUri(true)
-					->buildFrontendUri();
-		$this->view->assign('change_url',$selfUri);
-		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit indexAction', array());
+		$pluginPage = abs(intval($this->settings['pluginPage']));
+
+		#only generate link if a uid is configured
+		if ($pluginPage > 0) {
+    		//generate URI to this page
+    		$selfUri = $this->controllerContext->getUriBuilder()->reset()
+    					->setTargetPageUid(10)
+    					->setCreateAbsoluteUri(true)
+    					->buildFrontendUri();
+    		$this->view->assign('change_url',$selfUri);
+		} else {
+		    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::WARNING, 'No pluginPage set - skipping hyperlink generation', array('errorCode' => 1507388375));
+		}
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit indexAction', array());    
 	}
 
 
@@ -130,10 +126,9 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	 * @return 	string 							The rendered voting
 	 */
 	public function showAction()	 {
-		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry showAction', array());
-		$this->view->assign('label', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('form_label', 'Timezones'));
+	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry showAction', array());
+	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Timezone', array($this->timezoneService->getOffset(), date('Y-m-d H:i',time())));
 		$this->view->assign('tz_name', $this->timezoneService->getCurrentTimezoneAbbreviation());
-		$this->view->assign('curdatelabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('curdate_label', 'Timezones'));
 		$this->view->assign('curdatetime', $this->timezoneService->getIntlDateFormatter()->format(time()));
 		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit showAction', array());
 	}
@@ -145,97 +140,44 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	 * @return 	string 							The rendered voting
 	 */
 	public function selectAction()	 {
-		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry showAction', array());
-		$this->view->assign('select_label', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('select_label', 'Timezones'));
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry selectAction', array());
 		$this->view->assign('selector', $this->timezoneService->getTimezoneArray());
 		$this->view->assign('selected', $this->timezoneService->getCurrentTimezone()->getName());
-		$this->view->assign('submit', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('submit', 'Timezones'));
 		//generate URI to this page
 		$selfUri = $this->controllerContext->getUriBuilder()->reset()
-					->setArguments([
-						'tx_timezones_pi1[action]'=>'set',
-						'tx_timezones_pi1[timezone]'=>'set']
-						)
 					->setTargetPageUid($GLOBALS["TSFE"]->id)
 					->setCreateAbsoluteUri(true)
 					->buildFrontendUri();
 		$this->view->assign('action',$selfUri);
-		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit showAction', array());
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit selectAction', array());
 	}
 
 
 	/**
-	 * Override getErrorFlashMessage to present
-	 * nice flash error messages.
+	 * Sets the given timezone
 	 *
-	 * @return string
+	 * @param	string $timezone
+	 * @return 	void
+	 * @ignorevalidation $timezone
 	 */
-	protected function getErrorFlashMessage() {
-		switch ($this->actionMethodName) {
-			case 'createAction' :
-				return 'Could not create the new vote:';
-			case 'showAction' :
-				return 'Could not show vote!';
-			default :
-				return parent::getErrorFlashMessage();
-		}
-	}
-
-
-	/**
-	 * Sends log information to flashMessage and logging framework
-	 *
-	 * $messageText		string 	The message
-	 * $messageTitle 	string	The header of the message
-	 * $severity		string 	Logging severity
-	 * $additionalInfo	array	some additional data - at least 'errorCode'
-	 * @return	void
-	 */
-	private function logFlashMessage(	$messageText, 
-										$messageTitle, 
-										$severity, 
-										array $additionalInfo) {
-		//TODO delete deprecated $additionalInfo = \TYPO3\CMS\Core\Utility\GeneralUtility::array_merge($additionalInfo, array('messageTitle' => $messageTitle));
-		$additionalInfo = array('messageTitle' => $messageTitle) + $additionalInfo;
-		$severity = strtoupper($severity);
-		switch ($severity) {
-			case 'DEBUG' :
-				$flashSeverity = 'OK';
-				break;
-			case 'INFO' :
-				$flashSeverity = 'NOTICE';
-				break;
-			case 'NOTICE' :
-				$flashSeverity = 'INFO';
-				break;
-			case 'WARNING' :
-				$flashSeverity = 'WARNING';
-				break;
-			default :
-				$flashSeverity = 'ERROR';
-		}
-		if ( intval($additionalInfo['errorCode']) ) {
-			$messageText = $messageText.' ('.$additionalInfo['errorCode'].')';
-		}
-		//TODO: locally enqueue flashmessages of setStoragePids when controllerContext has not been set yet
-		if (is_object($this->controllerContext)) {
-			$this->addFlashMessage( $messageText,
-									$messageTitle,
-									constant('\TYPO3\CMS\Core\Messaging\AbstractMessage::'.$flashSeverity));
-		}
-		$this->logger->log(	constant('\TYPO3\CMS\Core\Log\LogLevel::'.$severity),
-							$messageText,
-							$additionalInfo );
-	}
-
-	/**
-	 * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-	 */
-	protected function getTypoScriptFrontendController() {
-		/** @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $TSFE */
-		global $TSFE;
-
-		return $TSFE;
+	public function tzsetAction($timezone = null)	 {
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry tzsetAction', array());
+		
+		$this->timezoneService->setCurrentTimezone($timezone);
+		$timezone = $this->timezoneService->getCurrentTimezone()->getName();
+		$this->cookieService->setCookie($this->prefixId, $timezone, $this->cookieLifetime);
+		
+		$referrer = $this->request->getInternalArgument('__referrer');
+		
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit tzsetAction - forwarding request',
+				array(
+						'action' => $referrer['@action'],
+						'controller' => $referrer['@controller'],
+						'extension' => $referrer['@extension'],
+						'arguments' => null,
+				));
+		$this->controllerContext->getFlashMessageQueue()->clear();
+		$this->redirectToUri($_SERVER['HTTP_REFERER']);
 	}
 }
 ?>
