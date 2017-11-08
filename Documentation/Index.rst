@@ -1,4 +1,4 @@
-﻿.. ==================================================
+.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -11,6 +11,8 @@
 .. role::   ts(typoscript)
    :class:  typoscript
 .. role::   php(code)
+.. highlight:: php
+
 
 .. _this link:	http://wiki.typo3.org/EXT/Timezones
 
@@ -23,55 +25,64 @@
 .. :border: 0
 .. :hspace: 9
 .. :name: Grafik2
-	
-====================
-EXT: Timezones
-====================
 
-:Classification:
-	timezones
+.. _start:
 
-:Version:
-	|release|
+=========
+Timezones
+=========
 
-:Language:
-	en
+.. only:: html
 
-:Description:
-	Highly flexible AJAX rating based on extbase/fluid/jquery. Allows multiple ratings within one page. It could be used as a cObj by other extensions or included in every FLUID template using the viewhelper. Each ratingstep could be configured having a name - international localization included.
-	
-:Keywords:
-	extbase fluid timezone
+	:Classification:
+		timezones
 
-:Author:
-	Thomas Hucke
+	:Version:
+		|release|
 
-:Email:
-	thucke@web.de
+	:Language:
+		en
 
-:Rendered:
-	|today|
+	:Description:
+		Manages timezones in your website
 
-:License:
-	This document is published under the Open Content License
-	available from http://www.opencontent.org/opl.shtml
+	:Keywords:
+		extbase fluid timezone
 
-The content of this document is related to TYPO3,
-a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
+	:Author:
+		Thomas Hucke
+
+	:Email:
+		thucke@web.de
+
+	:License:
+		This document is published under the Open Content License
+		available from http://www.opencontent.org/opl.shtml
+
+	:Rendered:
+		|today|
+
+
+	The content of this document is related to TYPO3,
+	a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
+
+
+	**Table of Contents**
+
+.. toctree::
+	:maxdepth: 5
+	:titlesonly:
+
+	Introduction/Index
+	Administrator/Index
+	User/Index
+	Changelog/Index
+
 
 |img-1|
 
 |img-2| EXT: Timezones
 
 |img-1|
-
-.. _start:
-
-.. **Table of Contents**
-
-.. toctree::
-	:maxdepth: 5
-	:titlesonly:
-	:glob:
 
 You'll find the documentation of this extension in the TYPO3 wiki following `this link`_.
