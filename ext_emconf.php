@@ -9,8 +9,8 @@
  * writing. "version" and "dependencies" must not be touched!
  ***************************************************************/
 $EM_CONF[$_EXTKEY] = array (
-	'title' => 'FE Timezone Library',
-	'description' => 'Manages timezones for website users',
+	'title' => 'Timezones',
+	'description' => 'Manages timezones in your website',
 	'category' => 'plugin',
 	'version' => '2.0.0',
 	'state' => 'stable',

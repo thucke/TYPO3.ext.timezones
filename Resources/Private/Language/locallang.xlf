@@ -52,7 +52,10 @@
 				<source>en_US</source>
 			</trans-unit>
 			<trans-unit id="error.noPluginPageSet" xml:space="preserve">
-				<source>Please set plugin.tx_timezones.settings.pluginPage to generate link</source>
+				<source>Please set plugin.tx_timezones.settings.pluginPage to generate link.</source>
+			</trans-unit>
+			<trans-unit id="error.phpModuleIntlNotLoaded" xml:space="preserve">
+				<source>Module INTL not loaded. Please check your PHP configuration.</source>
 			</trans-unit>
 		</body>
 	</file>

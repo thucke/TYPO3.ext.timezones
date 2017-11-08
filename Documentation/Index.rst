@@ -14,7 +14,7 @@
 .. highlight:: php
 
 
-.. _this link:	http://wiki.typo3.org/EXT/Timezones
+.. _this link:	https://docs.typo3.org/typo3cms/extensions/timezones/
 
 .. |img-1|      image:: Images/hr.gif
 .. :align: left

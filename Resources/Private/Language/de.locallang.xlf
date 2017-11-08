@@ -32,6 +32,10 @@
 				<source>Please set plugin.tx_timezones.settings.pluginPage to show a hyperlink</source>
 				<target state="translated">Konfiguriere plugin.tx_timezones.settings.pluginPage, zur Anzeige eines Links</target>
 			</trans-unit>			
+			<trans-unit id="error.phpModuleIntlNotLoaded" xml:space="preserve">
+				<source>Module INTL not loaded. Please check your PHP configuration.</source>
+				<target state="translated">Modul INTL nicht aktiviert. Bitte die PHP Konfiguration prüfen.</target>
+			</trans-unit>			
 		</body>
 	</file>
 </xliff>

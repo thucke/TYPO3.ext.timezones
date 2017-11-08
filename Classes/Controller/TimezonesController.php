@@ -5,7 +5,7 @@ namespace Thucke\Timezones\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Thomas Hucke <thucke@web.de>
+ *  (c) 2017 Thomas Hucke <thucke@web.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +28,6 @@ namespace Thucke\Timezones\Controller;
 /**
  * The Timezones Controller
  *
- * @version $Id:$
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License, version 2
  */
 class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
@@ -84,11 +83,11 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 		//instantiate the logger
 		$this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager')->get('Thucke\\Timezones\\Service\\ExtensionHelperService')->getLogger(__CLASS__);
 		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry point', array());
-
+		
+		$this->checkIntlModule();
+		
 		$this->prefixId = strtolower('tx_' . $this->request->getControllerExtensionName(). '_' . $this->request->getPluginName());
-		$frameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 		$this->cookieLifetime = time()+60*60*24*365;
-
 		$this->timezoneService->setCurrentTimezone($this->cookieService->getCookie($this->prefixId));
 		
 		//\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($this->settings,get_class($this).' settings');
@@ -178,6 +177,20 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 				));
 		$this->controllerContext->getFlashMessageQueue()->clear();
 		$this->redirectToUri($_SERVER['HTTP_REFERER']);
+	}
+	
+	/**
+	 * Checks if the required PHP module intl is loaded
+	 *
+	 * @throws \Thucke\Timezones\Exception\ModuleNotLoadedException if php module intl is not loaded
+	 * @return void
+	 */
+	private function checkIntlModule() {
+	    if (!extension_loaded('intl')) {
+	        throw new \Thucke\Timezones\Exception\ModuleNotLoadedException(
+	            \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error.phpModuleIntlNotLoaded', 'Timezones'), 1508270706
+	        );
+	    }
 	}
 }
 ?>

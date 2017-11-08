@@ -12,7 +12,6 @@
 				<el>
 					<switchableControllerActions>
 						<TCEforms>
-							<onChange>reload</onChange>
 							<label>LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.general_actions</label>
 							<config>
 								<type>select</type>
@@ -33,69 +32,9 @@
 						  </config>
 						</TCEforms>
 					</switchableControllerActions>
-					<settings.cookieLifetime>
-						<TCEforms>
-							<label>LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.general_cookieLifetime</label>
-							<config>
-								<type>input</type>
-								<size>4</size>
-								<max>4</max>
-								<eval>trim,int,num,nospace</eval>
-							</config>							
-						</TCEforms>
-					</settings.cookieLifetime>
 				</el>
 			</ROOT>
 		</sDEF>
-        <sFluidRatinglinksConfig>
-			<ROOT>
-				<TCEforms>
-					<sheetTitle>LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.fluid.ratinglinksConfig</sheetTitle>
-                    <displayCond>FIELD:sDEF.switchableControllerActions:=:Vote->ratinglinks</displayCond>
-				</TCEforms>
-				<type>array</type>
-				<el>
-					<settings.fluid.templates.ratinglinks.tooltips>
-						<TCEforms>
-							<label>LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.fluid.ratinglinksConfig_tooltips</label>
-							<config>
-								<type>check</type>
-								<default>true</default>
-							</config>							
-						</TCEforms>
-					</settings.fluid.templates.ratinglinks.tooltips>
-					<settings.fluid.templates.ratinglinks.likesMode>
-						<TCEforms>
-							<onChange>reload</onChange>
-							<label>LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.fluid.ratinglinksConfig_likesMode</label>
-							<config>
-								<type>check</type>
-							</config>							
-						</TCEforms>
-					</settings.fluid.templates.ratinglinks.likesMode>
-					<settings.fluid.partials.usersRating.showTextInfo>
-						<TCEforms>
-							<displayCond>FIELD:settings.fluid.templates.ratinglinks.likesMode:REQ:true</displayCond>
-							<label>LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.fluid.partialUsersRatingConfig_showTextInfo</label>
-							<config>
-								<type>check</type>
-								<default>false</default>
-							</config>							
-						</TCEforms>
-					</settings.fluid.partials.usersRating.showTextInfo>
-					<settings.fluid.partials.usersRating.showGraphicInfo>
-						<TCEforms>
-							<displayCond>FIELD:settings.fluid.templates.ratinglinks.likesMode:REQ:true</displayCond>
-							<label>LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.fluid.partialUsersRatingConfig_showGraphicInfo</label>
-							<config>
-								<type>check</type>
-								<default>true</default>
-							</config>							
-						</TCEforms>
-					</settings.fluid.partials.usersRating.showGraphicInfo>
-				</el>
-			</ROOT>
-        </sFluidRatinglinksConfig>
 		<sPaths>
 			<ROOT>
 				<TCEforms>
