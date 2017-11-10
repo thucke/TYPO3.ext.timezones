@@ -12,9 +12,11 @@
    :class:  typoscript
 .. role::   php(code)
 .. highlight:: php
+
 .. |br| raw:: html
 
    <br />
+   
    
 .. _docs.typo3.org:	https://docs.typo3.org/typo3cms/extensions/timezones/
 
@@ -88,5 +90,5 @@ Timezones
 
 |img-1|
 
-You'll find this documentation under `docs.typo3.org`_.|br|
+You'll find this documentation under `docs.typo3.org`_. |br|
 *Thanks to Ralph Schuster who initially created this extension and finally agreed transferring it to me.* 
