@@ -10,10 +10,10 @@
  ***************************************************************/
 $EM_CONF[$_EXTKEY] = array (
 	'title' => 'Timezones',
-	'description' => 'Manages timezones in your website',
+	'description' => 'Manages timezones and datetime conversion in your website',
 	'category' => 'plugin',
 	'version' => '2.0.0',
-	'state' => 'stable',
+	'state' => 'beta',
 	'uploadfolder' => false,
 	'createDirs' => '',
 	'clearcacheonload' => true,

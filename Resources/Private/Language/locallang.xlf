@@ -18,9 +18,6 @@
 			<trans-unit id="flexform.general_actions_3" xml:space="preserve">
 				<source>Select</source>
 			</trans-unit>
-			<trans-unit id="flexform.general_cookieLifetime" xml:space="preserve">
-				<source>Enter value to activate cookie protection for anonymous votes</source>
-			</trans-unit>
 			<trans-unit id="flexform.sheet_paths" xml:space="preserve">
 				<source>Paths</source>
 			</trans-unit>
@@ -32,9 +29,6 @@
 			</trans-unit>
 			<trans-unit id="flexform.paths_layoutRootPath" xml:space="preserve">
 				<source>Layout root path</source>
-			</trans-unit>
-			<trans-unit id="info_label" xml:space="preserve">
-				<source>All times for:</source>
 			</trans-unit>
 			<trans-unit id="form_label" xml:space="preserve">
 				<source>Your current timezone is set to:</source>

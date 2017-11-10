@@ -13,10 +13,13 @@
 .. role::   php(code)
 .. highlight:: php
 
-.. _changelog:
+.. _Github project page: https://github.com/thucke/TYPO3.ext.timezones/releases 
+
+.. _changelog: 
 
 Changelog
-============
+=========
 
 Target group: **Administrators**
 
+Please view the changelog of this extension direclty on the `Github project page`_

@@ -3,11 +3,6 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2017-02-05T17:33:10Z" product-name="timezones" target-language="de">
 		<header/>
 		<body>
-			<trans-unit id="info_label" xml:space="preserve">
-				<source>All times for:</source>
-				<target state="translated">Alle Zeitangaben in:</target>
-				<note></note>
-			</trans-unit>
 			<trans-unit id="form_label" xml:space="preserve">
 				<source>Your current timezone is set to:</source>
 				<target state="translated">Deine Zeitzone ist gesetzt auf:</target>

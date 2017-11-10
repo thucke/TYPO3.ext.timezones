@@ -15,10 +15,9 @@ namespace Thucke\Timezones\Tests\Unit\Service;
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
-use TYPO3\CMS\Extbase\Mvc\Request;
+use Thucke\Timezones\Service\TimezoneService;
 
 /**
  * Test case
@@ -113,7 +112,7 @@ class TimezonesControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 */
 	protected function getMockedTimezoneServiceInstance()
 	{
-		$mock = $this->getMock(Thucke\Timezones\Service\TimezoneService::class, ['getCurrentTimezoneAbbreviation'], array(),'', true);
+		$mock = $this->getMock(TimezoneService::class, ['getCurrentTimezoneAbbreviation'], array(),'', true);
 		$mock
 			->expects($this->once())
 			->method('getCurrentTimezoneAbbreviation')

@@ -12,9 +12,11 @@
    :class:  typoscript
 .. role::   php(code)
 .. highlight:: php
+.. |br| raw:: html
 
-
-.. _this link:	https://docs.typo3.org/typo3cms/extensions/timezones/
+   <br />
+   
+.. _docs.typo3.org:	https://docs.typo3.org/typo3cms/extensions/timezones/
 
 .. |img-1|      image:: Images/hr.gif
 .. :align: left
@@ -75,7 +77,8 @@ Timezones
 
 	Introduction/Index
 	Administrator/Index
-	User/Index
+   User/Index
+   Developer/Index
 	Changelog/Index
 
 
@@ -85,4 +88,5 @@ Timezones
 
 |img-1|
 
-You'll find the documentation of this extension in the TYPO3 wiki following `this link`_.
+You'll find this documentation under `docs.typo3.org`_.|br|
+*Thanks to Ralph Schuster who initially created this extension and finally agreed transferring it to me.* 
