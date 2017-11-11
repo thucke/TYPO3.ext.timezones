@@ -1,4 +1,4 @@
-.. ==================================================
+﻿.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -44,16 +44,16 @@ will be visible on the screen as per default. You may adjust everthing as
 you like.
 
 .. figure:: ../Images/IndexTimezone.png
-	:alt: Link showing current timezone
+    :alt: Link showing current timezone
 
-	Place timezone link on every page to activate time calculation
+    Place timezone link on every page to activate time calculation
 
 .. figure:: ../Images/ShowTimezone.png
-	:alt: Content element showing current timezone
+    :alt: Content element showing current timezone
 
-	Content element to display current timezone information
+    Content element to display current timezone information
 
 .. figure:: ../Images/SelectTimezone.png
-	:alt: Content element to change current timezone
+    :alt: Content element to change current timezone
 
-	Content element to change current timezone
+    Content element to change current timezone

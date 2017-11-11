@@ -12,13 +12,7 @@
    :class:  typoscript
 .. role::   php(code)
 .. highlight:: php
-
-.. |br| raw:: html
-
-   <br />
-   
-   
-.. _docs.typo3.org:	https://docs.typo3.org/typo3cms/extensions/timezones/
+.. _docs.typo3.org: https://docs.typo3.org/typo3cms/extensions/timezones/
 
 .. |img-1|      image:: Images/hr.gif
 .. :align: left
@@ -38,50 +32,39 @@ Timezones
 
 .. only:: html
 
-	:Classification:
-		timezones
+    :Classification:
+        timezones
 
-	:Version:
-		|release|
+    :Version:
+        |release|
 
-	:Language:
-		en
+    :Language:
+        en
 
-	:Description:
-		Manages timezones in your website
+    :Description:
+        Manages timezones in your website
 
-	:Keywords:
-		extbase fluid timezone
+    :Keywords:
+        extbase timezone datetime l18n
 
-	:Author:
-		Thomas Hucke
+    :Author:
+        Thomas Hucke
 
-	:Email:
-		thucke@web.de
+    :Email:
+        thucke@web.de
 
-	:License:
-		This document is published under the Open Content License
-		available from http://www.opencontent.org/opl.shtml
+    :License:
+        This document is published under the Open Content License
+        available from http://www.opencontent.org/opl.shtml
 
-	:Rendered:
-		|today|
-
-
-	The content of this document is related to TYPO3,
-	a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
+    :Rendered:
+        |today|
 
 
-	**Table of Contents**
+    The content of this document is related to TYPO3,
+    a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
 
-.. toctree::
-	:maxdepth: 5
-	:titlesonly:
 
-	Introduction/Index
-	Administrator/Index
-   User/Index
-   Developer/Index
-	Changelog/Index
 
 
 |img-1|
@@ -90,5 +73,18 @@ Timezones
 
 |img-1|
 
-You'll find this documentation under `docs.typo3.org`_. |br|
-*Thanks to Ralph Schuster who initially created this extension and finally agreed transferring it to me.* 
+
+**Table of Contents**
+
+.. toctree::
+    :maxdepth: 5
+
+    Introduction/Index
+    Administrator/Index
+    User/Index
+    Developer/Index
+    Changelog/Index
+
+You'll find this documentation under `docs.typo3.org`_.
+
+*Thanks to Ralph Schuster who initially created this extension and finally agreed transferring it to me.*

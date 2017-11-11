@@ -128,7 +128,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry showAction', array());
 	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Timezone', array($this->timezoneService->getOffset(), date('Y-m-d H:i',time())));
 		$this->view->assign('tz_name', $this->timezoneService->getCurrentTimezoneAbbreviation());
-		$this->view->assign('curdatetime', $this->timezoneService->getIntlDateFormatter()->format(time()));
+		$this->view->assign('curdatetime', $this->formatDateTime(time()));
 		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit showAction', array());
 	}
 
@@ -191,6 +191,21 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	            \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error.phpModuleIntlNotLoaded', 'Timezones'), 1508270706
 	        );
 	    }
+	}
+
+	/**
+	 * Convert time to users timezone if avaiable
+     * @link http://www.php.net/manual/en/intldateformatter.format.php
+	 * @param mixed $value 
+	 * @return string The formatted string or, if an error occurred, false.
+	 */
+	private function formatDateTime($tstamp) {
+	    if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('timezones')) {
+	        $rc = \Thucke\Timezones\Utility\TimezonesUtility::convertToTimezone($tstamp);
+	    } else {
+	        $rc = date(DATE_RFC850, $tstamp);
+	    }
+	    return $rc;
 	}
 }
 ?>

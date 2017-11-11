@@ -23,18 +23,23 @@ Target group: **Extension developers**
 
 Create a central function in your extension where you format dates and times, e.g. a function formatDateTime($timestamp):
 
-	.. code-block:: php
+    ::
 
       /**
        * Convert time to users timezone if avaiable
+       *
+       * @param mixed $value 
+       * @return string The formatted string or, if an error occurred, false.
        */
-      function formatDateTime($tstamp) {
-          if (TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('timezones')) {
-              $rc = Thucke\Timezones\Utility\TimezonesUtility::convertToTimezone($tstamp);
-         } else {
-            $rc = date($format, $tstamp);
-         }
-         return $rc;
+      private function formatDateTime($tstamp) {
+          if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('timezones')) {
+              // @link http://www.php.net/manual/en/intldateformatter.format.php
+              $rc = \Thucke\Timezones\Utility\TimezonesUtility::convertToTimezone($tstamp);
+          } else {
+              // @link http://www.php.net/manual/en/function.date.php
+              $rc = date(DATE_RFC850, $tstamp);
+          }
+          return $rc;
       }
 
     Use this function wherever u need to display dates and/or times. That's it. No more need to take care of anything else.
