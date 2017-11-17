@@ -31,7 +31,7 @@ plugin.tx_timezones {
 			0 = EXT:timezones/Resources/Private/Layouts/
 		}
 	}
-	
+	settings.pluginPage = {$plugin.tx_timezones.settings.pluginPage}
 	# This is an example how to modify the translation
 	_LOCAL_LANG {
 		default {

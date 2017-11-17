@@ -103,12 +103,11 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry indexAction', array());
 		$this->view->assign('tz_name',$this->timezoneService->getCurrentTimezoneAbbreviation());
 		$pluginPage = abs(intval($this->settings['pluginPage']));
-
 		#only generate link if a uid is configured
 		if ($pluginPage > 0) {
-    		//generate URI to this page
+		    //generate URI to this page
     		$selfUri = $this->controllerContext->getUriBuilder()->reset()
-    					->setTargetPageUid(10)
+    		            ->setTargetPageUid($pluginPage)
     					->setCreateAbsoluteUri(true)
     					->buildFrontendUri();
     		$this->view->assign('change_url',$selfUri);
