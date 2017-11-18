@@ -1,8 +1,8 @@
 <div class='tx-timezones-pi1' id='tx-timezones-pi1-show'>
-	<p id="label"><f:translate key="form_label" htmlEscape="false" /></p>
+	<p id="label"><f:format.raw><f:translate key="form_label" /></f:format.raw></p>
 	<p id="tz_name">
 		{tz_name}<br/>
-		<span id="curdate"><f:translate key="curdate_label" htmlEscape="false" /> {curdatetime}</span>
+		<span id="curdate"><f:format.raw><f:translate key="curdate_label"  /></f:format.raw> {curdatetime}</span>
 		{intlDateFormatter.pattern}
 	</p>
 </div>
