@@ -39,7 +39,7 @@ class ExtensionHelperService extends \Thucke\Timezones\Service\AbstractExtension
 	 * @return void
 	 */
 	public function getLogger( $name ) {
-		return $this->loggingService->getLogger(__CLASS__);
+	    return $this->loggingService->getLogger($name);
 	}
 }
 ?>

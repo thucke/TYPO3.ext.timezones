@@ -18,15 +18,15 @@
 								<items>
 									<numIndex index="0">
 										 <numIndex index="0">LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.general_actions_1</numIndex>
-										 <numIndex index="1">Timezones->index</numIndex>
+										 <numIndex index="1">Timezones->index;Timezones->show;Timezones->select;Timezones->tzset</numIndex>
 									</numIndex>
 									<numIndex index="1">
 										<numIndex index="0">LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.general_actions_2</numIndex>
-										<numIndex index="1">Timezones->show</numIndex>
+										<numIndex index="1">Timezones->show;Timezones->index;Timezones->select;Timezones->tzset</numIndex>
 									</numIndex>
 									<numIndex index="2">
 										 <numIndex index="0">LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.general_actions_3</numIndex>
-										 <numIndex index="1">Timezones->select</numIndex>
+										 <numIndex index="1">Timezones->select;Timezones->show;Timezones->index;Timezones->tzset</numIndex>
 									</numIndex>
 								</items>
 						  </config>

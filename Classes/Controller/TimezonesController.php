@@ -1,7 +1,6 @@
 <?php
 namespace Thucke\Timezones\Controller;
 
-
 /***************************************************************
  *  Copyright notice
  *
@@ -82,15 +81,14 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	public function initializeAction() {
 		//instantiate the logger
 		$this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager')->get('Thucke\\Timezones\\Service\\ExtensionHelperService')->getLogger(__CLASS__);
-		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry point', array());
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry initializeAction', array());
 		
 		$this->checkIntlModule();
 		
 		$this->prefixId = strtolower('tx_' . $this->request->getControllerExtensionName(). '_' . $this->request->getPluginName());
 		$this->cookieLifetime = time()+60*60*24*365;
 		$this->timezoneService->setCurrentTimezone($this->cookieService->getCookie($this->prefixId));
-		
-		//\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($this->settings,get_class($this).' settings');
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit initializeAction', array());
 	}
 
 
@@ -159,7 +157,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	 * @ignorevalidation $timezone
 	 */
 	public function tzsetAction($timezone = null)	 {
-		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry tzsetAction', array());
+	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry tzsetAction', array('Timezone' => $timezone));
 		
 		$this->timezoneService->setCurrentTimezone($timezone);
 		$timezone = $this->timezoneService->getCurrentTimezone()->getName();

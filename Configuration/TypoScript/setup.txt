@@ -8,7 +8,7 @@ plugin.tx_timezones {
 	extensionName = Timezones
 	vendorName = Thucke
 	controller = Timezones
-	mvc.callDefaultActionIfActionCantBeResolved = 1
+	mvc.callDefaultActionIfActionCantBeResolved = 0
 	switchableControllerActions {
 		Timezones {
 			1 = index
