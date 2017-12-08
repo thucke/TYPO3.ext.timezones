@@ -7,7 +7,7 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
  * the user input (default settings, FlexForm, URL etc.)
  */
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'Thucke.' . $_EXTKEY,	// The extension name (in UpperCamelCase) or the extension key (in lower_underscore)
+	'Thucke.Timezones',	// The extension name (in UpperCamelCase) or the extension key (in lower_underscore)
 	'Pi1',		// A unique name of the plugin in UpperCamelCase
 	array(		// An array holding the controller-action-combinations that are accessible 
 		'Timezones' 			=> 'index,show,select,tzset',	// The first controller and its first action will be the default 

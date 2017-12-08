@@ -17,7 +17,7 @@
 .. |img-1|      image:: Images/hr.gif
 .. :align: left
 
-.. |img-2|      image:: Images/TYPO3.png
+.. |img-2|      image:: Images/typo3-200px-transparent.png
    :height: 21
    :width: 87
 .. :border: 0

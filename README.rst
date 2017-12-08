@@ -9,12 +9,12 @@
 .. |img-1|      image:: Documentation/Images/hr.gif
 .. :align: left
 
-.. |img-2|      image:: Documentation/Images/TYPO3.png
-   :height: 21
-   :width: 87
+.. |img-2|      image:: Documentation/Images/typo3-200px-transparent.png
+.. :height: 21
+.. :width: 87
 .. :border: 0
 .. :hspace: 9
-.. :name: Grafik2
+.. :name: TYPO3Logo
 
 .. _readme:
 
