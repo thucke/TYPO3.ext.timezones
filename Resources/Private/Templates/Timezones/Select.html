@@ -1,8 +1,8 @@
 <div class='tx-timezones-pi1' id='tx-timezones-pi1-select'>
 	<f:form method="post" controller="Timezones" action="tzset" id="tzset">
 	   <fieldset>
-		  <legend><f:translate key="select_label" htmlEscape="false" /></legend>
-		  <f:form.select name="timezone" options="{selector}" value="{selected}" />
+		  <legend><f:format:raw><f:translate key="select_label" /></f:format:raw></legend>
+                <f:form.select name="timezone" options="{selector}" value="{selected}" />
 		  <br />
 		  <input type="submit" value="{f:translate(key:'submit')}" />
 	   </fieldset>

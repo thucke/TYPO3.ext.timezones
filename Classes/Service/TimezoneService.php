@@ -2,6 +2,7 @@
 namespace Thucke\Timezones\Service;
 use DateTime;
 use DateTimeZone;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 /***************************************************************
 *  Copyright notice
 *
@@ -31,13 +32,13 @@ use DateTimeZone;
  * @version $Id:$
  * @license http://opensource.org/licenses/gpl-license.php GNU protected License, version 2
  */
-class TimezoneService extends \Thucke\Timezones\Service\AbstractExtensionService {
+class TimezoneService extends AbstractExtensionService {
 
 	/**
 	 * List of all timezones
 	 * @var array
 	 */
-	protected $timezoneArray = array();
+	protected $timezoneArray = [];
 
 	/**
 	 * List of all timezones
@@ -58,17 +59,18 @@ class TimezoneService extends \Thucke\Timezones\Service\AbstractExtensionService
 	protected $locale;
 
 	/**
-	 * @var $logger \TYPO3\CMS\Core\Log\Logger
-	 */
+	 * @var \TYPO3\CMS\Core\Log\Logger $logger
+     */
 	protected $logger;
-	
-	/**
-	 * Constructor
-	 * @return void
-	 */
+
+    /**
+     * Constructor
+     * @return void
+     * @throws \Exception
+     */
 	public function initializeObject(  ) {
-	    $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager')->get('Thucke\\Timezones\\Service\\ExtensionHelperService')->getLogger(__CLASS__);
-	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry point', array());
+	    $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ObjectManager::class)->get(ExtensionHelperService::class)->getLogger(__CLASS__);
+	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry point');
 	    $this->locale = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('locale', 'Timezones');
 		$this->setCurrentTimezone(date_default_timezone_get());
 		//create instance of IntlDateFormatter for best localized date conversions
@@ -84,16 +86,15 @@ class TimezoneService extends \Thucke\Timezones\Service\AbstractExtensionService
 	 * @return	void
 	 */
 	public function setCurrentTimezone($timezoneName = null) {
-	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry setCurrentTimezone', array('timezoneName' => $timezoneName));
+	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry setCurrentTimezone', ['timezoneName' => $timezoneName]);
 	    if (!$timezoneName) {
 			$timezoneName = $this->getCurrentTimezone()->getName();
 		}
 		$result = date_default_timezone_set($timezoneName);
-		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'date_default_timezone_set', array('result' => $result,
-		    'timezone' => $timezoneName
-		));
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'date_default_timezone_set', ['result' => $result,
+		    'timezone' => $timezoneName]);
 		$this->currentTimezone = new DateTimeZone($timezoneName);
-		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit setCurrentTimezone', array());
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit setCurrentTimezone');
 	}
 
 	/**
@@ -108,32 +109,35 @@ class TimezoneService extends \Thucke\Timezones\Service\AbstractExtensionService
 		return $this->currentTimezone;
 	}
 
-	/**
-	 * Get the IntlDateFormatter
-	 *
-	 * @return	\IntlDateFormatter	Gives back the current IntlDateFormatter object
-	 */
+    /**
+     * Get the IntlDateFormatter
+     *
+     * @return \IntlDateFormatter    Gives back the current IntlDateFormatter object
+     * @throws \Exception
+     */
 	public function getIntlDateFormatter() {
-	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry getIntlDateFormatter', array());	    
+	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry getIntlDateFormatter');
 		$this->intlDateFormatter->setTimeZone($this->getIcuTimezoneString());
-		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit getIntlDateFormatter', array($this->intlDateFormatter));
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit getIntlDateFormatter', [$this->intlDateFormatter]);
 		return $this->intlDateFormatter;
 	}
 
-	/**
-	 * Get all timezones
-	 *
-	 * @return	string	Gives back the current DateTimeZone object
-	 */
+    /**
+     * Get all timezones
+     *
+     * @return    string    Gives back the current DateTimeZone object
+     * @throws \Exception
+     */
 	public function getCurrentTimezoneAbbreviation() {
-		return $this->getIntlDateFormatter()->formatObject(new DateTime('now', $this->getCurrentTimezone()), 'zzzz', $this->locale);
+		return $this->intlDateFormatter::formatObject(new DateTime('now', $this->getCurrentTimezone()), 'zzzz', $this->locale);
 	}
 
-	/**
-	 * Get all timezones
-	 *
-	 * @return	array	Gives back a list of all timezones
-	 */
+    /**
+     * Get all timezones
+     *
+     * @return    array    Gives back a list of all timezones
+     * @throws \Exception
+     */
 	public function getTimezoneArray() {
 		if (!$this->timezoneArray) {
 			$this->setTimezoneArray();
@@ -141,63 +145,72 @@ class TimezoneService extends \Thucke\Timezones\Service\AbstractExtensionService
 		return $this->timezoneArray;
 	}
 
-	/**
-	 * Set timezoneArray
-	 *
-	 * @return	void
-	 */
+    /**
+     * Set timezoneArray
+     *
+     * @return    void
+     * @throws \Exception
+     */
 	public function setTimezoneArray() {
 		$timezone_identifiers_list = DateTimeZone::listIdentifiers();
 		foreach($timezone_identifiers_list as $timezone_identifier){
 			$dateTimeZone = new DateTimeZone($timezone_identifier);
 			$dateTime = new DateTime('now', $dateTimeZone);
-			$abbreviation = $this->intlDateFormatter->formatObject($dateTime,'zzzz', $this->locale);
+			//$abbreviation = $this->intlDateFormatter::formatObject($dateTime,'zzzz', $this->locale);
 			$hours = floor($dateTimeZone->getOffset($dateTime) / 3600);
 			$mins = floor(($dateTimeZone->getOffset($dateTime) - ($hours*3600)) / 60);
 			$hours = 'GMT' . ($hours < 0 ? $hours : '+'.$hours);
 			$mins = ($mins > 0 ? $mins : '0'.$mins);
-			$text = str_replace("_"," ",$timezone_identifier);
+			$text = str_replace('_', ' ',$timezone_identifier);
 			$this->timezoneArray[$timezone_identifier] = $text.' ('.$hours.':'.$mins.')';
 		}
 	}
 
-	/**
-	 * Get the timezone offset in relation to GMT
-	 *
-	 * @return	int
-	 */
+    /**
+     * Get the timezone offset in relation to GMT
+     *
+     * @return    int
+     * @throws \Exception
+     */
 	public function getOffset() {
-		return $this->currentTimezone->getOffset(new DateTime("now", new DateTimeZone("GMT")));
+		return $this->currentTimezone->getOffset(new DateTime('now', new DateTimeZone('GMT')));
 	}
 
-	/**
-	 * Get the ICU representation of the timezone
-	 * e.g. GMT+2 
-	 *
-	 * @return	string
-	 */
+    /**
+     * Get the ICU representation of the timezone
+     * e.g. GMT+2
+     *
+     * @return    string
+     * @throws \Exception
+     */
 	public function getIcuTimezoneString() {
-	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry getIcuTimezoneString', array());
+	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry getIcuTimezoneString');
 	    $timezone = $this->currentTimezone->getName();
 		$dt = new DateTime('now', new DateTimeZone($timezone));
 		$icuTimezoneString = 'GMT';
-		if ($this->getOffset() != 0) {
-		    $icuTimezoneString = $icuTimezoneString.$dt->format('P');
+		if ($this->getOffset() !== 0) {
+		    $icuTimezoneString .= $dt->format('P');
 		}
-		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit getIcuTimezoneString', array($icuTimezoneString));
+		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit getIcuTimezoneString', [$icuTimezoneString]);
 		return $icuTimezoneString;
 	}
-	
-	/**
-	 * Check if daylight saving time is active
-	 *
-	 * @return	boolean
-	 */
+
+    /**
+     * Check if daylight saving time is active
+     *
+     * @return    boolean
+     * @throws \Exception
+     */
 	public function isDst() {
 		$dateTime = new DateTime('now', $this->currentTimezone);
-		$dstAbbrevation = $this->intlDateFormatter->formatObject($dateTime,'zzz','en_GB');
-		$gmtAbbrevation = $this->intlDateFormatter->formatObject($dateTime,'v','en_GB');
-		return ($dstAbbrevation != $gmtAbbrevation);
+
+        /** @var string $dstAbbrevation */
+        $dstAbbrevation = $this->intlDateFormatter::formatObject($dateTime,'zzz','en_GB');
+
+        /** @var string $gmtAbbrevation */
+        $gmtAbbrevation = $this->intlDateFormatter::formatObject($dateTime,'v','en_GB');
+        if (!empty($dstAbbrevation)) {
+            return ($dstAbbrevation !== $gmtAbbrevation);
+        }
 	}
 }
-?>

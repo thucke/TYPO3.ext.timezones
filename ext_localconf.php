@@ -13,7 +13,7 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 		'Timezones' 			=> 'index,show,select,tzset',	// The first controller and its first action will be the default 
 	),
 	array(		// An array of non-cachable controller-action-combinations (they must already be enabled)
-		'Timezones' 			=> 'show',
+		'Timezones' 			=> 'show,select',
 		)
 	//\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );

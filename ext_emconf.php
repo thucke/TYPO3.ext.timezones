@@ -8,11 +8,11 @@
  * Only the data in the array - everything else is removed by next
  * writing. "version" and "dependencies" must not be touched!
  ***************************************************************/
-$EM_CONF[$_EXTKEY] = array (
+$EM_CONF[$_EXTKEY] = [
 	'title' => 'Timezones',
 	'description' => 'Manages timezones and datetime conversion in your website',
 	'category' => 'plugin',
-	'version' => '2.1.0',
+	'version' => '2.1.1',
 	'state' => 'stable',
 	'uploadfolder' => false,
 	'createDirs' => '',
@@ -20,21 +20,15 @@ $EM_CONF[$_EXTKEY] = array (
 	'author' => 'Thomas Hucke',
 	'author_email' => 'thucke@web.de',
 	'author_company' => '',
-	'constraints' => array(
-		'depends' => array(
-			'php' => '7.0.0-7.2.99',
-			'typo3' => '6.2.15-8.7.99',
-		),
-		'conflicts' => array(
-		),
-		'suggests' => array(
-		),
-	),
-	'autoload' => array(
-		'psr-4' => array(
-			'Thucke\\Timezones\\' => 'Classes'
-		)
-	),
-);
-
-?>
+	'constraints' => [
+		'depends' => [
+            'php' => '7.1.0-7.2.99',
+            'typo3' => '8.7.0-9.5.99',
+        ],
+		'conflicts' => [],
+		'suggests' => [],
+    ],
+	'autoload' => [
+		'psr-4' => [
+			'Thucke\\Timezones\\' => 'Classes']],
+];
