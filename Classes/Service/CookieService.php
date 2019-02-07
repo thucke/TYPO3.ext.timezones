@@ -79,7 +79,8 @@ class CookieService extends AbstractExtensionService {
      */
 	public function setCookie($cookieName, $cookieValue, $cookieExpire=0 ) {
 		// do not set session cookies
-		If ( !empty($cookieExpire) ) {
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(date("H:i:s - m.d.y", $cookieExpire),'setCookie');
+        If ( !empty($cookieExpire) ) {
             /** @var array $GLOBALS */
             $settings = $GLOBALS['TYPO3_CONF_VARS']['SYS'];
 
@@ -91,13 +92,7 @@ class CookieService extends AbstractExtensionService {
             /** @var string $cookiePath */
             $cookiePath = ($cookieDomain ? '/' : \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_SITE_PATH'));
 
-            // If the cookie lifetime is set, use it:
-            if (!empty($GLOBALS)) {
-                /** @var array $cookieExpire */
-                $cookieExpire = $GLOBALS['EXEC_TIME'] + $cookieExpire;
-            }
-
-			// Use the secure option when the current request is served by a secure connection:
+            // Use the secure option when the current request is served by a secure connection:
             /** @var boolean $cookieSecure */
             $cookieSecure = (bool) $settings['cookieSecure'] && \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_SSL');
 			// Deliver cookies only via HTTP and prevent possible XSS by JavaScript:

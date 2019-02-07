@@ -58,7 +58,8 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     /**
 	 * @param \Thucke\Timezones\Service\CookieService $cookieService
 	 */
-	public function injectCookieService(\Thucke\Timezones\Service\CookieService $cookieService) {
+	public function injectCookieService(\Thucke\Timezones\Service\CookieService $cookieService): void
+    {
 		$this->cookieService = $cookieService;
 	}
 	/**
@@ -68,7 +69,8 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	/**
 	 * @param \Thucke\Timezones\Service\TimezoneService $timezoneService
 	 */
-	public function injectTimezoneService(\Thucke\Timezones\Service\TimezoneService $timezoneService) {
+	public function injectTimezoneService(\Thucke\Timezones\Service\TimezoneService $timezoneService): void
+    {
 		$this->timezoneService = $timezoneService;
 	}
 	/**
@@ -79,29 +81,34 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	 * @param	\Thucke\Timezones\Service\ExtensionHelperService $extensionHelperService
 	 * @return	void
 	 */
-	public function injectExtensionHelperService( ExtensionHelperService $extensionHelperService ) {
+	public function injectExtensionHelperService( ExtensionHelperService $extensionHelperService ): void
+    {
 		$this->extensionHelperService = $extensionHelperService;
 	}
 
     /**
      * Initializes the current action
      *
-     * @return void
      * @throws \Thucke\Timezones\Exception\ModuleNotLoadedException
      * @throws \Exception
+     * @return void
      */
-	public function initializeAction() {
-		//instantiate the logger
-		$this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ObjectManager::class)->get(ExtensionHelperService::class)->getLogger(__CLASS__);
-		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry initializeAction');
-		
-		$this->checkIntlModule();
-		
-		$this->prefixId = strtolower('tx_' . $this->request->getControllerExtensionName(). '_' . $this->request->getPluginName());
-		$this->cookieLifetime = (new \DateTime())->add(new \DateInterval('P1Y'));
-		$this->timezoneService->setCurrentTimezone($this->cookieService->getCookie($this->prefixId));
-		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit initializeAction');
-	}
+    public function initializeAction(): void
+    {
+        //instantiate the logger
+        $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ObjectManager::class)->get(ExtensionHelperService::class)->getLogger(__CLASS__);
+        $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry initializeAction');
+
+        $this->checkIntlModule();
+
+        $this->prefixId = strtolower('tx_' . $this->request->getControllerExtensionName(). '_' . $this->request->getPluginName());
+
+        //set expire time to 10 years in the future
+        $this->cookieLifetime = (new \DateTime())->add(new \DateInterval('P10Y'))->getTimestamp();
+
+        $this->timezoneService->setCurrentTimezone($this->cookieService->getCookie($this->prefixId));
+        $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit initializeAction');
+    }
 
 
     /**
@@ -174,10 +181,11 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      * @ignorevalidation $timezone
      */
-	public function tzsetAction($timezone = null)	 {
+	public function tzsetAction($timezone = null): void
+    {
 	    $this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry tzsetAction', ['Timezone' => $timezone]);
-		
-		$this->timezoneService->setCurrentTimezone($timezone);
+
+        $this->timezoneService->setCurrentTimezone($timezone);
 		$timezone = $this->timezoneService->getCurrentTimezone()->getName();
 		$this->cookieService->setCookie($this->prefixId, $timezone, $this->cookieLifetime);
 		
@@ -202,7 +210,8 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	 * @throws \Thucke\Timezones\Exception\ModuleNotLoadedException if php module intl is not loaded
 	 * @return void
 	 */
-	private function checkIntlModule() {
+	private function checkIntlModule(): void
+    {
 	    if (!extension_loaded('intl')) {
 	        throw new \Thucke\Timezones\Exception\ModuleNotLoadedException(
 	            \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error.phpModuleIntlNotLoaded', 'Timezones'), 1508270706
