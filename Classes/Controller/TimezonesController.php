@@ -98,7 +98,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 		$this->checkIntlModule();
 		
 		$this->prefixId = strtolower('tx_' . $this->request->getControllerExtensionName(). '_' . $this->request->getPluginName());
-		$this->cookieLifetime = (new \DateTime())->add(new \DateInterval('P1D'));
+		$this->cookieLifetime = (new \DateTime())->add(new \DateInterval('P1Y'));
 		$this->timezoneService->setCurrentTimezone($this->cookieService->getCookie($this->prefixId));
 		$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit initializeAction');
 	}
