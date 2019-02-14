@@ -1,5 +1,7 @@
 <?php
+
 namespace Thucke\Timezones\Service;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -24,62 +26,67 @@ namespace Thucke\Timezones\Service;
 ***************************************************************/
 
 /**
- * Factory for model objects
+ * Factory for model objects.
  *
  * @version $Id:$
+ *
  * @license http://opensource.org/licenses/gpl-license.php GNU protected License, version 2
  */
-class LoggingService {
+class LoggingService
+{
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     */
+    protected $objectManager;
+    /**
+     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+     */
+    protected $configurationManager;
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-	 */
-	protected $objectManager;
-	/**
-	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-	 */
-	protected $configurationManager;
+    /**
+     * Constructor
+     * Must overrule the abstract class method to avoid self referencing.
+     *
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface               $objectManager
+     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager,
+     *
+     * @return void
+     */
+    public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager,
+                                \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager)
+    {
+        $this->objectManager = $objectManager;
+        $this->configurationManager = $configurationManager;
+    }
 
-	/**
-	 * Constructor
-	 * Must overrule the abstract class method to avoid self referencing
-	 * @param	\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
-	 * @param	\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager, 
-	 * @return void
-	 */
-	public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager, 
-								\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
-		$this->objectManager = $objectManager;
-		$this->configurationManager = $configurationManager;		
-	}
+    /**
+     * Get a logger instance
+     * The configuration of the logger is modified by extension typoscript config.
+     *
+     * @param string $name the class name which this logger is for
+     *
+     * @return \TYPO3\CMS\Core\Log\Logger
+     */
+    public function getLogger($name)
+    {
+        $writerConfiguration = $GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']['Timezones']['writerConfiguration'];
+        $settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'timezones', 'pi1');
+        if (is_array($settings['logging'])) {
+            foreach ($settings['logging'] as $logLevel => $logConfig) {
+                $levelUppercase = strtoupper($logLevel);
+                if (!empty($logConfig['file'])) {
+                    $writerConfiguration[constant('\TYPO3\CMS\Core\Log\LogLevel::'.$levelUppercase)]['TYPO3\\CMS\\Core\\Log\\Writer\\FileWriter'] =
+                        ['logFile' => $logConfig['file']];
+                }
+                if (!empty($logConfig['database'])) {
+                    $writerConfiguration[constant('\TYPO3\CMS\Core\Log\LogLevel::'.$levelUppercase)]['TYPO3\\CMS\\Core\\Log\\Writer\\Database'] =
+                        ['table' => $logConfig['table']];
+                }
+            }
+        }
+        $GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']['Timezones']['writerConfiguration'] = $writerConfiguration;
+        $logger = $this->objectManager->get('TYPO3\\CMS\\Core\\Log\\LogManager')->getLogger($name);
 
-	/**
-	 * Get a logger instance
-	 * The configuration of the logger is modified by extension typoscript config
-	 *
-	 * @param	string	$name the class name which this logger is for
-	 * @return 	\TYPO3\CMS\Core\Log\Logger
-	 */
-	public function getLogger( $name ) {
-		$writerConfiguration = $GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']['Timezones']['writerConfiguration'];
-		$settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,'timezones','pi1');
-		If ( is_array($settings['logging']) ){
-			foreach ($settings['logging'] as $logLevel => $logConfig) {
-				$levelUppercase = strtoupper($logLevel);
-				If ( !empty($logConfig['file']) ) {
-					$writerConfiguration[constant('\TYPO3\CMS\Core\Log\LogLevel::'.$levelUppercase)]['TYPO3\\CMS\\Core\\Log\\Writer\\FileWriter'] = 
-						array('logFile' => $logConfig['file']);
-				}
-				If ( !empty($logConfig['database']) ) {
-					$writerConfiguration[constant('\TYPO3\CMS\Core\Log\LogLevel::'.$levelUppercase)]['TYPO3\\CMS\\Core\\Log\\Writer\\Database'] = 
-						array('table' => $logConfig['table']);
-				}
-			}
-		}
-		$GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']['Timezones']['writerConfiguration'] = $writerConfiguration;
-		$logger = $this->objectManager->get('TYPO3\\CMS\\Core\\Log\\LogManager')->getLogger( $name );
-		return $logger;
-	}
-	
+        return $logger;
+    }
 }
-?>
