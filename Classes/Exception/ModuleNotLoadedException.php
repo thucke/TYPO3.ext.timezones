@@ -1,4 +1,5 @@
 <?php
+
 namespace Thucke\Timezones\Exception;
 
 /*
@@ -15,7 +16,7 @@ namespace Thucke\Timezones\Exception;
  */
 
 /**
- * A "Storage page not set in Plugin configuration" exception
+ * A "Storage page not set in Plugin configuration" exception.
  *
  * @api
  */

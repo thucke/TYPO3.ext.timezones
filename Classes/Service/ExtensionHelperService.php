@@ -1,5 +1,7 @@
 <?php
+
 namespace Thucke\Timezones\Service;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -24,22 +26,24 @@ namespace Thucke\Timezones\Service;
 ***************************************************************/
 
 /**
- * Factory for model objects
+ * Factory for model objects.
  *
  * @version $Id:$
+ *
  * @license http://opensource.org/licenses/gpl-license.php GNU protected License, version 2
  */
-class ExtensionHelperService extends \Thucke\Timezones\Service\AbstractExtensionService {
-
-	/**
-	 * Get a logger instance
-	 * The configuration of the logger is modified by extension typoscript config
-	 *
-	 * @param	string	$name the class name which this logger is for
-	 * @return void
-	 */
-	public function getLogger( $name ) {
-	    return $this->loggingService->getLogger($name);
-	}
+class ExtensionHelperService extends \Thucke\Timezones\Service\AbstractExtensionService
+{
+    /**
+     * Get a logger instance
+     * The configuration of the logger is modified by extension typoscript config.
+     *
+     * @param string $name the class name which this logger is for
+     *
+     * @return void
+     */
+    public function getLogger($name)
+    {
+        return $this->loggingService->getLogger($name);
+    }
 }
-?>

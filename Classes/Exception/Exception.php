@@ -1,4 +1,5 @@
 <?php
+
 namespace Thucke\Timezones\Exception;
 
 /*
@@ -15,7 +16,7 @@ namespace Thucke\Timezones\Exception;
  */
 
 /**
- * A generic Cache exception
+ * A generic Cache exception.
  *
  * This file is a backport from FLOW3
  *

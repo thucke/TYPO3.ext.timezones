@@ -1,5 +1,7 @@
 <?php
+
 namespace Thucke\Timezones\Service;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -24,63 +26,69 @@ namespace Thucke\Timezones\Service;
 ***************************************************************/
 
 /**
- * Service for setting cookies like Typo3 does
+ * Service for setting cookies like Typo3 does.
  *
  * @version $Id:$
+ *
  * @license http://opensource.org/licenses/gpl-license.php GNU protected License, version 2
  */
-class CookieService extends AbstractExtensionService {
-
-	/**
-	 * Gets the domain to be used on setting cookies.
-	 * The information is taken from the value in $GLOBALS['TYPO3_CONF_VARS']['SYS']['cookieDomain'].
-	 * Protected function taken from t3lib_userAuth (t3 4.7.7)
-	 *
-	 * @return	string		The domain to be used on setting cookies
-	 */
-	protected function getCookieDomain() {
-		$result = '';
-		$cookieDomain = $GLOBALS['TYPO3_CONF_VARS']['SYS']['cookieDomain'];
-		// If a specific cookie domain is defined for a given TYPO3_MODE,
-		// use that domain
-		if (!empty($GLOBALS['TYPO3_CONF_VARS']['FE']['cookieDomain'])) {
-			$cookieDomain = $GLOBALS['TYPO3_CONF_VARS']['FE']['cookieDomain'];
-		}
-		if ($cookieDomain) {
-			if ($cookieDomain{0} === '/') {
-				$match = [];
-				$matchCnt = @preg_match($cookieDomain, \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'), $match);
-				if ($matchCnt === false) {
-					$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::ERROR,
-										'getCookieDomain: The regular expression for the cookie domain contains errors. The session is not shared across sub-domains.',
-										[
-											'cookieDomain' => $cookieDomain,
-											'errorCode' => 1399137882,
+class CookieService extends AbstractExtensionService
+{
+    /**
+     * Gets the domain to be used on setting cookies.
+     * The information is taken from the value in $GLOBALS['TYPO3_CONF_VARS']['SYS']['cookieDomain'].
+     * Protected function taken from t3lib_userAuth (t3 4.7.7).
+     *
+     * @return string The domain to be used on setting cookies
+     */
+    protected function getCookieDomain()
+    {
+        $result = '';
+        $cookieDomain = $GLOBALS['TYPO3_CONF_VARS']['SYS']['cookieDomain'];
+        // If a specific cookie domain is defined for a given TYPO3_MODE,
+        // use that domain
+        if (!empty($GLOBALS['TYPO3_CONF_VARS']['FE']['cookieDomain'])) {
+            $cookieDomain = $GLOBALS['TYPO3_CONF_VARS']['FE']['cookieDomain'];
+        }
+        if ($cookieDomain) {
+            if ($cookieDomain[0] === '/') {
+                $match = [];
+                $matchCnt = @preg_match($cookieDomain, \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'), $match);
+                if ($matchCnt === false) {
+                    $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::ERROR,
+                                        'getCookieDomain: The regular expression for the cookie domain contains errors. The session is not shared across sub-domains.',
+                                        [
+                                            'cookieDomain' => $cookieDomain,
+                                            'errorCode'    => 1399137882,
                                         ]);
-				} elseif ($matchCnt) {
-					$result = $match[0];
-				}
-			} else {
-				$result = $cookieDomain;
-			}
-		}
-		return $result;
-	}
+                } elseif ($matchCnt) {
+                    $result = $match[0];
+                }
+            } else {
+                $result = $cookieDomain;
+            }
+        }
+
+        return $result;
+    }
 
     /**
      * Sets the cookie
-     * Protected function taken from t3lib_userAuth (t3 4.7.7)
+     * Protected function taken from t3lib_userAuth (t3 4.7.7).
      *
-     * @param    string $cookieName identifier for the cookie
-     * @param    string $cookieValue cookie value
-     * @param    int $cookieExpire expire time for the cookie
-     * @return    void
+     * @param string $cookieName   identifier for the cookie
+     * @param string $cookieValue  cookie value
+     * @param int    $cookieExpire expire time for the cookie
+     *
      * @throws \TYPO3\CMS\Core\Exception
+     *
+     * @return void
      */
-	public function setCookie($cookieName, $cookieValue, $cookieExpire=0 ) {
-		// do not set session cookies
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(date("H:i:s - m.d.y", $cookieExpire),'setCookie');
-        If ( !empty($cookieExpire) ) {
+    public function setCookie($cookieName, $cookieValue, $cookieExpire = 0)
+    {
+        // do not set session cookies
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(date('H:i:s - m.d.y', $cookieExpire), 'setCookie');
+        if (!empty($cookieExpire)) {
             /** @var array $GLOBALS */
             $settings = $GLOBALS['TYPO3_CONF_VARS']['SYS'];
 
@@ -93,60 +101,64 @@ class CookieService extends AbstractExtensionService {
             $cookiePath = ($cookieDomain ? '/' : \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_SITE_PATH'));
 
             // Use the secure option when the current request is served by a secure connection:
-            /** @var boolean $cookieSecure */
+            /** @var bool $cookieSecure */
             $cookieSecure = (bool) $settings['cookieSecure'] && \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_SSL');
-			// Deliver cookies only via HTTP and prevent possible XSS by JavaScript:
-            /** @var boolean $cookieHttpOnly */
+            // Deliver cookies only via HTTP and prevent possible XSS by JavaScript:
+            /** @var bool $cookieHttpOnly */
             $cookieHttpOnly = (bool) $settings['cookieHttpOnly'];
 
-			// Do not set cookie if cookieSecure is set to "1" (force HTTPS) and no secure channel is used:
-			if ((int) $settings['cookieSecure'] !== 1 || \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_SSL')) {
-				setcookie(
-					$cookieName,
-					$cookieValue,
-					(integer) $cookieExpire,
-					$cookiePath,
-					$cookieDomain,
-					$cookieSecure,
-					$cookieHttpOnly
-				);
-				$this->logger->log(	\TYPO3\CMS\Core\Log\LogLevel::INFO,
-									'setCookie: Cookie set',
-									[
-										'cookieName' => $cookieName,
-										'cookieValue' => $cookieValue,
-										'cookieExpire' => $cookieExpire,
-										'cookiePath' => $cookiePath,
-										'cookieDomain' => $cookieDomain,
-										'cookieSecure' => $cookieSecure,
-										'cookieHttpOnly' => $cookieHttpOnly
+            // Do not set cookie if cookieSecure is set to "1" (force HTTPS) and no secure channel is used:
+            if ((int) $settings['cookieSecure'] !== 1 || \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_SSL')) {
+                setcookie(
+                    $cookieName,
+                    $cookieValue,
+                    (int) $cookieExpire,
+                    $cookiePath,
+                    $cookieDomain,
+                    $cookieSecure,
+                    $cookieHttpOnly
+                );
+                $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::INFO,
+                                    'setCookie: Cookie set',
+                                    [
+                                        'cookieName'     => $cookieName,
+                                        'cookieValue'    => $cookieValue,
+                                        'cookieExpire'   => $cookieExpire,
+                                        'cookiePath'     => $cookiePath,
+                                        'cookieDomain'   => $cookieDomain,
+                                        'cookieSecure'   => $cookieSecure,
+                                        'cookieHttpOnly' => $cookieHttpOnly,
                                     ]);
-			} else {
-				throw new \TYPO3\CMS\Core\Exception(
-					'Cookie was not set since HTTPS was forced in $TYPO3_CONF_VARS[SYS][cookieSecure].',
-					1254325546
-				);
-			}
-		}
-	}
-	
-	/**
-	 * Gets the cookie
-	 *
-	 * @param	string 	$cookieName		identifier for the cookie
-	 * @return	array|null
-	 */
-	public function getCookie($cookieName) {
-		return isset($_COOKIE[$cookieName]) ? stripslashes($_COOKIE[$cookieName]) : null;
-	}	
-	
-	/**
-	 * Return if cookie has been set
-	 *
-	 * @param	string	$cookieName		identifier for the cookie
-	 * @return	boolean
-	 */
-	public function hasCookie($cookieName) {
-		return !empty($this->getCookie($cookieName));
-	}
+            } else {
+                throw new \TYPO3\CMS\Core\Exception(
+                    'Cookie was not set since HTTPS was forced in $TYPO3_CONF_VARS[SYS][cookieSecure].',
+                    1254325546
+                );
+            }
+        }
+    }
+
+    /**
+     * Gets the cookie.
+     *
+     * @param string $cookieName identifier for the cookie
+     *
+     * @return array|null
+     */
+    public function getCookie($cookieName)
+    {
+        return isset($_COOKIE[$cookieName]) ? stripslashes($_COOKIE[$cookieName]) : null;
+    }
+
+    /**
+     * Return if cookie has been set.
+     *
+     * @param string $cookieName identifier for the cookie
+     *
+     * @return bool
+     */
+    public function hasCookie($cookieName)
+    {
+        return !empty($this->getCookie($cookieName));
+    }
 }
