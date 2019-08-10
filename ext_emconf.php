@@ -12,7 +12,7 @@ $EM_CONF[$_EXTKEY] = [
     'title'            => 'Timezones',
     'description'      => 'Manages timezones and datetime conversion in your website',
     'category'         => 'plugin',
-    'version'          => '2.2.0',
+    'version'          => '2.2.1',
     'state'            => 'stable',
     'uploadfolder'     => false,
     'createDirs'       => '',
@@ -23,7 +23,7 @@ $EM_CONF[$_EXTKEY] = [
     'constraints'      => [
         'depends' => [
             'php'   => '7.1.0-7.2.99',
-            'typo3' => '8.7.0-9.5.99',
+            'typo3' => '8.7.7-9.5.99',
         ],
         'conflicts' => [],
         'suggests'  => [],
