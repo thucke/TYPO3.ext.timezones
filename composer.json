@@ -36,7 +36,8 @@
 		}
 	},
 	"replace" : {
-		"thucke/timezones" : "self.version"
+		"thucke/timezones" : "self.version",
+		"typo3-ter/timezones" : "self.version"
 	},
 	"config": {
 		"vendor-dir": ".Build/vendor",
