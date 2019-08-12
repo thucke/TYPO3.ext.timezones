@@ -3,16 +3,10 @@
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
 
-.. ==================================================
-.. DEFINE SOME TEXTROLES
-.. --------------------------------------------------
-.. role::   underline
-.. role::   typoscript(code)
-.. role::   ts(typoscript)
-   :class:  typoscript
-.. role::   php(code)
-.. highlight:: php
-.. _docs.typo3.org: https://docs.typo3.org/typo3cms/extensions/timezones/
+.. include:: Includes.txt
+
+.. _start:
+
 
 .. |img-1|      image:: Images/hr.gif
 .. :align: left
@@ -24,11 +18,11 @@
 .. :hspace: 9
 .. :name: Grafik2
 
-.. _start:
+.. _docs.typo3.org: https://docs.typo3.org/typo3cms/extensions/timezones/
 
-=========
-Timezones
-=========
+==============
+EXT: Timezones
+==============
 
 .. only:: html
 
