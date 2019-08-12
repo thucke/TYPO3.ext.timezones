@@ -21,6 +21,7 @@
         "typo3/cms-core" : ">=8.7.7 <9.6"
 	},
 	"require-dev": {
+		"roave/security-advisories": "dev-master",
 		"friendsofphp/php-cs-fixer": "^2.0",
 		"nimut/testing-framework": "^1.0 || ^2.0 || ^3.0 || ^4.0"
 	},
@@ -31,11 +32,11 @@
 	},
 	"autoload-dev" : {
 		"psr-4" : {
-			"Thucke\\Timezones\\Tests\\" : "Tests",
+			"Thucke\\Timezones\\Tests\\" : "Tests"
 		}
 	},
 	"replace" : {
-		"thucke/timezones" : "self.version",
+		"thucke/timezones" : "self.version"
 	},
 	"config": {
 		"vendor-dir": ".Build/vendor",
