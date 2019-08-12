@@ -60,7 +60,6 @@ EXT: Timezones
     Developer/Index
     Changelog/Index
 
-
 You'll find this documentation under `docs.typo3.org`_.
 
 *Thanks to Ralph Schuster who initially created this extension and finally agreed transferring it to me.*
