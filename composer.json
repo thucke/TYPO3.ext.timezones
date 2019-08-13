@@ -2,10 +2,28 @@
 	"name" : "thucke/timezones",
 	"type" : "typo3-cms-extension",
 	"description" : "Manages timezones for website users",
-	"license" : "GPL-2.0+",
+	"keywords": [
+		"extbase",
+		"fluid",
+		"timezone",
+		"datetime",
+		"l18n"
+	],
+	"authors": [
+		{
+			"name": "Thomas Hucke",
+			"role": "Developer"
+		}
+	],
+	"license" : "GPL-2.0-or-later",
 	"require" : {
         "php" : ">=7.1.0 <7.3",
         "typo3/cms-core" : ">=8.7.7 <9.6"
+	},
+	"require-dev": {
+		"roave/security-advisories": "dev-master",
+		"friendsofphp/php-cs-fixer": "^2.0",
+		"nimut/testing-framework": "^1.0 || ^2.0 || ^3.0 || ^4.0"
 	},
 	"autoload" : {
 		"psr-4" : {
@@ -14,17 +32,30 @@
 	},
 	"autoload-dev" : {
 		"psr-4" : {
-			"Thucke\\Timezones\\Tests\\" : "Tests",
-			"TYPO3\\CMS\\Core\\Tests\\" : ".Build/vendor/typo3/cms/typo3/sysext/core/Tests/"
+			"Thucke\\Timezones\\Tests\\" : "Tests"
 		}
 	},
 	"replace" : {
-		"timezones" : "self.version",
-		"typo3-ter/timezones" : "self.version"
+		"thucke/timezones" : "self.version"
 	},
-	"minimum-stability" : "beta",
-	"support" : {},
-	"keywords" : [
-		"extbase fluid timezone"
-	]
+	"config": {
+		"vendor-dir": ".Build/vendor",
+		"bin-dir": ".Build/bin"
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"mkdir -p .Build/Web/typo3conf/ext/",
+			"[ -L .Build/Web/typo3conf/ext/timezones ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/timezones"
+		]
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "2.x-dev"
+		},
+		"typo3/cms": {
+			"cms-package-dir": "{$vendor-dir}/typo3/cms",
+			"web-dir": ".Build/Web",
+			"extension-key": "timezones"
+		}
+	}
 }

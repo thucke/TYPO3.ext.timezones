@@ -3,32 +3,15 @@
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
 
-.. ==================================================
-.. DEFINE SOME TEXTROLES
-.. --------------------------------------------------
-.. role::   underline
-.. role::   typoscript(code)
-.. role::   ts(typoscript)
-   :class:  typoscript
-.. role::   php(code)
-.. highlight:: php
-.. _docs.typo3.org: https://docs.typo3.org/typo3cms/extensions/timezones/
-
-.. |img-1|      image:: Images/hr.gif
-.. :align: left
-
-.. |img-2|      image:: Images/typo3-200px-transparent.png
-   :height: 21
-   :width: 87
-.. :border: 0
-.. :hspace: 9
-.. :name: Grafik2
+.. include:: Includes.txt
 
 .. _start:
 
-=========
-Timezones
-=========
+.. _docs.typo3.org: https://docs.typo3.org/typo3cms/extensions/timezones/
+
+==============
+EXT: Timezones
+==============
 
 .. only:: html
 
@@ -65,19 +48,11 @@ Timezones
     a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
 
 
-
-
-|img-1|
-
-|img-2| EXT: Timezones
-
-|img-1|
-
-
 **Table of Contents**
 
 .. toctree::
-    :maxdepth: 5
+    :maxdepth: 2
+    :titlesonly:
 
     Introduction/Index
     Administrator/Index
