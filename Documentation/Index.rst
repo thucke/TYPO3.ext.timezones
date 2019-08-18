@@ -48,7 +48,7 @@ EXT: Timezones
     a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
 
 
-**Table of Contents**
+.. **Table of Contents**
 
 .. toctree::
    :hidden:
@@ -72,6 +72,7 @@ EXT: Timezones
 
    ResourcesForEditors
    Sitemap/Index
+
 
 
 *Thanks to Ralph Schuster who initially created this extension and finally agreed transferring it to me.*
