@@ -37,8 +37,8 @@ EXT: Timezones
         thucke@web.de
 
     :License:
-        This document is published under the Open Content License
-        available from http://www.opencontent.org/opl.shtml
+        Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+        (`CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__)
 
     :Rendered:
         |today|
