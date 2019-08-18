@@ -42,10 +42,6 @@ EXT: Timezones
         |today|
 
 
-    The content of this document is related to TYPO3,
-    a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
-
-
 *Thanks to Ralph Schuster who initially created this extension and finally agreed transferring it to me.*
 
 
@@ -56,7 +52,6 @@ EXT: Timezones
     Introduction/Index
     User/Index
 
-
 .. toctree::
     :hidden:
     :caption: EXPERT
@@ -64,10 +59,9 @@ EXT: Timezones
     Administrator/Index
     Developer/Index
 
-
 .. toctree::
     :hidden:
     :caption: OTHER
 
-   ResourcesForEditors
-   Sitemap/Index
+    ResourcesForEditors
+    Sitemap/Index
