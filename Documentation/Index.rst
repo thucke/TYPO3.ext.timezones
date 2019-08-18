@@ -7,8 +7,6 @@
 
 .. _start:
 
-.. _docs.typo3.org: https://docs.typo3.org/typo3cms/extensions/timezones/
-
 ==============
 EXT: Timezones
 ==============
@@ -48,31 +46,28 @@ EXT: Timezones
     a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
 
 
-.. **Table of Contents**
+*Thanks to Ralph Schuster who initially created this extension and finally agreed transferring it to me.*
+
 
 .. toctree::
-   :hidden:
-   :caption: BASICS
+    :hidden:
+    :caption: BASICS
 
     Introduction/Index
     User/Index
 
 
 .. toctree::
-   :hidden:
-   :caption: EXPERT
+    :hidden:
+    :caption: EXPERT
 
     Administrator/Index
     Developer/Index
 
 
 .. toctree::
-   :hidden:
-   :caption: OTHER
+    :hidden:
+    :caption: OTHER
 
    ResourcesForEditors
    Sitemap/Index
-
-
-
-*Thanks to Ralph Schuster who initially created this extension and finally agreed transferring it to me.*
