@@ -7,8 +7,6 @@
 
 .. _start:
 
-.. _docs.typo3.org: https://docs.typo3.org/typo3cms/extensions/timezones/
-
 ==============
 EXT: Timezones
 ==============
@@ -37,29 +35,33 @@ EXT: Timezones
         thucke@web.de
 
     :License:
-        This document is published under the Open Content License
-        available from http://www.opencontent.org/opl.shtml
+        Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+        (`CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__)
 
     :Rendered:
         |today|
 
 
-    The content of this document is related to TYPO3,
-    a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
+*Thanks to Ralph Schuster who initially created this extension and finally agreed transferring it to me.*
 
-
-**Table of Contents**
 
 .. toctree::
-    :maxdepth: 2
-    :titlesonly:
+    :hidden:
+    :caption: BASICS
 
     Introduction/Index
-    Administrator/Index
     User/Index
+
+.. toctree::
+    :hidden:
+    :caption: EXPERT
+
+    Administrator/Index
     Developer/Index
-    Changelog/Index
 
-You'll find this documentation under `docs.typo3.org`_.
+.. toctree::
+    :hidden:
+    :caption: OTHER
 
-*Thanks to Ralph Schuster who initially created this extension and finally agreed transferring it to me.*
+    ResourcesForEditors
+    Sitemap/Index
