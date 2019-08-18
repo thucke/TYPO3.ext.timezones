@@ -51,15 +51,27 @@ EXT: Timezones
 **Table of Contents**
 
 .. toctree::
-    :maxdepth: 2
-    :titlesonly:
+   :hidden:
+   :caption: BASICS
 
     Introduction/Index
-    Administrator/Index
     User/Index
-    Developer/Index
-    Changelog/Index
 
-You'll find this documentation under `docs.typo3.org`_.
+
+.. toctree::
+   :hidden:
+   :caption: EXPERT
+
+    Administrator/Index
+    Developer/Index
+
+
+.. toctree::
+   :hidden:
+   :caption: OTHER
+
+   ResourcesForEditors
+   Sitemap/Index
+
 
 *Thanks to Ralph Schuster who initially created this extension and finally agreed transferring it to me.*
