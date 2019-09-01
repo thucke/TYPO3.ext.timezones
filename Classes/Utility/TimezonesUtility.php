@@ -2,9 +2,13 @@
 
 namespace Thucke\Timezones\Utility;
 
+use Exception;
 use Thucke\Timezones\Service\CookieService;
 use Thucke\Timezones\Service\ExtensionHelperService;
 use Thucke\Timezones\Service\TimezoneService;
+use TYPO3\CMS\Core\Log\Logger;
+use TYPO3\CMS\Core\Log\LogLevel;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /***************************************************************
@@ -43,27 +47,27 @@ class TimezonesUtility
      *
      * @param mixed $value
      *
-     * @throws \Exception
+     * @throws Exception
      *
      * @return string
      */
-    public static function convertToTimezone($value)
+    public static function convertToTimezone($value): string
     {
         //instantiate the logger
-        /** @var \TYPO3\CMS\Core\Log\Logger $logger */
-        $logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ObjectManager::class)->get(ExtensionHelperService::class)->getLogger(__CLASS__);
-        $logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry convertToTimezone');
+        /** @var Logger $logger */
+        $logger = GeneralUtility::makeInstance(ObjectManager::class)->get(ExtensionHelperService::class)->getLogger(__CLASS__);
+        $logger->log(LogLevel::DEBUG, 'Entry convertToTimezone');
 
-        /** @var \Thucke\Timezones\Service\TimezoneService $timezoneService */
-        $timezoneService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ObjectManager::class)->get(TimezoneService::class);
+        /** @var TimezoneService $timezoneService */
+        $timezoneService = GeneralUtility::makeInstance(ObjectManager::class)->get(TimezoneService::class);
 
-        /** @var \Thucke\Timezones\Service\CookieService $cookieService */
-        $cookieService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ObjectManager::class)->get(CookieService::class);
+        /** @var CookieService $cookieService */
+        $cookieService = GeneralUtility::makeInstance(ObjectManager::class)->get(CookieService::class);
 
         $timezoneService->setCurrentTimezone($cookieService->getCookie('tx_timezones_pi1'));
         $convertedValue = $timezoneService->getIntlDateFormatter()->format($value);
 
-        $logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit convertToTimezone', ['originalValue' => $value, 'convertedValue' => $convertedValue]);
+        $logger->log(LogLevel::DEBUG, 'Exit convertToTimezone', ['originalValue' => $value, 'convertedValue' => $convertedValue]);
 
         return $convertedValue;
     }
