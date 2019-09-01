@@ -2,6 +2,8 @@
 
 namespace Thucke\Timezones\Service;
 
+use TYPO3\CMS\Core\Log\Logger;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -40,7 +42,7 @@ class ExtensionHelperService extends \Thucke\Timezones\Service\AbstractExtension
      *
      * @param string $name the class name which this logger is for
      *
-     * @return void
+     * @return Logger
      */
     public function getLogger($name)
     {

@@ -1,5 +1,7 @@
 <?php
 
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
 if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
@@ -9,7 +11,7 @@ if (!defined('TYPO3_MODE')) {
  * right combination of Controller and Action according to
  * the user input (default settings, FlexForm, URL etc.)
  */
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+ExtensionUtility::configurePlugin(
     'Thucke.Timezones',	// The extension name (in UpperCamelCase) or the extension key (in lower_underscore)
     'Pi1',		// A unique name of the plugin in UpperCamelCase
     [		// An array holding the controller-action-combinations that are accessible

@@ -20,6 +20,6 @@ namespace Thucke\Timezones\Exception;
  *
  * @api
  */
-class ModuleNotLoadedException extends \Thucke\Timezones\Exception\Exception
+class ModuleNotLoadedException extends Exception
 {
 }

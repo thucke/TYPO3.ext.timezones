@@ -2,8 +2,8 @@
 #tx-timezones-pi1-index a:hover { color:#dc143c;}
 #tx-timezones-pi1-show #tz_name {
    width:32em; background-color:#C1D6E3;
-   margin:1em 0em 1em 2.5em; 
-   padding:0.5em 0em; 
+   margin:1em 0 1em 2.5em;
+   padding:0.5em 0;
    font-weight:bold; text-align:center;
    border:4px ridge #990000; }
 #tx-timezones-pi1-show #curdate { font-weight:normal; font-size:0.9em; line-height:1.5em;}

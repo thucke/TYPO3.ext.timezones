@@ -2,6 +2,10 @@
 
 namespace Thucke\Timezones\Service;
 
+use TYPO3\CMS\Core\Log\Logger;
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -32,30 +36,30 @@ namespace Thucke\Timezones\Service;
  *
  * @license http://opensource.org/licenses/gpl-license.php GNU protected License, version 2
  */
-class AbstractExtensionService implements \TYPO3\CMS\Core\SingletonInterface
+class AbstractExtensionService implements SingletonInterface
 {
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     * @var ObjectManagerInterface
      */
     protected $objectManager;
     /**
-     * @var \Thucke\Timezones\Service\LoggingService
+     * @var LoggingService
      */
     protected $loggingService;
     /**
-     * @var \TYPO3\CMS\Core\Log\Logger
+     * @var Logger
      */
     protected $logger;
 
     /**
      * Constructor.
      *
-     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
-     * @param \Thucke\Timezones\Service\LoggingService         $loggingService
+     * @param ObjectManagerInterface $objectManager
+     * @param LoggingService $loggingService
      *
      * @return void
      */
-    public function __construct(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager, \Thucke\Timezones\Service\LoggingService $loggingService)
+    public function __construct(ObjectManagerInterface $objectManager, LoggingService $loggingService)
     {
         $this->objectManager = $objectManager;
         $this->loggingService = $loggingService;
