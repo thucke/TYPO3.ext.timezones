@@ -1,0 +1,63 @@
+language: php
+
+php:
+  - 7.2
+  - 7.3
+env:
+  global:
+    - typo3DatabaseHost=localhost typo3DatabaseName=typo3 typo3DatabaseUsername=root typo3DatabasePassword=''
+  matrix:
+    - TYPO3_VERSION=^9
+    - TYPO3_VERSION=^8
+services:
+  - mysql
+script: ./Build/Scripts/runTravisTests.sh -s fulltest
+
+# stages and ordering /w conditions
+stages:
+  - name: static checks
+  - name: test
+    if: branch IN (master, develop) OR branch =~ ^release.*$ OR commit_message =~ force_tests
+  - name: doxygen
+
+matrix:
+  fast_finish: true
+  include:
+    - stage: static checks
+      name: "PHPLint"
+      php: 7.2
+      script: ./Build/Scripts/runTravisTests.sh -s lint
+    - name: "SonarQube"
+      php: 7.2
+      addons:
+        sonarcloud:
+          organization: "thucke"
+      script: sonar-scanner -Dproject.settings=Build/.sonar_project.properties -Dsonar.verbose=true
+    - stage: doxygen
+      name: "Doxygen generation"
+      php: 7.2
+      script: ./Build/Scripts/runTravisDoxygen.sh
+
+# specification of build environment
+dist: bionic
+addons:
+  apt:
+    packages:
+      - parallel
+      - doxygen
+      - graphviz
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/.sonar/cache
+    - .Build/cache
+notifications:
+  email:
+    recipients:
+      - github@thucke.de
+    on_success: change
+    on_failure: change
+
+# Git disable shallow clones
+git:
+  depth: false
