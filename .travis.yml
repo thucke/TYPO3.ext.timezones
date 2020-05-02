@@ -32,7 +32,7 @@ env:
     - typo3DatabaseName=typo3
     - typo3DatabaseUsername=root
     - typo3DatabasePassword=''
-    - TYPO3_PATH_ROOT=$PWD/.Build/public
+    - TYPO3_PATH_ROOT=${TRAVIS_BUILD_DIR}/.Build/Web
 
 services:
   - mysql
