@@ -1,58 +1,20 @@
-language: php
-
-php:
-  - 7.2
-  - 7.3
-  - 7.4
-env:
-  global:
-    - typo3DatabaseHost=localhost typo3DatabaseName=typo3 typo3DatabaseUsername=root typo3DatabasePassword=''
-  matrix:
-    - TYPO3_VERSION=^10
-    - TYPO3_VERSION=^9
-services:
-  - mysql
-script: ./Build/Scripts/runTravisTests.sh -s fulltest
-
-# stages and ordering /w conditions
-stages:
-  - name: static checks
-  - name: test
-    if: branch IN (master, develop) OR branch =~ ^release.*$ OR commit_message =~ force_tests
-  - name: doxygen
-    if: branch IN (master)
-
-matrix:
-  fast_finish: true
-  include:
-    - stage: static checks
-      name: "PHPLint"
-      php: 7.4
-      script: ./Build/Scripts/runTravisTests.sh -s lint
-    - name: "SonarQube"
-      php: 7.4
-      addons:
-        sonarcloud:
-          organization: "thucke"
-      script: sonar-scanner -Dproject.settings=Build/.sonar_project.properties -Dsonar.verbose=true
-    - stage: doxygen
-      name: "Doxygen generation"
-      php: 7.2
-      script: ./Build/Scripts/runTravisDoxygen.sh
-
 # specification of build environment
+os: linux
 dist: bionic
+language: php
 addons:
   apt:
     packages:
       - parallel
       - doxygen
       - graphviz
+
 cache:
   directories:
     - $HOME/.composer/cache
     - $HOME/.sonar/cache
     - .Build/cache
+
 notifications:
   email:
     recipients:
@@ -63,3 +25,91 @@ notifications:
 # Git disable shallow clones
 git:
   depth: false
+
+
+env:
+  global:
+    - typo3DatabaseHost=localhost
+    - typo3DatabaseName=typo3
+    - typo3DatabaseUsername=root
+    - typo3DatabasePassword=''
+    - TYPO3_PATH_ROOT=$PWD/.Build/public
+
+services:
+  - mysql
+
+# stages and ordering /w conditions
+stages:
+  - name: static checks
+  - name: test
+    if: type = push AND branch IN (master, develop) OR branch =~ ^release.*$ OR commit_message =~ force_tests
+  - name: doxygen
+    if: branch IN (master)
+
+jobs:
+  fast_finish: true
+  include:
+    - &tests
+      - stage: test
+        name: "Tests"
+        before_install:
+          - if php -i | grep -v TRAVIS_CMD | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
+        install:
+          - composer require typo3/minimal=${TYPO3_VERSION}
+          - git checkout composer.json
+        script:
+          - >
+            echo;
+            echo "Running unit tests";
+            echo;
+            echo;
+            .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests/Unit/
+          - >
+            echo;
+            echo "Running functional tests";
+            echo;
+            echo;
+            find '.Build/public/typo3conf/ext/testbase/Tests/Functional' -wholename '*Test.php' | \
+              parallel --gnu 'echo; echo "Running functional test suite {}"; .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml --exclude-group destructive {}';
+          - >
+            echo;
+            echo "Running destructive functional tests";
+            echo;
+            echo;
+            rm -Rf .Build/Web/typo3temp/*;
+            .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml --group destructive Tests/Functional/;;
+        php: 7.4
+        env: TYPO3=^10.4
+    - <<: *tests
+      php: 7.4
+      env: TYPO3=^9.5
+    - <<: *tests
+      php: 7.3
+      env: TYPO3=^10.4
+    - <<: *tests
+      php: 7.3
+      env: TYPO3=^9.5
+    - <<: *tests
+      php: 7.2
+      env: TYPO3=^10.4
+    - <<: *tests
+      php: 7.2
+      env: TYPO3=^9.5
+
+    - stage: static checks
+      name: "PHPLint"
+      php: 7.4
+      script:
+        - >
+          find . -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;;
+
+    - name: "SonarQube"
+      php: 7.4
+      addons:
+        sonarcloud:
+          organization: "thucke"
+      script: sonar-scanner -Dproject.settings=Build/.sonar_project.properties -Dsonar.verbose=true
+    - stage: doxygen
+      name: "Doxygen generation"
+      php: 7.2
+      script: ./Build/Scripts/runTravisDoxygen.sh
