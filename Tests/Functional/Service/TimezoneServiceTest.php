@@ -34,6 +34,7 @@ class TimezoneServiceTest extends UnitTestCase
 
     protected function setUp()
     {
+        /** @var TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $objectManager = new ObjectManager();
         $loggingService = $objectManager->get(LoggingService::class);
         $this->subject = new \Thucke\Timezones\Service\TimezoneService($objectManager, $loggingService);
@@ -41,10 +42,10 @@ class TimezoneServiceTest extends UnitTestCase
     }
 
     /**
-     * test
+     * @test
      * @throws \Exception
      */
-    public function timezoneArray_Contains_Berlin()
+    public function timezoneArrayContainsBerlin()
     {
         static::assertArrayHasKey('Europe/Berlin', $this->subject->getTimezoneArray());
     }
@@ -52,7 +53,7 @@ class TimezoneServiceTest extends UnitTestCase
     /**
      * @test
      */
-    public function check_UTC()
+    public function checkUtc()
     {
         static::assertArrayHasKey('UTC', $this->subject->getTimezoneArray());
         //$this->subject->setCurrentTimezone('UTC');
@@ -61,18 +62,18 @@ class TimezoneServiceTest extends UnitTestCase
 
     /**
      * @test
-     * @depends check_UTC
+     * @depends checkUtc
      */
-    public function check__UTC_DST()
+    public function checkUtcDst()
     {
         static::assertFalse($this->subject->isDst());
     }
 
     /**
      * @test
-     * @depends check_UTC
+     * @depends checkUtc
      */
-    public function check_UTC_Offset()
+    public function checkUtcOffset()
     {
         static::assertSame(0, $this->subject->getOffset());
     }
