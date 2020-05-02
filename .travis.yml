@@ -76,7 +76,7 @@ jobs:
             echo;
             echo;
             rm -Rf .Build/Web/typo3temp/*;
-            .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml --group destructive Tests/Functional/;;
+            .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml --group destructive Tests/Functional/;
         php: 7.4
         env: TYPO3_VERSION=^10.4
     - <<: *tests
