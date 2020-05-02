@@ -54,7 +54,7 @@ jobs:
         before_install:
           - if php -i | grep -v TRAVIS_CMD | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
         install:
-          - composer require typo3/minimal=${TYPO3_VERSION}
+          - composer require nimut/typo3-complete=${TYPO3_VERSION}
           - git checkout composer.json
         script:
           - >
@@ -68,7 +68,7 @@ jobs:
             echo "Running functional tests";
             echo;
             echo;
-            find '.Build/public/typo3conf/ext/testbase/Tests/Functional' -wholename '*Test.php' | \
+            find 'Tests/Functional' -wholename '*Test.php' | \
               parallel --gnu 'echo; echo "Running functional test suite {}"; .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml --exclude-group destructive {}';
           - >
             echo;
