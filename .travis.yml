@@ -49,7 +49,7 @@ jobs:
   fast_finish: true
   include:
     - &tests
-      - stage: test
+        stage: test
         name: "Tests"
         before_install:
           - if php -i | grep -v TRAVIS_CMD | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
