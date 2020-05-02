@@ -7,20 +7,20 @@
    :alt: Jetbrains PHPStorm IDE
    :align: top
 
-.. |Latest Stable Version| image:: https://img.shields.io/packagist/v/thucke/th-rating.svg
-   :target: https://packagist.org/packages/thucke/th-rating
+.. |Latest Stable Version| image:: https://img.shields.io/packagist/v/thucke/timezones.svg
+   :target: https://packagist.org/packages/thucke/timezones
    :alt: Latest stable version
 
-.. |License| image:: https://img.shields.io/packagist/l/thucke/th-rating.svg
-   :target: https://packagist.org/packages/thucke/th-rating
+.. |License| image:: https://img.shields.io/packagist/l/thucke/timezones.svg
+   :target: https://packagist.org/packages/thucke/timezones
    :alt: Licence
 
-.. |Downloads| image:: https://img.shields.io/packagist/dt/thucke/th-rating
-   :target: https://packagist.org/packages/thucke/th-rating
+.. |Downloads| image:: https://img.shields.io/packagist/dt/thucke/timezones
+   :target: https://packagist.org/packages/thucke/timezones
    :alt: Packagist downloads
 
-.. |PHP| image:: https://img.shields.io/packagist/php-v/thucke/th-rating.svg
-   :target: https://packagist.org/packages/thucke/th-rating
+.. |PHP| image:: https://img.shields.io/packagist/php-v/thucke/timezones.svg
+   :target: https://packagist.org/packages/thucke/timezones
    :alt: PHP version
 
 .. |Issues| image:: https://img.shields.io/github/issues/thucke/TYPO3.ext.timezones
@@ -40,9 +40,11 @@
 Timezones
 =========
 
+|Latest Stable Version| |License| |Downloads| |PHP| |Issues| |New commits|
+
 Guide to the TYPO3 extension for managing different timezones in frontend.
 
 :Repository:  https://github.com/thucke/TYPO3.ext.timezones
-:Read online: https://docs.typo3.org/p/thucke/th-rating/master/en-us/
+:Read online: https://docs.typo3.org/p/thucke/timezones/master/en-us/
 :Doxygen:     http://thucke.github.io/TYPO3.ext.timezones/
 

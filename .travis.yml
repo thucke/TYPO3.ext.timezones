@@ -3,12 +3,13 @@ language: php
 php:
   - 7.2
   - 7.3
+  - 7.4
 env:
   global:
     - typo3DatabaseHost=localhost typo3DatabaseName=typo3 typo3DatabaseUsername=root typo3DatabasePassword=''
   matrix:
+    - TYPO3_VERSION=^10
     - TYPO3_VERSION=^9
-    - TYPO3_VERSION=^8
 services:
   - mysql
 script: ./Build/Scripts/runTravisTests.sh -s fulltest
@@ -19,16 +20,17 @@ stages:
   - name: test
     if: branch IN (master, develop) OR branch =~ ^release.*$ OR commit_message =~ force_tests
   - name: doxygen
+    if: branch IN (master)
 
 matrix:
   fast_finish: true
   include:
     - stage: static checks
       name: "PHPLint"
-      php: 7.2
+      php: 7.4
       script: ./Build/Scripts/runTravisTests.sh -s lint
     - name: "SonarQube"
-      php: 7.2
+      php: 7.4
       addons:
         sonarcloud:
           organization: "thucke"

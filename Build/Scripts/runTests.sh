@@ -171,7 +171,7 @@ while getopts ":s:d:p:e:xy:huv" OPT; do
 done
 
 # Exit on invalid options
-if [ ${#INVALID_OPTIONS[@]} -ne 0 ]; then
+if [[ ${#INVALID_OPTIONS[@]} -ne 0 ]]; then
     echo "Invalid option(s):" >&2
     for I in "${INVALID_OPTIONS[@]}"; do
         echo "-"${I} >&2
@@ -186,7 +186,7 @@ DOCKER_PHP_IMAGE=`echo "php${PHP_VERSION}" | sed -e 's/\.//'`
 
 # Set $1 to first mass argument, this is the optional test file or test directory to execute
 shift $((OPTIND - 1))
-if [ -n "${1}" ]; then
+if [[ -n "${1}" ]]; then
     TEST_FILE="Web/typo3conf/ext/timezones/${1}"
 else
     case ${TEST_SUITE} in
@@ -202,7 +202,7 @@ else
     esac
 fi
 
-if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
+if [[ ${SCRIPT_VERBOSE} -eq 1 ]]; then
     set -x
 fi
 
@@ -285,7 +285,7 @@ case ${TEST_SUITE} in
         exit 1
 esac
 
-exit $SUITE_EXIT_CODE
+exit ${SUITE_EXIT_CODE}
 
 #convertDeprecationsToExceptions="false"
 
