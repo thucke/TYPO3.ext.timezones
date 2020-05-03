@@ -28,7 +28,7 @@
    :alt: Number of open issues
 
 .. |New commits| image:: https://img.shields.io/github/commits-since/thucke/timezones/latest
-   :target: https://github.com/thucke/TYPO3.ext.timezones/releases
+   :target: https://github.com/thucke/TYPO3.ext.timezones/releases/all
    :alt: GitHub commits since latest release
 
 .. _readme:
