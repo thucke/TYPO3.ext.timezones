@@ -17,17 +17,19 @@
 	],
 	"license" : "GPL-2.0-or-later",
 	"require" : {
-        "php" : ">=7.1.0 <7.4",
-        "typo3/cms-core" : ">=8.7.7 <9.6"
+		"php" : ">=7.2 <7.5",
+		"typo3/cms-core" : ">=8.5 <10",
+		"typo3/cms-extbase" : ">=8.5 <10",
+		"typo3/cms-fluid" : ">=8.5 <10"
 	},
 	"require-dev": {
-		"typo3/cms-about" : ">=8.7.7 <9.6",
-		"typo3/cms-install" : ">=8.7.7 <9.6",
-		"typo3/cms-frontend" : ">=8.7.7 <9.6",
-		"typo3/cms-fluid-styled-content" : ">=8.7.7 <9.6",
+		"typo3/cms-about" : ">=8.5 <10",
+		"typo3/cms-install" : ">=8.5 <10",
+		"typo3/cms-frontend" : ">=8.5 <10",
+		"typo3/cms-fluid-styled-content" : ">=8.5 <10",
 		"roave/security-advisories": "dev-master",
 		"friendsofphp/php-cs-fixer": "^2.0",
-		"nimut/testing-framework": "^1.0 || ^2.0 || ^3.0 || ^4.0",
+		"nimut/testing-framework": "^1.0 || ^2.0 || ^3.0 || ^4.0 || ^5.0",
 		"codeception/codeception": "^2.4"
 	},
 	"autoload" : {

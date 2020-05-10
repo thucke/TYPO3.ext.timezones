@@ -19,11 +19,12 @@ use Thucke\Timezones\Service\TimezoneService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 /**
  * Test case.
  */
-class TimezonesControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class TimezonesControllerTest extends UnitTestCase
 {
     protected $backupGlobalsBlacklist = ['TYPO3_CONF_VARS'];
 

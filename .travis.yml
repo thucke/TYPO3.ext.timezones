@@ -26,14 +26,14 @@ notifications:
 git:
   depth: false
 
-
 env:
   global:
     - typo3DatabaseHost=localhost
     - typo3DatabaseName=typo3
     - typo3DatabaseUsername=root
     - typo3DatabasePassword=''
-    - TYPO3_PATH_ROOT=$PWD/.Build/public
+    - TYPO3_PATH_ROOT=${TRAVIS_BUILD_DIR}/.Build/Web
+
 services:
   - mysql
 
@@ -49,12 +49,12 @@ jobs:
   fast_finish: true
   include:
     - &tests
-      - stage: test
+        stage: test
         name: "Tests"
         before_install:
           - if php -i | grep -v TRAVIS_CMD | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
         install:
-          - composer require typo3/minimal=${TYPO3_VERSION}
+          - composer require nimut/typo3-complete=${TYPO3_VERSION}
           - git checkout composer.json
         script:
           - >
@@ -68,7 +68,7 @@ jobs:
             echo "Running functional tests";
             echo;
             echo;
-            find '.Build/public/typo3conf/ext/testbase/Tests/Functional' -wholename '*Test.php' | \
+            find 'Tests/Functional' -wholename '*Test.php' | \
               parallel --gnu 'echo; echo "Running functional test suite {}"; .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml --exclude-group destructive {}';
           - >
             echo;
@@ -76,24 +76,24 @@ jobs:
             echo;
             echo;
             rm -Rf .Build/Web/typo3temp/*;
-            .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml --group destructive Tests/Functional/;;
-        php: 7.4
-        env: TYPO3=^10.4
+            .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml --group destructive Tests/Functional/;
+        php: 7.2
+        env: TYPO3_VERSION=^9.5
+    - <<: *tests
+      php: 7.3
+      env: TYPO3_VERSION=^9.5
     - <<: *tests
       php: 7.4
-      env: TYPO3=^9.5
-    - <<: *tests
-      php: 7.3
-      env: TYPO3=^10.4
-    - <<: *tests
-      php: 7.3
-      env: TYPO3=^9.5
+      env: TYPO3_VERSION=^9.5
     - <<: *tests
       php: 7.2
-      env: TYPO3=^10.4
+      env: TYPO3_VERSION=^8.5
     - <<: *tests
-      php: 7.2
-      env: TYPO3=^9.5
+      php: 7.3
+      env: TYPO3_VERSION=^8.5
+    - <<: *tests
+      php: 7.4
+      env: TYPO3_VERSION=^8.5
 
     - stage: static checks
       name: "PHPLint"
