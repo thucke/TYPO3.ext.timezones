@@ -16,29 +16,46 @@ namespace Thucke\Timezones\Tests\Unit\Service;
  */
 
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use Thucke\Timezones\Service\LoggingService;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
 /**
  * Test case.
  */
-class TimezoneServiceTest extends UnitTestCase
+class TimezoneServiceTest extends FunctionalTestCase
 {
-    protected $backupGlobalsBlacklist = ['TYPO3_CONF_VARS'];
+    /**
+     * @var string[]
+     */
+    //protected $backupGlobalsBlacklist = ['TYPO3_CONF_VARS'];
+    /**
+     * @var string[]
+     */
+    protected $testExtensionsToLoad = ['typo3conf/ext/timezones'];
+    /**
+     * @var string[]
+     */
+    protected $coreExtensionsToLoad = ['extbase', 'fluid'];
 
     /**
      * @var \Thucke\Timezones\Service\TimezoneService
-     * @inject
      */
     protected $subject;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        /** @var TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
+        parent::setUp();
+
         $objectManager = new ObjectManager();
-        $loggingService = $objectManager->get(LoggingService::class);
+        $configurationManager = $this->createPartialMock(ConfigurationManager::class, ['getConfiguration']);
+        $configurationManager->method('getConfiguration')->willReturn([]);
+
+        $loggingService = $objectManager->get(LoggingService::class, $objectManager, $configurationManager);
         $this->subject = new \Thucke\Timezones\Service\TimezoneService($objectManager, $loggingService);
         $this->subject->initializeObject();
+        $this->subject->setCurrentTimezone('Europe/Berlin');
     }
 
     /**
@@ -47,34 +64,48 @@ class TimezoneServiceTest extends UnitTestCase
      */
     public function timezoneArrayContainsBerlin()
     {
-        static::assertArrayHasKey('Europe/Berlin', $this->subject->getTimezoneArray());
+        $this->assertArrayHasKey('Europe/Berlin', $this->subject->getTimezoneArray());
     }
 
     /**
      * @test
+     * @throws \Exception
      */
     public function checkUtc()
     {
-        static::assertArrayHasKey('UTC', $this->subject->getTimezoneArray());
-        //$this->subject->setCurrentTimezone('UTC');
-        //static::assertSame('UTC', $this->subject->getCurrentTimezone()->getName());
+        $this->assertArrayHasKey('UTC', $this->subject->getTimezoneArray());
+        $oldTz = $this->subject->getCurrentTimezone();
+        $this->subject->setCurrentTimezone('UTC');
+        $this->assertSame('UTC', $this->subject->getCurrentTimezone()->getName());
+        $this->subject->setCurrentTimezone($oldTz->getName());
     }
 
     /**
      * @test
-     * @depends checkUtc
+     * @throws \Exception
      */
-    public function checkUtcDst()
+    public function checkDst()
     {
-        static::assertFalse($this->subject->isDst());
+        $this->subject->setCurrentTimezone('Europe/Berlin');
+        $this->assertFalse($this->subject->isDst('2020-01-01'));
+        $this->assertTrue($this->subject->isDst('2020-07-01'));
     }
 
     /**
      * @test
-     * @depends checkUtc
      */
-    public function checkUtcOffset()
+    public function checkTimezoneString()
     {
-        static::assertSame(0, $this->subject->getOffset());
+        // consider the Germany may have GMT+0100 or GMT+0200 due to DST also allowed is e.g. GMT+01:00
+        $this->assertRegExp('/GMT\+0[1|2]:?00/', $this->subject->getIcuTimezoneString());
+    }
+
+    /**
+     * @test
+     */
+    public function checkTimezoneOffset()
+    {
+        // consider the Germany may have GMT+0100 or GMT+0200 due to DST
+        $this->assertRegExp('/[3600|7200]/', $this->subject->getOffsetInSeconds());
     }
 }

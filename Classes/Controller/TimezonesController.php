@@ -3,7 +3,9 @@
 namespace Thucke\Timezones\Controller;
 
 use Thucke\Timezones\Service\ExtensionHelperService;
+use TYPO3\CMS\Core\Log\LogLevel;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /***************************************************************
  *  Copyright notice
@@ -102,18 +104,22 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function initializeAction(): void
     {
         //instantiate the logger
-        $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ObjectManager::class)->get(ExtensionHelperService::class)->getLogger(__CLASS__);
-        $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry initializeAction');
+        $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ObjectManager::class)
+            ->get(ExtensionHelperService::class)
+            ->getLogger(__CLASS__);
+        $this->logger->log(LogLevel::DEBUG, 'Entry initializeAction');
 
         $this->checkIntlModule();
 
-        $this->prefixId = strtolower('tx_'.$this->request->getControllerExtensionName().'_'.$this->request->getPluginName());
+        $this->prefixId = strtolower(
+            'tx_'.$this->request->getControllerExtensionName().'_'.$this->request->getPluginName()
+        );
 
         //set expire time to 10 years in the future
         $this->cookieLifetime = (new \DateTime())->add(new \DateInterval('P10Y'))->getTimestamp();
 
         $this->timezoneService->setCurrentTimezone($this->cookieService->getCookie($this->prefixId));
-        $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit initializeAction');
+        $this->logger->log(LogLevel::DEBUG, 'Exit initializeAction');
     }
 
     /**
@@ -125,7 +131,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function indexAction()
     {
-        $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry indexAction');
+        $this->logger->log(LogLevel::DEBUG, 'Entry indexAction');
         $this->view->assign('tz_name', $this->timezoneService->getCurrentTimezoneAbbreviation());
         $pluginPage = abs((int) $this->settings['pluginPage']);
         //only generate link if a uid is configured
@@ -137,9 +143,13 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                         ->buildFrontendUri();
             $this->view->assign('change_url', $selfUri);
         } else {
-            $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::WARNING, 'No pluginPage set - skipping hyperlink generation', ['errorCode' => 1507388375]);
+            $this->logger->log(
+                LogLevel::WARNING,
+                'No pluginPage set - skipping hyperlink generation',
+                ['errorCode' => 1507388375]
+            );
         }
-        $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit indexAction');
+        $this->logger->log(LogLevel::DEBUG, 'Exit indexAction');
     }
 
     /**
@@ -151,11 +161,15 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function showAction()
     {
-        $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry showAction');
-        $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Timezone', [$this->timezoneService->getOffset(), date('Y-m-d H:i')]);
+        $this->logger->log(LogLevel::DEBUG, 'Entry showAction');
+        $this->logger->log(
+            LogLevel::DEBUG,
+            'Timezone',
+            [$this->timezoneService->getOffsetInSeconds(), date('Y-m-d H:i')]
+        );
         $this->view->assign('tz_name', $this->timezoneService->getCurrentTimezoneAbbreviation());
         $this->view->assign('curdatetime', $this->formatDateTime(time()));
-        $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit showAction');
+        $this->logger->log(LogLevel::DEBUG, 'Exit showAction');
     }
 
     /**
@@ -167,7 +181,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function selectAction()
     {
-        $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry selectAction');
+        $this->logger->log(LogLevel::DEBUG, 'Entry selectAction');
         $this->view->assign('selector', $this->timezoneService->getTimezoneArray());
         $this->view->assign('selected', $this->timezoneService->getCurrentTimezone()->getName());
         //generate URI to this page
@@ -176,7 +190,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                     ->setCreateAbsoluteUri(true)
                     ->buildFrontendUri();
         $this->view->assign('action', $selfUri);
-        $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit selectAction');
+        $this->logger->log(LogLevel::DEBUG, 'Exit selectAction');
     }
 
     /**
@@ -193,7 +207,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function tzsetAction($timezone = null): void
     {
-        $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Entry tzsetAction', ['Timezone' => $timezone]);
+        $this->logger->log(LogLevel::DEBUG, 'Entry tzsetAction', ['Timezone' => $timezone]);
 
         $this->timezoneService->setCurrentTimezone($timezone);
         $timezone = $this->timezoneService->getCurrentTimezone()->getName();
@@ -202,13 +216,15 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $referrer = $this->request->getInternalArgument('__referrer');
 
         /* @noinspection PhpIllegalStringOffsetInspection */
-        $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::DEBUG, 'Exit tzsetAction - forwarding request',
-                [
-                        'action'     => $referrer['@action'],
-                        'controller' => $referrer['@controller'],
-                        'extension'  => $referrer['@extension'],
-                        'arguments'  => null,
-                ]
+        $this->logger->log(
+            LogLevel::DEBUG,
+            'Exit tzsetAction - forwarding request',
+            [
+                'action'     => $referrer['@action'],
+                'controller' => $referrer['@controller'],
+                'extension'  => $referrer['@extension'],
+                'arguments'  => null,
+            ]
         );
         $this->controllerContext->getFlashMessageQueue()->clear();
         $this->redirectToUri($_SERVER['HTTP_REFERER']);
@@ -225,7 +241,8 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     {
         if (!extension_loaded('intl')) {
             throw new \Thucke\Timezones\Exception\ModuleNotLoadedException(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('error.phpModuleIntlNotLoaded', 'Timezones'), 1508270706
+                LocalizationUtility::translate('error.phpModuleIntlNotLoaded', 'Timezones'),
+                1508270706
             );
         }
     }
