@@ -77,23 +77,23 @@ jobs:
             echo;
             rm -Rf .Build/Web/typo3temp/*;
             .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml --group destructive Tests/Functional/;
-        php: 7.4
-        env: TYPO3_VERSION=^10.4
+        php: 7.2
+        env: TYPO3_VERSION=^9.5
+    - <<: *tests
+      php: 7.3
+      env: TYPO3_VERSION=^9.5
     - <<: *tests
       php: 7.4
       env: TYPO3_VERSION=^9.5
     - <<: *tests
-      php: 7.3
-      env: TYPO3_VERSION=^10.4
-    - <<: *tests
-      php: 7.3
-      env: TYPO3_VERSION=^9.5
-    - <<: *tests
       php: 7.2
-      env: TYPO3_VERSION=^10.4
+      env: TYPO3_VERSION=^8.5
     - <<: *tests
-      php: 7.2
-      env: TYPO3_VERSION=^9.5
+      php: 7.3
+      env: TYPO3_VERSION=^8.5
+    - <<: *tests
+      php: 7.4
+      env: TYPO3_VERSION=^8.5
 
     - stage: static checks
       name: "PHPLint"
