@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the package thucke/timezones.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Thucke\Timezones\Tests\Unit\Service;
 
 /*
@@ -15,11 +22,10 @@ namespace Thucke\Timezones\Tests\Unit\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use Thucke\Timezones\Service\LoggingService;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Test case.

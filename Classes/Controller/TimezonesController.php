@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the package thucke/timezones.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Thucke\Timezones\Controller;
 
 use Thucke\Timezones\Service\ExtensionHelperService;
@@ -85,8 +92,6 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 
     /**
      * @param \Thucke\Timezones\Service\ExtensionHelperService $extensionHelperService
-     *
-     * @return void
      */
     public function injectExtensionHelperService(ExtensionHelperService $extensionHelperService): void
     {
@@ -98,8 +103,6 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      *
      * @throws \Thucke\Timezones\Exception\ModuleNotLoadedException
      * @throws \Exception
-     *
-     * @return void
      */
     public function initializeAction(): void
     {
@@ -112,7 +115,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->checkIntlModule();
 
         $this->prefixId = strtolower(
-            'tx_'.$this->request->getControllerExtensionName().'_'.$this->request->getPluginName()
+            'tx_' . $this->request->getControllerExtensionName() . '_' . $this->request->getPluginName()
         );
 
         //set expire time to 10 years in the future
@@ -133,7 +136,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     {
         $this->logger->log(LogLevel::DEBUG, 'Entry indexAction');
         $this->view->assign('tz_name', $this->timezoneService->getCurrentTimezoneAbbreviation());
-        $pluginPage = abs((int) $this->settings['pluginPage']);
+        $pluginPage = abs((int)$this->settings['pluginPage']);
         //only generate link if a uid is configured
         if ($pluginPage > 0) {
             //generate URI to this page
@@ -202,7 +205,6 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      *
-     * @return void
      * @ignorevalidation $timezone
      */
     public function tzsetAction($timezone = null): void
@@ -234,8 +236,6 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * Checks if the required PHP module intl is loaded.
      *
      * @throws \Thucke\Timezones\Exception\ModuleNotLoadedException if php module intl is not loaded
-     *
-     * @return void
      */
     private function checkIntlModule(): void
     {

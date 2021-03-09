@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the package thucke/timezones.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Thucke\Timezones\Service;
 
 use TYPO3\CMS\Core\Log\Logger;
@@ -56,8 +63,6 @@ class AbstractExtensionService implements SingletonInterface
      *
      * @param ObjectManagerInterface $objectManager
      * @param LoggingService $loggingService
-     *
-     * @return void
      */
     public function __construct(ObjectManagerInterface $objectManager, LoggingService $loggingService)
     {

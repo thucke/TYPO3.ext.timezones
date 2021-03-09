@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the package thucke/timezones.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Thucke\Timezones\Service;
 
 use DateTime;
@@ -81,8 +88,6 @@ class TimezoneService extends AbstractExtensionService
      * Constructor.
      *
      * @throws Exception
-     *
-     * @return void
      */
     public function initializeObject(): void
     {
@@ -107,8 +112,6 @@ class TimezoneService extends AbstractExtensionService
      * Sets the new timezone identifier.
      *
      * @param string|DateTimeZone $timezone
-     *
-     * @return void
      */
     public function setCurrentTimezone($timezone = null): void
     {
@@ -190,8 +193,6 @@ class TimezoneService extends AbstractExtensionService
      * Set timezoneArray.
      *
      * @throws Exception
-     *
-     * @return void
      */
     public function setTimezoneArray(): void
     {
@@ -202,10 +203,10 @@ class TimezoneService extends AbstractExtensionService
             //$abbreviation = $this->intlDateFormatter::formatObject($dateTime,'zzzz', $this->locale);
             $hours = floor($dateTimeZone->getOffset($dateTime) / 3600);
             $mins = floor(($dateTimeZone->getOffset($dateTime) - ($hours * 3600)) / 60);
-            $hours = 'GMT'.($hours < 0 ? $hours : '+'.$hours);
-            $mins = ($mins > 0 ? $mins : '0'.$mins);
+            $hours = 'GMT' . ($hours < 0 ? $hours : '+' . $hours);
+            $mins = ($mins > 0 ? $mins : '0' . $mins);
             $text = str_replace('_', ' ', $timezone_identifier);
-            $this->timezoneArray[$timezone_identifier] = $text.' ('.$hours.':'.$mins.')';
+            $this->timezoneArray[$timezone_identifier] = $text . ' (' . $hours . ':' . $mins . ')';
         }
     }
 

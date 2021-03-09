@@ -1,11 +1,18 @@
 <?php
 
+/*
+ * This file is part of the package thucke/timezones.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Thucke\Timezones\Service;
 
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
-use TYPO3\CMS\Core\Log\Writer\FileWriter;
 use TYPO3\CMS\Core\Log\Writer\DatabaseWriter;
+use TYPO3\CMS\Core\Log\Writer\FileWriter;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
@@ -56,12 +63,11 @@ class LoggingService
      *
      * @param ObjectManagerInterface               $objectManager
      * @param ConfigurationManagerInterface $configurationManager,
-     *
-     * @return void
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        ConfigurationManagerInterface $configurationManager)
+        ConfigurationManagerInterface $configurationManager
+    )
     {
         $this->objectManager = $objectManager;
         $this->configurationManager = $configurationManager;
@@ -83,11 +89,11 @@ class LoggingService
             foreach ($settings['logging'] as $logLevel => $logConfig) {
                 $levelUppercase = strtoupper($logLevel);
                 if (!empty($logConfig['file'])) {
-                    $writerConfiguration[constant('\TYPO3\CMS\Core\Log\LogLevel::'.$levelUppercase)][FileWriter::class] =
+                    $writerConfiguration[constant('\TYPO3\CMS\Core\Log\LogLevel::' . $levelUppercase)][FileWriter::class] =
                         ['logFile' => $logConfig['file']];
                 }
                 if (!empty($logConfig['database'])) {
-                    $writerConfiguration[constant('\TYPO3\CMS\Core\Log\LogLevel::'.$levelUppercase)][DatabaseWriter::class] =
+                    $writerConfiguration[constant('\TYPO3\CMS\Core\Log\LogLevel::' . $levelUppercase)][DatabaseWriter::class] =
                         ['table' => $logConfig['table']];
                 }
             }
