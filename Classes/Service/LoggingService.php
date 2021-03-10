@@ -67,8 +67,7 @@ class LoggingService
     public function __construct(
         ObjectManagerInterface $objectManager,
         ConfigurationManagerInterface $configurationManager
-    )
-    {
+    ) {
         $this->objectManager = $objectManager;
         $this->configurationManager = $configurationManager;
     }
