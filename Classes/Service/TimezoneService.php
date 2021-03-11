@@ -1,4 +1,12 @@
 <?php
+declare(strict_types = 1);
+
+/*
+ * This file is part of the package thucke/timezones.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 namespace Thucke\Timezones\Service;
 
@@ -11,29 +19,6 @@ use TYPO3\CMS\Core\Log\LogLevel;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-
-/***************************************************************
-*  Copyright notice
-*
-*  (c) 2013 Thomas Hucke <thucke@web.de>
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General protected License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General protected License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General protected License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
 
 /**
  * Service for setting cookies like Typo3 does extension=php_intl.dll.
@@ -81,8 +66,6 @@ class TimezoneService extends AbstractExtensionService
      * Constructor.
      *
      * @throws Exception
-     *
-     * @return void
      */
     public function initializeObject(): void
     {
@@ -107,14 +90,12 @@ class TimezoneService extends AbstractExtensionService
      * Sets the new timezone identifier.
      *
      * @param string|DateTimeZone $timezone
-     *
-     * @return void
      */
     public function setCurrentTimezone($timezone = null): void
     {
         $this->logger->log(LogLevel::DEBUG, 'Entry setCurrentTimezone', ['timezoneName' => $timezone]);
         if (!$timezone) {
-            $timezone = $this->getCurrentTimezone();
+            $timezone = $this->getCurrentTimezone()->getName();
         } elseif ($timezone instanceof DateTimeZone) {
             $timezone = $timezone->getName();
         }
@@ -133,7 +114,7 @@ class TimezoneService extends AbstractExtensionService
      */
     public function getCurrentTimezone(): DateTimeZone
     {
-        if (!$this->currentTimezone) {
+        if (!empty($this->currentTimezone)) {
             $this->setCurrentTimezone(date_default_timezone_get());
         }
 
@@ -190,8 +171,6 @@ class TimezoneService extends AbstractExtensionService
      * Set timezoneArray.
      *
      * @throws Exception
-     *
-     * @return void
      */
     public function setTimezoneArray(): void
     {
@@ -202,10 +181,10 @@ class TimezoneService extends AbstractExtensionService
             //$abbreviation = $this->intlDateFormatter::formatObject($dateTime,'zzzz', $this->locale);
             $hours = floor($dateTimeZone->getOffset($dateTime) / 3600);
             $mins = floor(($dateTimeZone->getOffset($dateTime) - ($hours * 3600)) / 60);
-            $hours = 'GMT'.($hours < 0 ? $hours : '+'.$hours);
-            $mins = ($mins > 0 ? $mins : '0'.$mins);
+            $hours = 'GMT' . ($hours < 0 ? $hours : '+' . $hours);
+            $mins = ($mins > 0 ? $mins : '0' . $mins);
             $text = str_replace('_', ' ', $timezone_identifier);
-            $this->timezoneArray[$timezone_identifier] = $text.' ('.$hours.':'.$mins.')';
+            $this->timezoneArray[$timezone_identifier] = $text . ' (' . $hours . ':' . $mins . ')';
         }
     }
 

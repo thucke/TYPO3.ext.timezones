@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the package thucke/timezones.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 if (!defined('TYPO3_MODE')) {
@@ -16,9 +23,11 @@ ExtensionUtility::configurePlugin(
     'Pi1',		// A unique name of the plugin in UpperCamelCase
     [		// An array holding the controller-action-combinations that are accessible
         'Timezones' 			=> 'index,show,select,tzset',	// The first controller and its first action will be the default
+        \Thucke\Timezones\Controller\TimezonesController::class => 'index,show,select,tzset',
     ],
     [		// An array of non-cachable controller-action-combinations (they must already be enabled)
         'Timezones' 			=> 'show,select',
+        \Thucke\Timezones\Controller\TimezonesController::class => 'show,select'
         ]
     //\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );

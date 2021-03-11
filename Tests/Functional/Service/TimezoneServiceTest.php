@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the package thucke/timezones.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace Thucke\Timezones\Tests\Unit\Service;
 
 /*
@@ -15,11 +22,12 @@ namespace Thucke\Timezones\Tests\Unit\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Nimut\TestingFramework\TestCase\UnitTestCase;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use Thucke\Timezones\Service\LoggingService;
+use TYPO3\CMS\Core\Core\Bootstrap;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * Test case.
@@ -47,10 +55,22 @@ class TimezoneServiceTest extends FunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $extAbsPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('timezones');
 
-        $objectManager = new ObjectManager();
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $configurationManager = $this->createPartialMock(ConfigurationManager::class, ['getConfiguration']);
         $configurationManager->method('getConfiguration')->willReturn([]);
+
+        $this->importDataSet($extAbsPath . '/Tests/Functional/Fixtures/Database/pages.xml');
+        $this->setUpFrontendRootPage(
+            1,
+            [
+                'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
+                $extAbsPath . '/Configuration/TypoScript/setup.typoscript',
+                $extAbsPath . '/Tests/Functional/Fixtures/Frontend/Basic.typoscript',
+            ]
+        );
+        Bootstrap::initializeLanguageObject();
 
         $loggingService = $objectManager->get(LoggingService::class, $objectManager, $configurationManager);
         $this->subject = new \Thucke\Timezones\Service\TimezoneService($objectManager, $loggingService);

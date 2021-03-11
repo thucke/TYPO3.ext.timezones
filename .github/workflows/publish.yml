@@ -1,0 +1,98 @@
+
+name: Publish new version
+
+#run automatically when a new release is done
+on:
+  release:
+    types: [released]
+
+jobs:
+  publish:
+    name: Publish new version to TER
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-20.04
+    env:
+      TYPO3_EXTENSION_KEY: ${{ secrets.TYPO3_EXTENSION_KEY }}
+      TYPO3_API_TOKEN: ${{ secrets.TYPO3_API_TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get version
+        id: get-version
+        run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
+
+      - name: Fetch release details from ${{ github.repository }}
+        id: get_latest_release
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /repos/${{ github.repository }}/releases/tags/${{ steps.get-version.outputs.version }}
+          owner: dummy
+          repo: ${{ github.event.repository.name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      #see: https://trstringer.com/github-actions-multiline-strings/
+      #substituting the %, \n, and \r characters
+      - name: Store release body
+        id: set-release-body
+        run: |
+          RELEASE_BODY="${RELEASE_BODY//'%'/'%25'}"
+          RELEASE_BODY="${RELEASE_BODY//$'\n'/'%0A'}"
+          RELEASE_BODY="${RELEASE_BODY//$'\r'/'%0D'}"
+          echo ::set-output name=release_body::"$RELEASE_BODY"
+        env:
+          RELEASE_BODY: ${{ fromJson(steps.get_latest_release.outputs.data).body }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          extensions: intl, mbstring, json, zip, curl
+
+      - name: Install tailor
+        run: composer global require typo3/tailor --prefer-dist --no-progress --no-suggest
+
+      - name: Set extension version
+        run: php ~/.composer/vendor/bin/tailor set-version ${{ steps.get-version.outputs.version }}
+
+      - name: Publish to TER
+        run: php ~/.composer/vendor/bin/tailor ter:publish --comment "${{ steps.get-comment.outputs.comment }}" ${{ steps.get-version.outputs.version }}
+
+  doxygen:
+    name: Update Doxygen content on Github pages
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check statuses of Github
+      - name: Check GitHub Pages status
+        uses: crazy-max/ghaction-github-status@v2
+        with:
+          pages_threshold: major_outage
+
+      - name: Checkout Code
+        if: success()
+        uses: actions/checkout@v2
+        with:
+          path: source
+
+      - name: Create Doxygen target directory
+        run: mkdir -p ${GITHUB_WORKSPACE}/target
+
+      - name: Generate Doxygen
+        if: success()
+        uses: mattnotmitt/doxygen-action@v1
+        with:
+          working-directory: /github/workspace/target
+          doxyfile-path: /github/workspace/source/Build/.doxygen
+
+      - name: Deploy Doxygen
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: target/html
+          keep_files: false
+          commit_message: Update Doxygen for new release
