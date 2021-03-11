@@ -54,10 +54,20 @@ class TimezoneServiceTest extends FunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $extAbsPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('timezones');
 
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $configurationManager = $this->createPartialMock(ConfigurationManager::class, ['getConfiguration']);
         $configurationManager->method('getConfiguration')->willReturn([]);
+
+        $this->setUpFrontendRootPage(
+            1,
+            [
+                'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript',
+                $extAbsPath . '/Configuration/TypoScript/setup.typoscript',
+                $extAbsPath . '/Tests/Functional/Fixtures/Frontend/Basic.typoscript',
+            ]
+        );
 
         $loggingService = $objectManager->get(LoggingService::class, $objectManager, $configurationManager);
         $this->subject = new \Thucke\Timezones\Service\TimezoneService($objectManager, $loggingService);
