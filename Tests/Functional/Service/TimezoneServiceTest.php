@@ -23,6 +23,7 @@ namespace Thucke\Timezones\Tests\Unit\Service;
  */
 
 use Thucke\Timezones\Service\LoggingService;
+use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -69,6 +70,7 @@ class TimezoneServiceTest extends FunctionalTestCase
                 $extAbsPath . '/Tests/Functional/Fixtures/Frontend/Basic.typoscript',
             ]
         );
+        Bootstrap::initializeLanguageObject();
 
         $loggingService = $objectManager->get(LoggingService::class, $objectManager, $configurationManager);
         $this->subject = new \Thucke\Timezones\Service\TimezoneService($objectManager, $loggingService);
