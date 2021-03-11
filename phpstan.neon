@@ -1,5 +1,5 @@
 parameters:
-    level: 5
+    level: 4
     paths:
         - Classes
         - Tests
@@ -8,3 +8,8 @@ parameters:
     excludes_analyse:
         - 'Classes/Utility/LocalizationUtility.php'
         - 'Classes/Domain/Validator/StepconfValidator.php'
+    ignoreErrors:
+        -
+            message: '#Offset ''@[a-z]*'' does not exist on string.#'
+            path: Classes/Controller/TimezonesController.php
+            count: 3

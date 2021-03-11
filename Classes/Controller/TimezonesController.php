@@ -14,29 +14,6 @@ use TYPO3\CMS\Core\Log\LogLevel;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-/***************************************************************
- *  Copyright notice
- *
- *  (c) 2017 Thomas Hucke <thucke@web.de>
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
-
 /**
  * The Timezones Controller.
  *
@@ -129,8 +106,6 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * Index action for this controller.
      *
      * @throws \Exception
-     *
-     * @return string The rendered view
      */
     public function indexAction()
     {
@@ -159,8 +134,6 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * Displays the vote of the current user.
      *
      * @throws \Exception
-     *
-     * @return string The rendered voting
      */
     public function showAction()
     {
@@ -179,8 +152,6 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * Displays the vote of the current user.
      *
      * @throws \Exception
-     *
-     * @return string The rendered voting
      */
     public function selectAction()
     {
@@ -217,7 +188,6 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 
         $referrer = $this->request->getInternalArgument('__referrer');
 
-        /* @noinspection PhpIllegalStringOffsetInspection */
         $this->logger->log(
             LogLevel::DEBUG,
             'Exit tzsetAction - forwarding request',
@@ -252,20 +222,19 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      *
      * @link http://www.php.net/manual/en/intldateformatter.format.php
      *
-     * @param $tstamp
+     * @param int|\DateTimeInterface$tstamp
      *
      * @throws \Exception
      *
      * @return string The formatted string or, if an error occurred, false.
      */
-    private function formatDateTime($tstamp)
+    private function formatDateTime($tstamp): string
     {
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('timezones')) {
             $rc = \Thucke\Timezones\Utility\TimezonesUtility::convertToTimezone($tstamp);
         } else {
             $rc = date(DATE_RFC850, $tstamp);
         }
-
         return $rc;
     }
 }
