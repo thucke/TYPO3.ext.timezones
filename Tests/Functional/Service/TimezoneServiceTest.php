@@ -23,6 +23,7 @@ namespace Thucke\Timezones\Tests\Unit\Service;
  */
 
 use Thucke\Timezones\Service\LoggingService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
@@ -54,7 +55,7 @@ class TimezoneServiceTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $objectManager = new ObjectManager();
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $configurationManager = $this->createPartialMock(ConfigurationManager::class, ['getConfiguration']);
         $configurationManager->method('getConfiguration')->willReturn([]);
 
