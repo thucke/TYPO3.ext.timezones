@@ -221,10 +221,8 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      *
      * @link http://www.php.net/manual/en/intldateformatter.format.php
      *
-     * @param int|\DateTimeInterface$tstamp
-     *
+     * @param int|\DateTimeInterface $tstamp
      * @throws \Exception
-     *
      * @return string The formatted string or, if an error occurred, false.
      */
     private function formatDateTime($tstamp): string

@@ -95,7 +95,7 @@ class TimezoneService extends AbstractExtensionService
     {
         $this->logger->log(LogLevel::DEBUG, 'Entry setCurrentTimezone', ['timezoneName' => $timezone]);
         if (!$timezone) {
-            $timezone = $this->getCurrentTimezone();
+            $timezone = $this->getCurrentTimezone()->getName();
         } elseif ($timezone instanceof DateTimeZone) {
             $timezone = $timezone->getName();
         }
