@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 /*
  * This file is part of the package thucke/timezones.
@@ -10,8 +11,8 @@
 namespace Thucke\Timezones\Service;
 
 use TYPO3\CMS\Core\Exception;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Log\LogLevel;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Service for setting cookies like Typo3 does.

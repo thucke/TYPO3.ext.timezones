@@ -11,6 +11,7 @@ namespace Thucke\Timezones\Controller;
 
 use Thucke\Timezones\Service\ExtensionHelperService;
 use TYPO3\CMS\Core\Log\LogLevel;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -171,12 +172,10 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * Sets the given timezone.
      *
      * @param string $timezone
-     *
+     * @Extbase\IgnoreValidation("timezone")
      * @throws \TYPO3\CMS\Core\Exception
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
-     *
-     * @ignorevalidation $timezone
      */
     public function tzsetAction($timezone = null): void
     {
