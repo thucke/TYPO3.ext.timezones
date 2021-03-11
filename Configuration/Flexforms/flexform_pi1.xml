@@ -15,6 +15,7 @@
 							<label>LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.general_actions</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items>
 									<numIndex index="0">
 										 <numIndex index="0">LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.general_actions_1</numIndex>

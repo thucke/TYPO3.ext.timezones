@@ -133,6 +133,6 @@
         "typo3/tailor": "^1.3"
     },
 	"replace" : {
-		"thucke/timezones" : "self.version"
+		"typo3-ter/timezones" : "self.version"
 	}
 }
