@@ -60,6 +60,7 @@ class TimezoneServiceTest extends FunctionalTestCase
         $configurationManager = $this->createPartialMock(ConfigurationManager::class, ['getConfiguration']);
         $configurationManager->method('getConfiguration')->willReturn([]);
 
+        $this->importDataSet($extAbsPath . '/Tests/Functional/Fixtures/Database/pages.xml');
         $this->setUpFrontendRootPage(
             1,
             [
