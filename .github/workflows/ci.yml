@@ -6,24 +6,7 @@ jobs:
   build:
 
     runs-on: ubuntu-18.04
-    services:
-      # mysql-service Label used to access the service container
-      mysql-service:
-        # Docker Hub image (also with version)
-        image: mysql:5.7
-        env:
-          ## Accessing to Github secrets, where you can store your configuration
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: t3func
-        ## map the "external" 33306 port with the "internal" 3306
-        ports:
-          - 33306:3306
-        # Set health checks to wait until mysql database has started (it takes some seconds to start)
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
+
     strategy:
       fail-fast: false
       matrix:
@@ -41,6 +24,9 @@ jobs:
             php: '7.3'
 
     steps:
+      - name: Start database server
+        run: sudo /etc/init.d/mysql start
+
       - name: Checkout Code
         uses: actions/checkout@v2
 
@@ -82,9 +68,8 @@ jobs:
       - name: Functional Tests without coverage
         run: composer thucke:test:php:functional
         env:
-          typo3DatabaseHost: mysql-service
+          typo3DatabaseHost: 127.0.0.1
           typo3DatabaseName: t3func
           typo3DatabasePassword: root
           typo3DatabaseUsername: root
-          typo3DatabasePort: 33306
           TYPO3_CONEXT: Development
