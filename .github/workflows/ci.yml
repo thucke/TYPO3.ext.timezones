@@ -82,7 +82,7 @@ jobs:
       - name: Functional Tests without coverage
         run: composer thucke:test:php:functional
         env:
-          typo3DatabaseHost: mysql
+          typo3DatabaseHost: mysql-service
           typo3DatabaseName: t3func
           typo3DatabasePassword: root
           typo3DatabaseUsername: root
