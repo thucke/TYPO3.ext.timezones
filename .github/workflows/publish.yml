@@ -5,6 +5,7 @@ name: Publish new version
 on:
   release:
     types: [released]
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -58,7 +59,7 @@ jobs:
         run: php ~/.composer/vendor/bin/tailor set-version ${{ steps.get-version.outputs.version }}
 
       - name: Publish to TER
-        run: php ~/.composer/vendor/bin/tailor ter:publish --comment "${{ steps.get-comment.outputs.comment }}" ${{ steps.get-version.outputs.version }}
+        run: php ~/.composer/vendor/bin/tailor ter:publish --comment "${{ steps.set-release-body.outputs.release_body}}" ${{ steps.get-version.outputs.version }}
 
   doxygen:
     name: Update Doxygen content on Github pages
