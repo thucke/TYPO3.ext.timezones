@@ -1,18 +1,17 @@
 <?php
-/***************************************************************
- * Extension Manager/Repository config file for ext "timezones".
+
+/*
+ * This file is part of the package thucke/timezones.
  *
- * Auto generated 18-03-2014 18:44
- *
- * Manual updates:
- * Only the data in the array - everything else is removed by next
- * writing. "version" and "dependencies" must not be touched!
- ***************************************************************/
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 $EM_CONF[$_EXTKEY] = [
     'title'            => 'Timezones',
     'description'      => 'Manages timezones and datetime conversion in your website',
     'category'         => 'plugin',
-    'version'          => '2.2.1',
+    'version'          => '3.0.0',
     'state'            => 'stable',
     'uploadfolder'     => false,
     'createDirs'       => '',
@@ -22,8 +21,8 @@ $EM_CONF[$_EXTKEY] = [
     'author_company'   => '',
     'constraints'      => [
         'depends' => [
-            'php'   => '7.1.0-7.3.99',
-            'typo3' => '8.7.7-9.5.99',
+            'php' => '7.3.0-7.4.99',
+            'typo3' => '9.5.0-10.4.99'
         ],
         'conflicts' => [],
         'suggests'  => [],
