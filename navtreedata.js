@@ -47,7 +47,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-""
+"AbstractExtensionService_8php.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
