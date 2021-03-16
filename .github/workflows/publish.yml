@@ -6,7 +6,7 @@ on:
   release:
     types: [released]
   workflow_dispatch:
-  
+
 jobs:
   publish:
     name: Publish new version to TER
@@ -23,7 +23,7 @@ jobs:
       - name: Get version
         id: get-version
         run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
-          
+
       - name: Fetch release details from ${{ github.repository }}
         id: get_latest_release
         uses: octokit/request-action@v2.x
@@ -33,6 +33,7 @@ jobs:
           repo: ${{ github.event.repository.name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       #see: https://trstringer.com/github-actions-multiline-strings/
       #substituting the %, \n, and \r characters
       - name: Store release body
