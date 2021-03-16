@@ -5,7 +5,8 @@ name: Publish new version
 on:
   release:
     types: [released]
-
+  workflow_dispatch:
+  
 jobs:
   publish:
     name: Publish new version to TER
