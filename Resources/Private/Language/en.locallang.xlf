@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="EXT:timezones/Resources/Private/Language/locallang.xlf" product-name="timezones" target-language="en">
+    <header/>
+    <body>
+      <trans-unit id="flexform.sheet_general" xml:space="preserve">
+				<source>General</source>
+			<target state="needs-translation">General</target></trans-unit>
+      <trans-unit id="flexform.general_actions" xml:space="preserve">
+				<source>Plugin action</source>
+			<target state="needs-translation">Plugin action</target></trans-unit>
+      <trans-unit id="flexform.general_actions_1" xml:space="preserve">
+				<source>Index</source>
+			<target state="needs-translation">Index</target></trans-unit>
+      <trans-unit id="flexform.general_actions_2" xml:space="preserve">
+				<source>Show</source>
+			<target state="needs-translation">Show</target></trans-unit>
+      <trans-unit id="flexform.general_actions_3" xml:space="preserve">
+				<source>Select</source>
+			<target state="needs-translation">Select</target></trans-unit>
+      <trans-unit id="flexform.sheet_paths" xml:space="preserve">
+				<source>Paths</source>
+			<target state="needs-translation">Paths</target></trans-unit>
+      <trans-unit id="flexform.paths_templateRootPath" xml:space="preserve">
+				<source>Template root path</source>
+			<target state="needs-translation">Template root path</target></trans-unit>
+      <trans-unit id="flexform.paths_partialRootPath" xml:space="preserve">
+				<source>Partial root path</source>
+			<target state="needs-translation">Partial root path</target></trans-unit>
+      <trans-unit id="flexform.paths_layoutRootPath" xml:space="preserve">
+				<source>Layout root path</source>
+			<target state="needs-translation">Layout root path</target></trans-unit>
+      <trans-unit id="form_label" xml:space="preserve">
+				<source>Your current timezone is set to:</source>
+			<target state="needs-translation">Your current timezone is set to:</target></trans-unit>
+      <trans-unit id="select_label" xml:space="preserve">
+				<source>Please select:</source>
+			<target state="needs-translation">Please select:</target></trans-unit>
+      <trans-unit id="submit" xml:space="preserve">
+				<source>Set Timezone</source>
+			<target state="needs-translation">Set Timezone</target></trans-unit>
+      <trans-unit id="curdate_label" xml:space="preserve">
+				<source>Current time:</source>
+			<target state="needs-translation">Current time:</target></trans-unit>
+      <trans-unit id="locale" xml:space="preserve">
+				<source>en_US</source>
+			<target state="needs-translation">en_US</target></trans-unit>
+      <trans-unit id="error.noPluginPageSet" xml:space="preserve">
+				<source>Please set plugin.tx_timezones.settings.pluginPage to generate link.</source>
+			<target state="needs-translation">Please set plugin.tx_timezones.settings.pluginPage to generate link.</target></trans-unit>
+      <trans-unit id="error.phpModuleIntlNotLoaded" xml:space="preserve">
+				<source>Module INTL not loaded. Please check your PHP configuration.</source>
+			<target state="needs-translation">Module INTL not loaded. Please check your PHP configuration.</target></trans-unit>
+    </body>
+  </file>
+</xliff>
