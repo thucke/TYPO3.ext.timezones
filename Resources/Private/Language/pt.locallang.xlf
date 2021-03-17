@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-  <file source-language="en" datatype="plaintext" original="EXT:timezones/Resources/Private/Language/locallang.xlf" product-name="timezones" target-language="pt-PT">
+  <file source-language="en" datatype="plaintext" original="EXT:timezones/Resources/Private/Language/locallang.xlf" product-name="timezones" target-language="pt-BR">
     <header/>
     <body>
       <trans-unit id="flexform.sheet_general" xml:space="preserve">
