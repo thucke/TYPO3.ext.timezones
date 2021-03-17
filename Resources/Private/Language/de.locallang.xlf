@@ -3,54 +3,54 @@
   <file source-language="en" datatype="plaintext" original="EXT:timezones/Resources/Private/Language/locallang.xlf" product-name="timezones" target-language="de">
     <header/>
     <body>
-      <trans-unit id="flexform.sheet_general" xml:space="preserve">
+      <trans-unit id="flexform.sheet_general" xml:space="preserve" approved="yes">
 				<source>General</source>
-			<target state="needs-translation">General</target></trans-unit>
-      <trans-unit id="flexform.general_actions" xml:space="preserve">
+			<target state="final">Allgemein</target></trans-unit>
+      <trans-unit id="flexform.general_actions" xml:space="preserve" approved="yes">
 				<source>Plugin action</source>
-			<target state="needs-translation">Plugin action</target></trans-unit>
-      <trans-unit id="flexform.general_actions_1" xml:space="preserve">
+			<target state="final">Plugin-Aktion</target></trans-unit>
+      <trans-unit id="flexform.general_actions_1" xml:space="preserve" approved="yes">
 				<source>Index</source>
-			<target state="needs-translation">Index</target></trans-unit>
-      <trans-unit id="flexform.general_actions_2" xml:space="preserve">
+			<target state="final">Index</target></trans-unit>
+      <trans-unit id="flexform.general_actions_2" xml:space="preserve" approved="yes">
 				<source>Show</source>
-			<target state="needs-translation">Show</target></trans-unit>
-      <trans-unit id="flexform.general_actions_3" xml:space="preserve">
+			<target state="final">Anzeigen</target></trans-unit>
+      <trans-unit id="flexform.general_actions_3" xml:space="preserve" approved="yes">
 				<source>Select</source>
-			<target state="needs-translation">Select</target></trans-unit>
-      <trans-unit id="flexform.sheet_paths" xml:space="preserve">
+			<target state="final">Auswählen</target></trans-unit>
+      <trans-unit id="flexform.sheet_paths" xml:space="preserve" approved="yes">
 				<source>Paths</source>
-			<target state="needs-translation">Paths</target></trans-unit>
-      <trans-unit id="flexform.paths_templateRootPath" xml:space="preserve">
+			<target state="final">Pfade</target></trans-unit>
+      <trans-unit id="flexform.paths_templateRootPath" xml:space="preserve" approved="yes">
 				<source>Template root path</source>
-			<target state="needs-translation">Template root path</target></trans-unit>
-      <trans-unit id="flexform.paths_partialRootPath" xml:space="preserve">
+			<target state="final">Wurzelverzeichnis für Templates</target></trans-unit>
+      <trans-unit id="flexform.paths_partialRootPath" xml:space="preserve" approved="yes">
 				<source>Partial root path</source>
-			<target state="needs-translation">Partial root path</target></trans-unit>
-      <trans-unit id="flexform.paths_layoutRootPath" xml:space="preserve">
+			<target state="final">Wurzelverzeichnis für Partials</target></trans-unit>
+      <trans-unit id="flexform.paths_layoutRootPath" xml:space="preserve" approved="yes">
 				<source>Layout root path</source>
-			<target state="needs-translation">Layout root path</target></trans-unit>
-      <trans-unit id="form_label" xml:space="preserve">
+			<target state="final">Wurzelverzeichnis für Layouts</target></trans-unit>
+      <trans-unit id="form_label" xml:space="preserve" approved="yes">
 				<source>Your current timezone is set to:</source>
-			<target state="translated">Deine Zeitzone ist gesetzt auf:</target></trans-unit>
-      <trans-unit id="select_label" xml:space="preserve">
+			<target state="final">Deine Zeitzone ist gesetzt auf:</target></trans-unit>
+      <trans-unit id="select_label" xml:space="preserve" approved="yes">
 				<source>Please select:</source>
-			<target state="translated">Bitte auswählen:</target></trans-unit>
-      <trans-unit id="submit" xml:space="preserve">
+			<target state="final">Bitte auswählen:</target></trans-unit>
+      <trans-unit id="submit" xml:space="preserve" approved="yes">
 				<source>Set Timezone</source>
-			<target state="translated">Setze Zeitzone</target></trans-unit>
-      <trans-unit id="curdate_label" xml:space="preserve">
+			<target state="final">Setze Zeitzone</target></trans-unit>
+      <trans-unit id="curdate_label" xml:space="preserve" approved="yes">
 				<source>Current time:</source>
-			<target state="translated">Aktuelle Uhrzeit:</target></trans-unit>
-      <trans-unit id="locale" xml:space="preserve">
+			<target state="final">Aktuelle Uhrzeit:</target></trans-unit>
+      <trans-unit id="locale" xml:space="preserve" approved="yes">
 				<source>en_US</source>
-			<target state="translated">de_DE</target></trans-unit>
-      <trans-unit id="error.noPluginPageSet" xml:space="preserve">
+			<target state="final">de_DE</target></trans-unit>
+      <trans-unit id="error.noPluginPageSet" xml:space="preserve" approved="yes">
 				<source>Please set plugin.tx_timezones.settings.pluginPage to generate link.</source>
-			<target state="translated">Konfiguriere plugin.tx_timezones.settings.pluginPage, zur Anzeige eines Links</target></trans-unit>
-      <trans-unit id="error.phpModuleIntlNotLoaded" xml:space="preserve">
+			<target state="final">Konfiguriere plugin.tx_timezones.settings.pluginPage, zur Anzeige eines Links.</target></trans-unit>
+      <trans-unit id="error.phpModuleIntlNotLoaded" xml:space="preserve" approved="yes">
 				<source>Module INTL not loaded. Please check your PHP configuration.</source>
-			<target state="translated">Modul INTL nicht aktiviert. Bitte die PHP Konfiguration prüfen.</target></trans-unit>
+			<target state="final">Modul INTL nicht aktiviert. Bitte die PHP Konfiguration prüfen.</target></trans-unit>
     </body>
   </file>
 </xliff>
