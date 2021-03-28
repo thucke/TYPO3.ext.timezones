@@ -26,8 +26,8 @@ ExtensionUtility::configurePlugin(
         \Thucke\Timezones\Controller\TimezonesController::class => 'index,show,select,tzset',
     ],
     [		// An array of non-cachable controller-action-combinations (they must already be enabled)
-        'Timezones' 			=> 'show,select',
-        \Thucke\Timezones\Controller\TimezonesController::class => 'show,select'
+        'Timezones' 			=> 'show,select,index',
+        \Thucke\Timezones\Controller\TimezonesController::class => 'show,select,index'
         ]
     //\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );

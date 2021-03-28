@@ -1,0 +1,1717 @@
+
+-- Dump of TYPO3 Connection "Default"
+-- MySQL dump 10.18  Distrib 10.3.27-MariaDB, for debian-linux-gnu (x86_64)
+--
+-- Host: db    Database: db
+-- ------------------------------------------------------
+-- Server version	8.0.21
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `backend_layout`
+--
+
+DROP TABLE IF EXISTS `backend_layout`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `backend_layout` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `sorting` int NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `t3_origuid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_oid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_wsid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_state` smallint NOT NULL DEFAULT '0',
+  `t3ver_stage` int NOT NULL DEFAULT '0',
+  `t3ver_count` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_tstamp` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_move_id` int unsigned NOT NULL DEFAULT '0',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `config` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `icon` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`uid`),
+  KEY `parent` (`pid`,`deleted`,`hidden`),
+  KEY `t3ver_oid` (`t3ver_oid`,`t3ver_wsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `backend_layout`
+--
+
+LOCK TABLES `backend_layout` WRITE;
+/*!40000 ALTER TABLE `backend_layout` DISABLE KEYS */;
+/*!40000 ALTER TABLE `backend_layout` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `be_groups`
+--
+
+DROP TABLE IF EXISTS `be_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `be_groups` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int unsigned NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `title` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `non_exclude_fields` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `explicit_allowdeny` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `allowed_languages` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `custom_options` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `db_mountpoints` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `pagetypes_select` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `tables_select` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `tables_modify` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `groupMods` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `availableWidgets` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `file_mountpoints` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `file_permissions` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `lockToDomain` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `TSconfig` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `subgroup` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `workspace_perms` smallint NOT NULL DEFAULT '1',
+  `category_perms` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`uid`),
+  KEY `parent` (`pid`,`deleted`,`hidden`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `be_groups`
+--
+
+LOCK TABLES `be_groups` WRITE;
+/*!40000 ALTER TABLE `be_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `be_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `be_sessions`
+--
+
+DROP TABLE IF EXISTS `be_sessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `be_sessions` (
+  `ses_id` varchar(190) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `ses_iplock` varchar(39) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `ses_userid` int unsigned NOT NULL DEFAULT '0',
+  `ses_tstamp` int unsigned NOT NULL DEFAULT '0',
+  `ses_data` longblob,
+  `ses_backuserid` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ses_id`),
+  KEY `ses_tstamp` (`ses_tstamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `be_sessions`
+--
+
+LOCK TABLES `be_sessions` WRITE;
+/*!40000 ALTER TABLE `be_sessions` DISABLE KEYS */;
+INSERT INTO `be_sessions` VALUES ('1a8632979ca4a542dd24065da0f03684','[DISABLED]',1,1616854728,'a:4:{s:26:\"formProtectionSessionToken\";s:64:\"da5c1c87e92fb8d6818dfc28ed00096196a5584c8a3071fda6edf1a98d815c91\";s:27:\"core.template.flashMessages\";N;s:52:\"TYPO3\\CMS\\Recordlist\\Controller\\RecordListController\";a:1:{s:12:\"search_field\";s:0:\"\";}s:80:\"extbase.flashmessages.tx_extensionmanager_tools_extensionmanagerextensionmanager\";N;}',0),('ec74a075959de71239c2c9a23c547f5a','[DISABLED]',1,1616849147,'a:4:{s:26:\"formProtectionSessionToken\";s:64:\"b95d48b2c53010acc0905e367e56963b076cee719dbf184033a80dd00c5fe6ef\";s:27:\"core.template.flashMessages\";N;s:52:\"TYPO3\\CMS\\Recordlist\\Controller\\RecordListController\";a:1:{s:12:\"search_field\";s:0:\"\";}s:80:\"extbase.flashmessages.tx_extensionmanager_tools_extensionmanagerextensionmanager\";N;}',0);
+/*!40000 ALTER TABLE `be_sessions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `be_users`
+--
+
+DROP TABLE IF EXISTS `be_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `be_users` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int unsigned NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `disable` smallint unsigned NOT NULL DEFAULT '0',
+  `starttime` int unsigned NOT NULL DEFAULT '0',
+  `endtime` int unsigned NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `avatar` int unsigned NOT NULL DEFAULT '0',
+  `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `admin` smallint unsigned NOT NULL DEFAULT '0',
+  `usergroup` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `lang` varchar(6) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `db_mountpoints` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `options` smallint unsigned NOT NULL DEFAULT '0',
+  `realName` varchar(80) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `userMods` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `allowed_languages` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `uc` mediumblob,
+  `file_mountpoints` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `file_permissions` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `workspace_perms` smallint NOT NULL DEFAULT '1',
+  `lockToDomain` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `disableIPlock` smallint unsigned NOT NULL DEFAULT '0',
+  `TSconfig` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `lastlogin` int unsigned NOT NULL DEFAULT '0',
+  `createdByAction` int NOT NULL DEFAULT '0',
+  `usergroup_cached_list` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `workspace_id` int NOT NULL DEFAULT '0',
+  `category_perms` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `password_reset_token` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`uid`),
+  KEY `username` (`username`),
+  KEY `parent` (`pid`,`deleted`,`disable`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `be_users`
+--
+
+LOCK TABLES `be_users` WRITE;
+/*!40000 ALTER TABLE `be_users` DISABLE KEYS */;
+INSERT INTO `be_users` VALUES (1,0,1616338635,1616338506,0,0,0,0,0,NULL,'admin',0,'$2y$12$YaRgnj4Oc1lVVn2MrzJQXOE/6bWpXCyp4Ivx97qNdBporJhG4vK3W',1,'','','',NULL,0,'',NULL,'','a:24:{s:14:\"interfaceSetup\";s:7:\"backend\";s:10:\"moduleData\";a:7:{s:10:\"web_layout\";a:2:{s:8:\"function\";s:1:\"1\";s:8:\"language\";s:1:\"0\";}s:10:\"FormEngine\";a:2:{i:0;a:3:{s:32:\"af6a208f792a83220f87a953a62a081a\";a:4:{i:0;s:19:\"<em>[No title]</em>\";i:1;a:5:{s:4:\"edit\";a:1:{s:10:\"tt_content\";a:1:{i:6;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:33:\"&edit%5Btt_content%5D%5B6%5D=edit\";i:3;a:5:{s:5:\"table\";s:10:\"tt_content\";s:3:\"uid\";i:6;s:3:\"pid\";i:3;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}}s:32:\"b4ebb2474e05a65466f2a0872f322b9b\";a:4:{i:0;s:14:\"Index timezone\";i:1;a:5:{s:4:\"edit\";a:1:{s:5:\"pages\";a:1:{i:4;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";a:1:{s:5:\"pages\";a:1:{s:16:\"sys_language_uid\";s:1:\"0\";}}s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:76:\"&edit%5Bpages%5D%5B4%5D=edit&overrideVals%5Bpages%5D%5Bsys_language_uid%5D=0\";i:3;a:5:{s:5:\"table\";s:5:\"pages\";s:3:\"uid\";i:4;s:3:\"pid\";i:1;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}}s:32:\"629911c017052e9e049ce359020150c0\";a:4:{i:0;s:19:\"<em>[No title]</em>\";i:1;a:5:{s:4:\"edit\";a:1:{s:10:\"tt_content\";a:1:{i:7;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:33:\"&edit%5Btt_content%5D%5B7%5D=edit\";i:3;a:5:{s:5:\"table\";s:10:\"tt_content\";s:3:\"uid\";i:7;s:3:\"pid\";i:4;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}}}i:1;s:32:\"629911c017052e9e049ce359020150c0\";}s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";a:0:{}s:9:\"tx_beuser\";s:532:\"O:40:\"TYPO3\\CMS\\Beuser\\Domain\\Model\\ModuleData\":2:{s:9:\"\0*\0demand\";O:36:\"TYPO3\\CMS\\Beuser\\Domain\\Model\\Demand\":12:{s:11:\"\0*\0userName\";s:0:\"\";s:11:\"\0*\0userType\";i:0;s:9:\"\0*\0status\";i:0;s:9:\"\0*\0logins\";i:0;s:19:\"\0*\0backendUserGroup\";i:0;s:6:\"\0*\0uid\";N;s:16:\"\0*\0_localizedUid\";N;s:15:\"\0*\0_languageUid\";N;s:16:\"\0*\0_versionedUid\";N;s:6:\"\0*\0pid\";N;s:61:\"\0TYPO3\\CMS\\Extbase\\DomainObject\\AbstractDomainObject\0_isClone\";b:0;s:69:\"\0TYPO3\\CMS\\Extbase\\DomainObject\\AbstractDomainObject\0_cleanProperties\";a:0:{}}s:18:\"\0*\0compareUserList\";a:0:{}}\";s:8:\"web_list\";a:1:{s:15:\"bigControlPanel\";s:1:\"1\";}s:16:\"opendocs::recent\";a:8:{s:32:\"b4ebb2474e05a65466f2a0872f322b9b\";a:4:{i:0;s:22:\"Show timezone (copy 1)\";i:1;a:5:{s:4:\"edit\";a:1:{s:5:\"pages\";a:1:{i:4;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";a:1:{s:5:\"pages\";a:1:{s:16:\"sys_language_uid\";s:1:\"0\";}}s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:76:\"&edit%5Bpages%5D%5B4%5D=edit&overrideVals%5Bpages%5D%5Bsys_language_uid%5D=0\";i:3;a:5:{s:5:\"table\";s:5:\"pages\";s:3:\"uid\";i:4;s:3:\"pid\";i:1;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}}s:32:\"86205c5935270b8ee413592ec1b62292\";a:4:{i:0;s:25:\"Main TypoScript Rendering\";i:1;a:5:{s:4:\"edit\";a:1:{s:12:\"sys_template\";a:1:{i:1;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:35:\"&edit%5Bsys_template%5D%5B1%5D=edit\";i:3;a:5:{s:5:\"table\";s:12:\"sys_template\";s:3:\"uid\";i:1;s:3:\"pid\";i:1;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}}s:32:\"494c59ed0b451cdb0042831766e2d4b1\";a:4:{i:0;s:19:\"<em>[No title]</em>\";i:1;a:5:{s:4:\"edit\";a:1:{s:10:\"tt_content\";a:1:{i:5;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:33:\"&edit%5Btt_content%5D%5B5%5D=edit\";i:3;a:5:{s:5:\"table\";s:10:\"tt_content\";s:3:\"uid\";i:5;s:3:\"pid\";i:3;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}}s:32:\"2258d9587529a9ea12f96ce7d90372b3\";a:4:{i:0;s:12:\"Set Timezone\";i:1;a:5:{s:4:\"edit\";a:1:{s:5:\"pages\";a:1:{i:3;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:28:\"&edit%5Bpages%5D%5B3%5D=edit\";i:3;a:5:{s:5:\"table\";s:5:\"pages\";s:3:\"uid\";i:3;s:3:\"pid\";i:1;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}}s:32:\"a3b9454ecc0d182884b26f9c529ddb87\";a:4:{i:0;s:19:\"<em>[No title]</em>\";i:1;a:5:{s:4:\"edit\";a:1:{s:10:\"tt_content\";a:1:{i:4;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:33:\"&edit%5Btt_content%5D%5B4%5D=edit\";i:3;a:5:{s:5:\"table\";s:10:\"tt_content\";s:3:\"uid\";i:4;s:3:\"pid\";i:2;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}}s:32:\"20ed475662b97ac33d3aa853a74f9c9c\";a:4:{i:0;s:13:\"Show timezone\";i:1;a:5:{s:4:\"edit\";a:1:{s:5:\"pages\";a:1:{i:2;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:28:\"&edit%5Bpages%5D%5B2%5D=edit\";i:3;a:5:{s:5:\"table\";s:5:\"pages\";s:3:\"uid\";i:2;s:3:\"pid\";i:1;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}}s:32:\"581106f297d9eed8dec1190ee4d6b04d\";a:4:{i:0;s:19:\"<em>[No title]</em>\";i:1;a:5:{s:4:\"edit\";a:1:{s:10:\"tt_content\";a:1:{i:3;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:33:\"&edit%5Btt_content%5D%5B3%5D=edit\";i:3;a:5:{s:5:\"table\";s:10:\"tt_content\";s:3:\"uid\";i:3;s:3:\"pid\";i:1;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}}s:32:\"deac478137dd48a97e299bd046412e21\";a:4:{i:0;s:19:\"<em>[No title]</em>\";i:1;a:5:{s:4:\"edit\";a:1:{s:10:\"tt_content\";a:1:{i:2;s:4:\"edit\";}}s:7:\"defVals\";N;s:12:\"overrideVals\";N;s:11:\"columnsOnly\";N;s:6:\"noView\";N;}i:2;s:33:\"&edit%5Btt_content%5D%5B2%5D=edit\";i:3;a:5:{s:5:\"table\";s:10:\"tt_content\";s:3:\"uid\";i:2;s:3:\"pid\";i:1;s:3:\"cmd\";s:4:\"edit\";s:12:\"deleteAccess\";b:1;}}}s:9:\"clipboard\";a:5:{s:5:\"tab_1\";a:0:{}s:5:\"tab_2\";a:0:{}s:5:\"tab_3\";a:0:{}s:7:\"current\";s:6:\"normal\";s:6:\"normal\";a:2:{s:2:\"el\";a:1:{s:7:\"pages|2\";s:1:\"1\";}s:4:\"mode\";s:4:\"copy\";}}}s:19:\"thumbnailsByDefault\";i:1;s:14:\"emailMeAtLogin\";i:0;s:8:\"titleLen\";s:2:\"50\";s:8:\"edit_RTE\";i:1;s:20:\"edit_docModuleUpload\";i:1;s:15:\"resizeTextareas\";i:1;s:25:\"resizeTextareas_MaxHeight\";s:3:\"500\";s:24:\"resizeTextareas_Flexible\";i:0;s:4:\"lang\";s:0:\"\";s:19:\"firstLoginTimeStamp\";i:1616338522;s:15:\"moduleSessionID\";a:7:{s:10:\"web_layout\";s:40:\"f60a61f4bfd32ed17d608b18009c5d5b2437dd85\";s:10:\"FormEngine\";s:40:\"134db08b45e7a6673331a2877b6fd652f7a293ae\";s:57:\"TYPO3\\CMS\\Backend\\Utility\\BackendUtility::getUpdateSignal\";s:40:\"134db08b45e7a6673331a2877b6fd652f7a293ae\";s:9:\"tx_beuser\";s:40:\"f60a61f4bfd32ed17d608b18009c5d5b2437dd85\";s:8:\"web_list\";s:40:\"39df23fc2b5f8b54e630f95b1212e65693b77289\";s:16:\"opendocs::recent\";s:40:\"134db08b45e7a6673331a2877b6fd652f7a293ae\";s:9:\"clipboard\";s:40:\"134db08b45e7a6673331a2877b6fd652f7a293ae\";}s:8:\"realName\";s:0:\"\";s:5:\"email\";s:0:\"\";s:8:\"password\";s:0:\"\";s:9:\"password2\";s:0:\"\";s:6:\"avatar\";s:0:\"\";s:11:\"startModule\";s:0:\"\";s:25:\"showHiddenFilesAndFolders\";i:0;s:10:\"copyLevels\";s:0:\"\";s:15:\"recursiveDelete\";i:0;s:18:\"resetConfiguration\";s:0:\"\";s:17:\"BackendComponents\";a:1:{s:6:\"States\";a:1:{s:8:\"Pagetree\";a:1:{s:9:\"stateHash\";a:1:{s:3:\"0_1\";s:1:\"1\";}}}}}',NULL,NULL,1,'',0,NULL,1616854692,0,NULL,0,NULL,'');
+/*!40000 ALTER TABLE `be_users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cache_hash`
+--
+
+DROP TABLE IF EXISTS `cache_hash`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache_hash` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `expires` int unsigned NOT NULL DEFAULT '0',
+  `content` longblob,
+  PRIMARY KEY (`id`),
+  KEY `cache_id` (`identifier`(180),`expires`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache_hash`
+--
+
+LOCK TABLES `cache_hash` WRITE;
+/*!40000 ALTER TABLE `cache_hash` DISABLE KEYS */;
+INSERT INTO `cache_hash` VALUES (1,'d07b003d9fce07cd551ada22027bf881',2145909600,'a:3:{s:8:\"options.\";a:8:{s:15:\"enableBookmarks\";s:1:\"1\";s:10:\"file_list.\";a:4:{s:28:\"enableDisplayBigControlPanel\";s:10:\"selectable\";s:23:\"enableDisplayThumbnails\";s:10:\"selectable\";s:15:\"enableClipBoard\";s:10:\"selectable\";s:10:\"thumbnail.\";a:2:{s:5:\"width\";s:2:\"64\";s:6:\"height\";s:2:\"64\";}}s:9:\"pageTree.\";a:1:{s:31:\"doktypesToShowInNewPageDragArea\";s:21:\"1,6,4,7,3,254,255,199\";}s:12:\"contextMenu.\";a:1:{s:6:\"table.\";a:3:{s:6:\"pages.\";a:2:{s:12:\"disableItems\";s:0:\"\";s:5:\"tree.\";a:1:{s:12:\"disableItems\";s:0:\"\";}}s:9:\"sys_file.\";a:2:{s:12:\"disableItems\";s:0:\"\";s:5:\"tree.\";a:1:{s:12:\"disableItems\";s:0:\"\";}}s:15:\"sys_filemounts.\";a:2:{s:12:\"disableItems\";s:0:\"\";s:5:\"tree.\";a:1:{s:12:\"disableItems\";s:0:\"\";}}}}s:11:\"saveDocView\";s:1:\"1\";s:10:\"saveDocNew\";s:1:\"1\";s:11:\"saveDocNew.\";a:3:{s:5:\"pages\";s:1:\"0\";s:8:\"sys_file\";s:1:\"0\";s:17:\"sys_file_metadata\";s:1:\"0\";}s:14:\"disableDelete.\";a:1:{s:8:\"sys_file\";s:1:\"1\";}}s:9:\"admPanel.\";a:1:{s:7:\"enable.\";a:1:{s:3:\"all\";s:1:\"1\";}}s:12:\"TCAdefaults.\";a:1:{s:9:\"sys_note.\";a:2:{s:6:\"author\";s:0:\"\";s:5:\"email\";s:0:\"\";}}}'),(2,'92ae9e039e0feb5e6f1ddf9a7d594bf2',2145909600,'a:2:{s:9:\"constants\";a:2:{s:7:\"styles.\";a:2:{s:10:\"templates.\";a:3:{s:16:\"templateRootPath\";s:0:\"\";s:15:\"partialRootPath\";s:0:\"\";s:14:\"layoutRootPath\";s:0:\"\";}s:8:\"content.\";a:6:{s:17:\"defaultHeaderType\";s:1:\"2\";s:9:\"shortcut.\";a:1:{s:6:\"tables\";s:10:\"tt_content\";}s:9:\"allowTags\";s:392:\"a, abbr, acronym, address, article, aside, b, bdo, big, blockquote, br, caption, center, cite, code, col, colgroup, dd, del, dfn, dl, div, dt, em, font, footer, header, h1, h2, h3, h4, h5, h6, hr, i, img, ins, kbd, label, li, link, meta, nav, ol, p, pre, q, s, samp, sdfield, section, small, span, strike, strong, style, sub, sup, table, thead, tbody, tfoot, td, th, tr, title, tt, u, ul, var\";s:6:\"image.\";a:1:{s:11:\"lazyLoading\";s:4:\"lazy\";}s:10:\"textmedia.\";a:9:{s:4:\"maxW\";s:3:\"600\";s:10:\"maxWInText\";s:3:\"300\";s:13:\"columnSpacing\";s:2:\"10\";s:10:\"rowSpacing\";s:2:\"10\";s:10:\"textMargin\";s:2:\"10\";s:11:\"borderColor\";s:7:\"#000000\";s:11:\"borderWidth\";s:1:\"2\";s:13:\"borderPadding\";s:1:\"0\";s:9:\"linkWrap.\";a:6:{s:5:\"width\";s:4:\"800m\";s:6:\"height\";s:4:\"600m\";s:9:\"newWindow\";s:1:\"0\";s:15:\"lightboxEnabled\";s:1:\"0\";s:16:\"lightboxCssClass\";s:8:\"lightbox\";s:20:\"lightboxRelAttribute\";s:21:\"lightbox[{field:uid}]\";}}s:6:\"links.\";a:2:{s:9:\"extTarget\";s:6:\"_blank\";s:4:\"keep\";s:4:\"path\";}}}s:7:\"plugin.\";a:1:{s:13:\"tx_timezones.\";a:1:{s:9:\"settings.\";a:1:{s:10:\"pluginPage\";s:1:\"0\";}}}}s:5:\"setup\";a:13:{s:7:\"config.\";a:2:{s:19:\"pageTitleProviders.\";a:2:{s:7:\"record.\";a:1:{s:8:\"provider\";s:48:\"TYPO3\\CMS\\Core\\PageTitle\\RecordPageTitleProvider\";}s:4:\"seo.\";a:2:{s:8:\"provider\";s:49:\"TYPO3\\CMS\\Seo\\PageTitle\\SeoTitlePageTitleProvider\";s:6:\"before\";s:6:\"record\";}}s:11:\"tx_extbase.\";a:3:{s:4:\"mvc.\";a:1:{s:48:\"throwPageNotFoundExceptionIfActionCantBeResolved\";s:1:\"0\";}s:12:\"persistence.\";a:2:{s:28:\"enableAutomaticCacheClearing\";s:1:\"1\";s:20:\"updateReferenceIndex\";s:1:\"0\";}s:9:\"features.\";a:2:{s:20:\"skipDefaultArguments\";s:1:\"0\";s:25:\"ignoreAllEnableFieldsInBe\";s:1:\"0\";}}}s:7:\"styles.\";a:1:{s:8:\"content.\";a:2:{s:3:\"get\";s:7:\"CONTENT\";s:4:\"get.\";a:2:{s:5:\"table\";s:10:\"tt_content\";s:7:\"select.\";a:2:{s:7:\"orderBy\";s:7:\"sorting\";s:5:\"where\";s:11:\"{#colPos}=0\";}}}}s:10:\"tt_content\";s:4:\"CASE\";s:11:\"tt_content.\";a:50:{s:4:\"key.\";a:1:{s:5:\"field\";s:5:\"CType\";}s:7:\"default\";s:4:\"TEXT\";s:8:\"default.\";a:4:{s:5:\"field\";s:5:\"CType\";s:16:\"htmlSpecialChars\";s:1:\"1\";s:4:\"wrap\";s:165:\"<p style=\"background-color: yellow; padding: 0.5em 1em;\"><strong>ERROR:</strong> Content Element with uid \"{field:uid}\" and type \"|\" has no rendering definition!</p>\";s:5:\"wrap.\";a:1:{s:10:\"insertData\";s:1:\"1\";}}s:8:\"stdWrap.\";a:2:{s:9:\"editPanel\";s:1:\"1\";s:10:\"editPanel.\";a:5:{s:5:\"allow\";s:29:\"move, new, edit, hide, delete\";s:5:\"label\";s:2:\"%s\";s:14:\"onlyCurrentPid\";s:1:\"1\";s:13:\"previewBorder\";s:1:\"1\";s:5:\"edit.\";a:1:{s:13:\"displayRecord\";s:1:\"1\";}}}s:7:\"bullets\";s:20:\"< lib.contentElement\";s:8:\"bullets.\";a:3:{s:12:\"templateName\";s:7:\"Bullets\";s:15:\"dataProcessing.\";a:4:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\SplitProcessor\";s:3:\"10.\";a:4:{s:3:\"if.\";a:2:{s:5:\"value\";s:1:\"2\";s:11:\"isLessThan.\";a:1:{s:5:\"field\";s:12:\"bullets_type\";}}s:9:\"fieldName\";s:8:\"bodytext\";s:18:\"removeEmptyEntries\";s:1:\"1\";s:2:\"as\";s:7:\"bullets\";}i:20;s:62:\"TYPO3\\CMS\\Frontend\\DataProcessing\\CommaSeparatedValueProcessor\";s:3:\"20.\";a:4:{s:9:\"fieldName\";s:8:\"bodytext\";s:3:\"if.\";a:2:{s:5:\"value\";s:1:\"2\";s:7:\"equals.\";a:1:{s:5:\"field\";s:12:\"bullets_type\";}}s:14:\"fieldDelimiter\";s:1:\"|\";s:2:\"as\";s:7:\"bullets\";}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:59:\"tt_content: header [header_layout], bodytext [bullets_type]\";s:10:\"editIcons.\";a:2:{s:13:\"beforeLastTag\";s:1:\"1\";s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:92:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.bullets\";}}}}s:3:\"div\";s:20:\"< lib.contentElement\";s:4:\"div.\";a:1:{s:12:\"templateName\";s:3:\"Div\";}s:6:\"header\";s:20:\"< lib.contentElement\";s:7:\"header.\";a:2:{s:12:\"templateName\";s:6:\"Header\";s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:63:\"tt_content: header [header_layout|header_link], subheader, date\";s:10:\"editIcons.\";a:2:{s:13:\"beforeLastTag\";s:1:\"1\";s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:91:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.header\";}}}}s:4:\"html\";s:20:\"< lib.contentElement\";s:5:\"html.\";a:2:{s:12:\"templateName\";s:4:\"Html\";s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:20:\"tt_content: bodytext\";s:10:\"editIcons.\";a:2:{s:13:\"beforeLastTag\";s:1:\"1\";s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.html\";}}}}s:5:\"image\";s:20:\"< lib.contentElement\";s:6:\"image.\";a:3:{s:12:\"templateName\";s:5:\"Image\";s:15:\"dataProcessing.\";a:4:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"image\";}}i:20;s:50:\"TYPO3\\CMS\\Frontend\\DataProcessing\\GalleryProcessor\";s:3:\"20.\";a:5:{s:15:\"maxGalleryWidth\";s:3:\"600\";s:21:\"maxGalleryWidthInText\";s:3:\"300\";s:13:\"columnSpacing\";s:2:\"10\";s:11:\"borderWidth\";s:1:\"2\";s:13:\"borderPadding\";s:1:\"0\";}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:92:\"tt_content : image [imageorient|imagewidth|imageheight], [imagecols|imageborder], image_zoom\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:90:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.image\";}}}}s:4:\"list\";s:20:\"< lib.contentElement\";s:5:\"list.\";a:3:{s:12:\"templateName\";s:4:\"List\";s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:72:\"tt_content: header [header_layout], list_type, layout, pages [recursive]\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.list\";}}}s:3:\"20.\";a:2:{s:13:\"timezones_pi1\";s:4:\"USER\";s:14:\"timezones_pi1.\";a:3:{s:8:\"userFunc\";s:37:\"TYPO3\\CMS\\Extbase\\Core\\Bootstrap->run\";s:13:\"extensionName\";s:9:\"Timezones\";s:10:\"pluginName\";s:3:\"Pi1\";}}}s:8:\"shortcut\";s:20:\"< lib.contentElement\";s:9:\"shortcut.\";a:3:{s:12:\"templateName\";s:8:\"Shortcut\";s:10:\"variables.\";a:2:{s:9:\"shortcuts\";s:7:\"RECORDS\";s:10:\"shortcuts.\";a:2:{s:7:\"source.\";a:1:{s:5:\"field\";s:7:\"records\";}s:6:\"tables\";s:10:\"tt_content\";}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:43:\"tt_content: header [header_layout], records\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:93:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.shortcut\";}}}}s:5:\"table\";s:20:\"< lib.contentElement\";s:6:\"table.\";a:3:{s:12:\"templateName\";s:5:\"Table\";s:15:\"dataProcessing.\";a:2:{i:10;s:62:\"TYPO3\\CMS\\Frontend\\DataProcessing\\CommaSeparatedValueProcessor\";s:3:\"10.\";a:5:{s:9:\"fieldName\";s:8:\"bodytext\";s:15:\"fieldDelimiter.\";a:1:{s:5:\"char.\";a:2:{s:7:\"cObject\";s:4:\"TEXT\";s:8:\"cObject.\";a:1:{s:5:\"field\";s:15:\"table_delimiter\";}}}s:15:\"fieldEnclosure.\";a:2:{s:5:\"char.\";a:2:{s:7:\"cObject\";s:4:\"TEXT\";s:8:\"cObject.\";a:1:{s:5:\"field\";s:15:\"table_enclosure\";}}s:3:\"if.\";a:3:{s:5:\"value\";s:1:\"0\";s:7:\"equals.\";a:1:{s:5:\"field\";s:15:\"table_enclosure\";}s:6:\"negate\";s:1:\"1\";}}s:15:\"maximumColumns.\";a:1:{s:5:\"field\";s:4:\"cols\";}s:2:\"as\";s:5:\"table\";}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:100:\"tt_content: header [header_layout], bodytext, [table_caption|cols|table_header_position|table_tfoot]\";s:10:\"editIcons.\";a:2:{s:13:\"beforeLastTag\";s:1:\"1\";s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:90:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.table\";}}}}s:4:\"text\";s:20:\"< lib.contentElement\";s:5:\"text.\";a:2:{s:12:\"templateName\";s:4:\"Text\";s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:20:\"tt_content: bodytext\";s:10:\"editIcons.\";a:2:{s:13:\"beforeLastTag\";s:1:\"1\";s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.html\";}}}}s:9:\"textmedia\";s:20:\"< lib.contentElement\";s:10:\"textmedia.\";a:3:{s:12:\"templateName\";s:9:\"Textmedia\";s:15:\"dataProcessing.\";a:4:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:6:\"assets\";}}i:20;s:50:\"TYPO3\\CMS\\Frontend\\DataProcessing\\GalleryProcessor\";s:3:\"20.\";a:5:{s:15:\"maxGalleryWidth\";s:3:\"600\";s:21:\"maxGalleryWidthInText\";s:3:\"300\";s:13:\"columnSpacing\";s:2:\"10\";s:11:\"borderWidth\";s:1:\"2\";s:13:\"borderPadding\";s:1:\"0\";}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:126:\"tt_content: header [header_layout], bodytext, assets [imageorient|imagewidth|imageheight], [imagecols|imageborder], image_zoom\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:94:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.textmedia\";}}}}s:7:\"textpic\";s:20:\"< lib.contentElement\";s:8:\"textpic.\";a:3:{s:12:\"templateName\";s:7:\"Textpic\";s:15:\"dataProcessing.\";a:4:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"image\";}}i:20;s:50:\"TYPO3\\CMS\\Frontend\\DataProcessing\\GalleryProcessor\";s:3:\"20.\";a:5:{s:15:\"maxGalleryWidth\";s:3:\"600\";s:21:\"maxGalleryWidthInText\";s:3:\"300\";s:13:\"columnSpacing\";s:2:\"10\";s:11:\"borderWidth\";s:1:\"2\";s:13:\"borderPadding\";s:1:\"0\";}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:125:\"tt_content: header [header_layout], bodytext, image [imageorient|imagewidth|imageheight], [imagecols|imageborder], image_zoom\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:92:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.textpic\";}}}}s:7:\"uploads\";s:20:\"< lib.contentElement\";s:8:\"uploads.\";a:3:{s:12:\"templateName\";s:7:\"Uploads\";s:15:\"dataProcessing.\";a:2:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:3:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"media\";}s:12:\"collections.\";a:1:{s:5:\"field\";s:16:\"file_collections\";}s:8:\"sorting.\";a:2:{s:5:\"field\";s:16:\"filelink_sorting\";s:10:\"direction.\";a:1:{s:5:\"field\";s:26:\"filelink_sorting_direction\";}}}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:127:\"tt_content: header [header_layout], media, file_collections, filelink_sorting, [filelink_size|uploads_description|uploads_type]\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:92:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.uploads\";}}}}s:13:\"menu_abstract\";s:20:\"< lib.contentElement\";s:14:\"menu_abstract.\";a:3:{s:12:\"templateName\";s:12:\"MenuAbstract\";s:15:\"dataProcessing.\";a:2:{i:10;s:47:\"TYPO3\\CMS\\Frontend\\DataProcessing\\MenuProcessor\";s:3:\"10.\";a:3:{s:7:\"special\";s:9:\"directory\";s:8:\"special.\";a:1:{s:6:\"value.\";a:1:{s:5:\"field\";s:5:\"pages\";}}s:15:\"dataProcessing.\";a:2:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"media\";}}}}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:41:\"tt_content: header [header_layout], pages\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.menu\";}}}}s:24:\"menu_categorized_content\";s:20:\"< lib.contentElement\";s:25:\"menu_categorized_content.\";a:3:{s:12:\"templateName\";s:22:\"MenuCategorizedContent\";s:15:\"dataProcessing.\";a:2:{i:10;s:56:\"TYPO3\\CMS\\Frontend\\DataProcessing\\DatabaseQueryProcessor\";s:3:\"10.\";a:10:{s:5:\"table\";s:10:\"tt_content\";s:12:\"selectFields\";s:12:\"tt_content.*\";s:7:\"groupBy\";s:3:\"uid\";s:10:\"pidInList.\";a:1:{s:4:\"data\";s:12:\"leveluid : 0\";}s:9:\"recursive\";s:2:\"99\";s:5:\"join.\";a:2:{s:4:\"data\";s:25:\"field:selected_categories\";s:4:\"wrap\";s:109:\"sys_category_record_mm ON uid = sys_category_record_mm.uid_foreign AND sys_category_record_mm.uid_local IN(|)\";}s:6:\"where.\";a:2:{s:4:\"data\";s:20:\"field:category_field\";s:4:\"wrap\";s:41:\"tablenames=\'tt_content\' and fieldname=\'|\'\";}s:7:\"orderBy\";s:18:\"tt_content.sorting\";s:2:\"as\";s:7:\"content\";s:15:\"dataProcessing.\";a:2:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"image\";}}}}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:71:\"tt_content: header [header_layout], selected_categories, category_field\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.menu\";}}}}s:22:\"menu_categorized_pages\";s:20:\"< lib.contentElement\";s:23:\"menu_categorized_pages.\";a:3:{s:12:\"templateName\";s:20:\"MenuCategorizedPages\";s:15:\"dataProcessing.\";a:2:{i:10;s:47:\"TYPO3\\CMS\\Frontend\\DataProcessing\\MenuProcessor\";s:3:\"10.\";a:3:{s:7:\"special\";s:10:\"categories\";s:8:\"special.\";a:4:{s:6:\"value.\";a:1:{s:5:\"field\";s:19:\"selected_categories\";}s:9:\"relation.\";a:1:{s:5:\"field\";s:14:\"category_field\";}s:7:\"sorting\";s:5:\"title\";s:5:\"order\";s:3:\"asc\";}s:15:\"dataProcessing.\";a:2:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"media\";}}}}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:71:\"tt_content: header [header_layout], selected_categories, category_field\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.menu\";}}}}s:10:\"menu_pages\";s:20:\"< lib.contentElement\";s:11:\"menu_pages.\";a:3:{s:12:\"templateName\";s:9:\"MenuPages\";s:15:\"dataProcessing.\";a:2:{i:10;s:47:\"TYPO3\\CMS\\Frontend\\DataProcessing\\MenuProcessor\";s:3:\"10.\";a:3:{s:7:\"special\";s:4:\"list\";s:8:\"special.\";a:1:{s:6:\"value.\";a:1:{s:5:\"field\";s:5:\"pages\";}}s:15:\"dataProcessing.\";a:2:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"media\";}}}}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:41:\"tt_content: header [header_layout], pages\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.menu\";}}}}s:13:\"menu_subpages\";s:20:\"< lib.contentElement\";s:14:\"menu_subpages.\";a:3:{s:12:\"templateName\";s:12:\"MenuSubpages\";s:15:\"dataProcessing.\";a:2:{i:10;s:47:\"TYPO3\\CMS\\Frontend\\DataProcessing\\MenuProcessor\";s:3:\"10.\";a:3:{s:7:\"special\";s:9:\"directory\";s:8:\"special.\";a:1:{s:6:\"value.\";a:1:{s:5:\"field\";s:5:\"pages\";}}s:15:\"dataProcessing.\";a:2:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"media\";}}}}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:41:\"tt_content: header [header_layout], pages\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.menu\";}}}}s:12:\"menu_section\";s:20:\"< lib.contentElement\";s:13:\"menu_section.\";a:3:{s:12:\"templateName\";s:11:\"MenuSection\";s:15:\"dataProcessing.\";a:2:{i:10;s:47:\"TYPO3\\CMS\\Frontend\\DataProcessing\\MenuProcessor\";s:3:\"10.\";a:4:{s:17:\"includeNotInMenu.\";a:2:{s:8:\"override\";s:1:\"1\";s:9:\"override.\";a:1:{s:3:\"if.\";a:1:{s:8:\"isFalse.\";a:1:{s:5:\"field\";s:5:\"pages\";}}}}s:7:\"special\";s:4:\"list\";s:8:\"special.\";a:1:{s:6:\"value.\";a:2:{s:5:\"field\";s:5:\"pages\";s:9:\"override.\";a:3:{s:4:\"data\";s:8:\"page:uid\";s:3:\"if.\";a:1:{s:8:\"isFalse.\";a:1:{s:5:\"field\";s:5:\"pages\";}}s:9:\"override.\";a:2:{s:4:\"data\";s:21:\"page:content_from_pid\";s:3:\"if.\";a:1:{s:7:\"isTrue.\";a:1:{s:4:\"data\";s:21:\"page:content_from_pid\";}}}}}}s:15:\"dataProcessing.\";a:4:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"media\";}}i:20;s:56:\"TYPO3\\CMS\\Frontend\\DataProcessing\\DatabaseQueryProcessor\";s:3:\"20.\";a:6:{s:5:\"table\";s:10:\"tt_content\";s:10:\"pidInList.\";a:1:{s:5:\"field\";s:3:\"uid\";}s:2:\"as\";s:7:\"content\";s:5:\"where\";s:16:\"sectionIndex = 1\";s:7:\"orderBy\";s:7:\"sorting\";s:15:\"dataProcessing.\";a:2:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"image\";}}}}}}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:41:\"tt_content: header [header_layout], pages\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.menu\";}}}}s:18:\"menu_section_pages\";s:20:\"< lib.contentElement\";s:19:\"menu_section_pages.\";a:3:{s:12:\"templateName\";s:16:\"MenuSectionPages\";s:15:\"dataProcessing.\";a:2:{i:10;s:47:\"TYPO3\\CMS\\Frontend\\DataProcessing\\MenuProcessor\";s:3:\"10.\";a:3:{s:7:\"special\";s:9:\"directory\";s:8:\"special.\";a:1:{s:6:\"value.\";a:1:{s:5:\"field\";s:5:\"pages\";}}s:15:\"dataProcessing.\";a:4:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"media\";}}i:20;s:56:\"TYPO3\\CMS\\Frontend\\DataProcessing\\DatabaseQueryProcessor\";s:3:\"20.\";a:5:{s:5:\"table\";s:10:\"tt_content\";s:10:\"pidInList.\";a:1:{s:5:\"field\";s:3:\"uid\";}s:7:\"orderBy\";s:7:\"sorting\";s:2:\"as\";s:7:\"content\";s:15:\"dataProcessing.\";a:2:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"image\";}}}}}}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:41:\"tt_content: header [header_layout], pages\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.menu\";}}}}s:21:\"menu_recently_updated\";s:20:\"< lib.contentElement\";s:22:\"menu_recently_updated.\";a:3:{s:12:\"templateName\";s:19:\"MenuRecentlyUpdated\";s:15:\"dataProcessing.\";a:2:{i:10;s:47:\"TYPO3\\CMS\\Frontend\\DataProcessing\\MenuProcessor\";s:3:\"10.\";a:3:{s:7:\"special\";s:7:\"updated\";s:8:\"special.\";a:3:{s:6:\"value.\";a:1:{s:5:\"field\";s:5:\"pages\";}s:6:\"maxAge\";s:9:\"3600*24*7\";s:20:\"excludeNoSearchPages\";s:1:\"1\";}s:15:\"dataProcessing.\";a:2:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"media\";}}}}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:41:\"tt_content: header [header_layout], pages\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.menu\";}}}}s:18:\"menu_related_pages\";s:20:\"< lib.contentElement\";s:19:\"menu_related_pages.\";a:3:{s:12:\"templateName\";s:16:\"MenuRelatedPages\";s:15:\"dataProcessing.\";a:2:{i:10;s:47:\"TYPO3\\CMS\\Frontend\\DataProcessing\\MenuProcessor\";s:3:\"10.\";a:4:{s:7:\"special\";s:8:\"keywords\";s:8:\"special.\";a:2:{s:6:\"value.\";a:1:{s:5:\"field\";s:5:\"pages\";}s:20:\"excludeNoSearchPages\";s:1:\"1\";}s:23:\"alternativeSortingField\";s:5:\"title\";s:15:\"dataProcessing.\";a:2:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"media\";}}}}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:41:\"tt_content: header [header_layout], pages\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.menu\";}}}}s:12:\"menu_sitemap\";s:20:\"< lib.contentElement\";s:13:\"menu_sitemap.\";a:3:{s:12:\"templateName\";s:11:\"MenuSitemap\";s:15:\"dataProcessing.\";a:2:{i:10;s:47:\"TYPO3\\CMS\\Frontend\\DataProcessing\\MenuProcessor\";s:3:\"10.\";a:2:{s:6:\"levels\";s:1:\"7\";s:15:\"dataProcessing.\";a:2:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"media\";}}}}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:41:\"tt_content: header [header_layout], pages\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.menu\";}}}}s:18:\"menu_sitemap_pages\";s:20:\"< lib.contentElement\";s:19:\"menu_sitemap_pages.\";a:3:{s:12:\"templateName\";s:16:\"MenuSitemapPages\";s:15:\"dataProcessing.\";a:2:{i:10;s:47:\"TYPO3\\CMS\\Frontend\\DataProcessing\\MenuProcessor\";s:3:\"10.\";a:4:{s:7:\"special\";s:9:\"directory\";s:8:\"special.\";a:1:{s:6:\"value.\";a:1:{s:5:\"field\";s:5:\"pages\";}}s:6:\"levels\";s:1:\"7\";s:15:\"dataProcessing.\";a:2:{i:10;s:48:\"TYPO3\\CMS\\Frontend\\DataProcessing\\FilesProcessor\";s:3:\"10.\";a:1:{s:11:\"references.\";a:1:{s:9:\"fieldName\";s:5:\"media\";}}}}}s:8:\"stdWrap.\";a:2:{s:9:\"editIcons\";s:41:\"tt_content: header [header_layout], pages\";s:10:\"editIcons.\";a:1:{s:10:\"iconTitle.\";a:1:{s:4:\"data\";s:89:\"LLL:EXT:fluid_styled_content/Resources/Private/Language/FrontendEditing.xlf:editIcon.menu\";}}}}}s:4:\"lib.\";a:6:{s:14:\"contentElement\";s:13:\"FLUIDTEMPLATE\";s:15:\"contentElement.\";a:5:{s:12:\"templateName\";s:7:\"Default\";s:18:\"templateRootPaths.\";a:2:{i:0;s:53:\"EXT:fluid_styled_content/Resources/Private/Templates/\";i:10;s:0:\"\";}s:17:\"partialRootPaths.\";a:2:{i:0;s:52:\"EXT:fluid_styled_content/Resources/Private/Partials/\";i:10;s:0:\"\";}s:16:\"layoutRootPaths.\";a:2:{i:0;s:51:\"EXT:fluid_styled_content/Resources/Private/Layouts/\";i:10;s:0:\"\";}s:9:\"settings.\";a:2:{s:17:\"defaultHeaderType\";s:1:\"2\";s:6:\"media.\";a:3:{s:11:\"lazyLoading\";s:4:\"lazy\";s:6:\"popup.\";a:9:{s:7:\"bodyTag\";s:41:\"<body style=\"margin:0; background:#fff;\">\";s:4:\"wrap\";s:37:\"<a href=\"javascript:close();\"> | </a>\";s:5:\"width\";s:4:\"800m\";s:6:\"height\";s:4:\"600m\";s:5:\"crop.\";a:1:{s:4:\"data\";s:17:\"file:current:crop\";}s:8:\"JSwindow\";s:1:\"1\";s:9:\"JSwindow.\";a:2:{s:9:\"newWindow\";s:1:\"0\";s:3:\"if.\";a:1:{s:7:\"isFalse\";s:1:\"0\";}}s:15:\"directImageLink\";s:1:\"0\";s:11:\"linkParams.\";a:1:{s:11:\"ATagParams.\";a:1:{s:8:\"dataWrap\";s:44:\"class=\"lightbox\" rel=\"lightbox[{field:uid}]\"\";}}}s:17:\"additionalConfig.\";a:2:{s:9:\"no-cookie\";s:1:\"1\";s:3:\"api\";s:1:\"0\";}}}}s:10:\"parseFunc.\";a:8:{s:9:\"makelinks\";s:1:\"1\";s:10:\"makelinks.\";a:2:{s:5:\"http.\";a:2:{s:4:\"keep\";s:4:\"path\";s:9:\"extTarget\";s:6:\"_blank\";}s:7:\"mailto.\";a:1:{s:4:\"keep\";s:4:\"path\";}}s:5:\"tags.\";a:2:{s:1:\"a\";s:4:\"TEXT\";s:2:\"a.\";a:2:{s:7:\"current\";s:1:\"1\";s:9:\"typolink.\";a:5:{s:10:\"parameter.\";a:1:{s:4:\"data\";s:15:\"parameters:href\";}s:6:\"title.\";a:1:{s:4:\"data\";s:16:\"parameters:title\";}s:11:\"ATagParams.\";a:1:{s:4:\"data\";s:20:\"parameters:allParams\";}s:7:\"target.\";a:1:{s:8:\"ifEmpty.\";a:1:{s:4:\"data\";s:17:\"parameters:target\";}}s:10:\"extTarget.\";a:2:{s:8:\"ifEmpty.\";a:1:{s:8:\"override\";s:6:\"_blank\";}s:9:\"override.\";a:1:{s:4:\"data\";s:17:\"parameters:target\";}}}}}s:9:\"allowTags\";s:392:\"a, abbr, acronym, address, article, aside, b, bdo, big, blockquote, br, caption, center, cite, code, col, colgroup, dd, del, dfn, dl, div, dt, em, font, footer, header, h1, h2, h3, h4, h5, h6, hr, i, img, ins, kbd, label, li, link, meta, nav, ol, p, pre, q, s, samp, sdfield, section, small, span, strike, strong, style, sub, sup, table, thead, tbody, tfoot, td, th, tr, title, tt, u, ul, var\";s:8:\"denyTags\";s:1:\"*\";s:5:\"sword\";s:31:\"<span class=\"ce-sword\">|</span>\";s:9:\"constants\";s:1:\"1\";s:18:\"nonTypoTagStdWrap.\";a:2:{s:10:\"HTMLparser\";s:1:\"1\";s:11:\"HTMLparser.\";a:2:{s:18:\"keepNonMatchedTags\";s:1:\"1\";s:16:\"htmlSpecialChars\";s:1:\"2\";}}}s:14:\"parseFunc_RTE.\";a:10:{s:9:\"makelinks\";s:1:\"1\";s:10:\"makelinks.\";a:2:{s:5:\"http.\";a:2:{s:4:\"keep\";s:4:\"path\";s:9:\"extTarget\";s:6:\"_blank\";}s:7:\"mailto.\";a:1:{s:4:\"keep\";s:4:\"path\";}}s:5:\"tags.\";a:2:{s:1:\"a\";s:4:\"TEXT\";s:2:\"a.\";a:2:{s:7:\"current\";s:1:\"1\";s:9:\"typolink.\";a:5:{s:10:\"parameter.\";a:1:{s:4:\"data\";s:15:\"parameters:href\";}s:6:\"title.\";a:1:{s:4:\"data\";s:16:\"parameters:title\";}s:11:\"ATagParams.\";a:1:{s:4:\"data\";s:20:\"parameters:allParams\";}s:7:\"target.\";a:1:{s:8:\"ifEmpty.\";a:1:{s:4:\"data\";s:17:\"parameters:target\";}}s:10:\"extTarget.\";a:2:{s:8:\"ifEmpty.\";a:1:{s:8:\"override\";s:6:\"_blank\";}s:9:\"override.\";a:1:{s:4:\"data\";s:17:\"parameters:target\";}}}}}s:9:\"allowTags\";s:392:\"a, abbr, acronym, address, article, aside, b, bdo, big, blockquote, br, caption, center, cite, code, col, colgroup, dd, del, dfn, dl, div, dt, em, font, footer, header, h1, h2, h3, h4, h5, h6, hr, i, img, ins, kbd, label, li, link, meta, nav, ol, p, pre, q, s, samp, sdfield, section, small, span, strike, strong, style, sub, sup, table, thead, tbody, tfoot, td, th, tr, title, tt, u, ul, var\";s:8:\"denyTags\";s:1:\"*\";s:5:\"sword\";s:31:\"<span class=\"ce-sword\">|</span>\";s:9:\"constants\";s:1:\"1\";s:18:\"nonTypoTagStdWrap.\";a:3:{s:10:\"HTMLparser\";s:1:\"1\";s:11:\"HTMLparser.\";a:2:{s:18:\"keepNonMatchedTags\";s:1:\"1\";s:16:\"htmlSpecialChars\";s:1:\"2\";}s:12:\"encapsLines.\";a:4:{s:13:\"encapsTagList\";s:29:\"p,pre,h1,h2,h3,h4,h5,h6,hr,dt\";s:9:\"remapTag.\";a:1:{s:3:\"DIV\";s:1:\"P\";}s:13:\"nonWrappedTag\";s:1:\"P\";s:17:\"innerStdWrap_all.\";a:1:{s:7:\"ifBlank\";s:6:\"&nbsp;\";}}}s:14:\"externalBlocks\";s:89:\"article, aside, blockquote, div, dd, dl, footer, header, nav, ol, section, table, ul, pre\";s:15:\"externalBlocks.\";a:14:{s:3:\"ol.\";a:2:{s:7:\"stripNL\";s:1:\"1\";s:8:\"stdWrap.\";a:1:{s:9:\"parseFunc\";s:15:\"< lib.parseFunc\";}}s:3:\"ul.\";a:2:{s:7:\"stripNL\";s:1:\"1\";s:8:\"stdWrap.\";a:1:{s:9:\"parseFunc\";s:15:\"< lib.parseFunc\";}}s:4:\"pre.\";a:1:{s:8:\"stdWrap.\";a:1:{s:10:\"parseFunc.\";a:8:{s:9:\"makelinks\";s:1:\"1\";s:10:\"makelinks.\";a:2:{s:5:\"http.\";a:2:{s:4:\"keep\";s:4:\"path\";s:9:\"extTarget\";s:6:\"_blank\";}s:7:\"mailto.\";a:1:{s:4:\"keep\";s:4:\"path\";}}s:5:\"tags.\";a:2:{s:1:\"a\";s:4:\"TEXT\";s:2:\"a.\";a:2:{s:7:\"current\";s:1:\"1\";s:9:\"typolink.\";a:5:{s:10:\"parameter.\";a:1:{s:4:\"data\";s:15:\"parameters:href\";}s:6:\"title.\";a:1:{s:4:\"data\";s:16:\"parameters:title\";}s:11:\"ATagParams.\";a:1:{s:4:\"data\";s:20:\"parameters:allParams\";}s:7:\"target.\";a:1:{s:8:\"ifEmpty.\";a:1:{s:4:\"data\";s:17:\"parameters:target\";}}s:10:\"extTarget.\";a:2:{s:8:\"ifEmpty.\";a:1:{s:8:\"override\";s:6:\"_blank\";}s:9:\"override.\";a:1:{s:4:\"data\";s:17:\"parameters:target\";}}}}}s:9:\"allowTags\";s:392:\"a, abbr, acronym, address, article, aside, b, bdo, big, blockquote, br, caption, center, cite, code, col, colgroup, dd, del, dfn, dl, div, dt, em, font, footer, header, h1, h2, h3, h4, h5, h6, hr, i, img, ins, kbd, label, li, link, meta, nav, ol, p, pre, q, s, samp, sdfield, section, small, span, strike, strong, style, sub, sup, table, thead, tbody, tfoot, td, th, tr, title, tt, u, ul, var\";s:8:\"denyTags\";s:1:\"*\";s:5:\"sword\";s:31:\"<span class=\"ce-sword\">|</span>\";s:9:\"constants\";s:1:\"1\";s:18:\"nonTypoTagStdWrap.\";a:2:{s:10:\"HTMLparser\";s:1:\"1\";s:11:\"HTMLparser.\";a:2:{s:18:\"keepNonMatchedTags\";s:1:\"1\";s:16:\"htmlSpecialChars\";s:1:\"2\";}}}}}s:6:\"table.\";a:4:{s:7:\"stripNL\";s:1:\"1\";s:8:\"stdWrap.\";a:2:{s:10:\"HTMLparser\";s:1:\"1\";s:11:\"HTMLparser.\";a:2:{s:5:\"tags.\";a:1:{s:6:\"table.\";a:1:{s:10:\"fixAttrib.\";a:1:{s:6:\"class.\";a:3:{s:7:\"default\";s:12:\"contenttable\";s:6:\"always\";s:1:\"1\";s:4:\"list\";s:12:\"contenttable\";}}}}s:18:\"keepNonMatchedTags\";s:1:\"1\";}}s:14:\"HTMLtableCells\";s:1:\"1\";s:15:\"HTMLtableCells.\";a:2:{s:8:\"default.\";a:1:{s:8:\"stdWrap.\";a:2:{s:9:\"parseFunc\";s:19:\"< lib.parseFunc_RTE\";s:10:\"parseFunc.\";a:1:{s:18:\"nonTypoTagStdWrap.\";a:1:{s:12:\"encapsLines.\";a:2:{s:13:\"nonWrappedTag\";s:0:\"\";s:17:\"innerStdWrap_all.\";a:1:{s:7:\"ifBlank\";s:0:\"\";}}}}}}s:25:\"addChr10BetweenParagraphs\";s:1:\"1\";}}s:4:\"div.\";a:2:{s:7:\"stripNL\";s:1:\"1\";s:13:\"callRecursive\";s:1:\"1\";}s:8:\"article.\";a:2:{s:7:\"stripNL\";s:1:\"1\";s:13:\"callRecursive\";s:1:\"1\";}s:6:\"aside.\";a:2:{s:7:\"stripNL\";s:1:\"1\";s:13:\"callRecursive\";s:1:\"1\";}s:11:\"blockquote.\";a:2:{s:7:\"stripNL\";s:1:\"1\";s:13:\"callRecursive\";s:1:\"1\";}s:7:\"footer.\";a:2:{s:7:\"stripNL\";s:1:\"1\";s:13:\"callRecursive\";s:1:\"1\";}s:7:\"header.\";a:2:{s:7:\"stripNL\";s:1:\"1\";s:13:\"callRecursive\";s:1:\"1\";}s:4:\"nav.\";a:2:{s:7:\"stripNL\";s:1:\"1\";s:13:\"callRecursive\";s:1:\"1\";}s:8:\"section.\";a:2:{s:7:\"stripNL\";s:1:\"1\";s:13:\"callRecursive\";s:1:\"1\";}s:3:\"dl.\";a:2:{s:7:\"stripNL\";s:1:\"1\";s:13:\"callRecursive\";s:1:\"1\";}s:3:\"dd.\";a:2:{s:7:\"stripNL\";s:1:\"1\";s:13:\"callRecursive\";s:1:\"1\";}}}s:8:\"timezone\";s:4:\"USER\";s:9:\"timezone.\";a:11:{s:8:\"userFunc\";s:37:\"TYPO3\\CMS\\Extbase\\Core\\Bootstrap->run\";s:10:\"pluginName\";s:3:\"Pi1\";s:13:\"extensionName\";s:9:\"Timezones\";s:10:\"vendorName\";s:6:\"Thucke\";s:10:\"controller\";s:9:\"Timezones\";s:4:\"mvc.\";a:1:{s:39:\"callDefaultActionIfActionCantBeResolved\";s:1:\"0\";}s:28:\"switchableControllerActions.\";a:1:{s:10:\"Timezones.\";a:4:{i:1;s:5:\"index\";i:2;s:4:\"show\";i:3;s:6:\"select\";i:4;s:5:\"tzset\";}}s:5:\"view.\";a:3:{s:18:\"templateRootPaths.\";a:1:{i:0;s:42:\"EXT:timezones/Resources/Private/Templates/\";}s:17:\"partialRootPaths.\";a:1:{i:0;s:41:\"EXT:timezones/Resources/Private/Partials/\";}s:16:\"layoutRootPaths.\";a:1:{i:0;s:40:\"EXT:timezones/Resources/Private/Layouts/\";}}s:9:\"settings.\";a:1:{s:10:\"pluginPage\";s:1:\"0\";}s:12:\"_LOCAL_LANG.\";a:1:{s:8:\"default.\";a:1:{s:9:\"read_more\";s:7:\"more >>\";}}s:6:\"action\";s:5:\"index\";}}s:7:\"plugin.\";a:3:{s:12:\"tx_frontend.\";a:1:{s:18:\"_CSS_DEFAULT_STYLE\";s:3359:\"    .ce-align-left { text-align: left; }\n    .ce-align-center { text-align: center; }\n    .ce-align-right { text-align: right; }\n\n    .ce-table td, .ce-table th { vertical-align: top; }\n\n    .ce-textpic, .ce-image, .ce-nowrap .ce-bodytext, .ce-gallery, .ce-row, .ce-uploads li, .ce-uploads div { overflow: hidden; }\n\n    .ce-left .ce-gallery, .ce-column { float: left; }\n    .ce-center .ce-outer { position: relative; float: right; right: 50%; }\n    .ce-center .ce-inner { position: relative; float: right; right: -50%; }\n    .ce-right .ce-gallery { float: right; }\n\n    .ce-gallery figure { display: table; margin: 0; }\n    .ce-gallery figcaption { display: table-caption; caption-side: bottom; }\n    .ce-gallery img { display: block; }\n    .ce-gallery iframe { border-width: 0; }\n    .ce-border img,\n    .ce-border iframe {\n        border: 2px solid #000000;\n        padding: 0px;\n    }\n\n    .ce-intext.ce-right .ce-gallery, .ce-intext.ce-left .ce-gallery, .ce-above .ce-gallery {\n        margin-bottom: 10px;\n    }\n    .ce-image .ce-gallery { margin-bottom: 0; }\n    .ce-intext.ce-right .ce-gallery { margin-left: 10px; }\n    .ce-intext.ce-left .ce-gallery { margin-right: 10px; }\n    .ce-below .ce-gallery { margin-top: 10px; }\n\n    .ce-column { margin-right: 10px; }\n    .ce-column:last-child { margin-right: 0; }\n\n    .ce-row { margin-bottom: 10px; }\n    .ce-row:last-child { margin-bottom: 0; }\n\n    .ce-above .ce-bodytext { clear: both; }\n\n    .ce-intext.ce-left ol, .ce-intext.ce-left ul { padding-left: 40px; overflow: auto; }\n\n    /* Headline */\n    .ce-headline-left { text-align: left; }\n    .ce-headline-center { text-align: center; }\n    .ce-headline-right { text-align: right; }\n\n    /* Uploads */\n    .ce-uploads { margin: 0; padding: 0; }\n    .ce-uploads li { list-style: none outside none; margin: 1em 0; }\n    .ce-uploads img { float: left; padding-right: 1em; vertical-align: top; }\n    .ce-uploads span { display: block; }\n\n    /* Table */\n    .ce-table { width: 100%; max-width: 100%; }\n    .ce-table th, .ce-table td { padding: 0.5em 0.75em; vertical-align: top; }\n    .ce-table thead th { border-bottom: 2px solid #dadada; }\n    .ce-table th, .ce-table td { border-top: 1px solid #dadada; }\n    .ce-table-striped tbody tr:nth-of-type(odd) { background-color: rgba(0,0,0,.05); }\n    .ce-table-bordered th, .ce-table-bordered td { border: 1px solid #dadada; }\n\n    /* Space */\n    .frame-space-before-extra-small { margin-top: 1em; }\n    .frame-space-before-small { margin-top: 2em; }\n    .frame-space-before-medium { margin-top: 3em; }\n    .frame-space-before-large { margin-top: 4em; }\n    .frame-space-before-extra-large { margin-top: 5em; }\n    .frame-space-after-extra-small { margin-bottom: 1em; }\n    .frame-space-after-small { margin-bottom: 2em; }\n    .frame-space-after-medium { margin-bottom: 3em; }\n    .frame-space-after-large { margin-bottom: 4em; }\n    .frame-space-after-extra-large { margin-bottom: 5em; }\n\n    /* Frame */\n    .frame-ruler-before:before { content: \'\'; display: block; border-top: 1px solid rgba(0,0,0,0.25); margin-bottom: 2em; }\n    .frame-ruler-after:after { content: \'\'; display: block; border-bottom: 1px solid rgba(0,0,0,0.25); margin-top: 2em; }\n    .frame-indent { margin-left: 15%; margin-right: 15%; }\n    .frame-indent-left { margin-left: 33%; }\n    .frame-indent-right { margin-right: 33%; }\";}s:12:\"tx_timezones\";s:4:\"USER\";s:13:\"tx_timezones.\";a:11:{s:8:\"userFunc\";s:37:\"TYPO3\\CMS\\Extbase\\Core\\Bootstrap->run\";s:10:\"pluginName\";s:3:\"Pi1\";s:13:\"extensionName\";s:9:\"Timezones\";s:10:\"vendorName\";s:6:\"Thucke\";s:10:\"controller\";s:9:\"Timezones\";s:4:\"mvc.\";a:1:{s:39:\"callDefaultActionIfActionCantBeResolved\";s:1:\"0\";}s:28:\"switchableControllerActions.\";a:1:{s:10:\"Timezones.\";a:4:{i:1;s:5:\"index\";i:2;s:4:\"show\";i:3;s:6:\"select\";i:4;s:5:\"tzset\";}}s:5:\"view.\";a:3:{s:18:\"templateRootPaths.\";a:1:{i:0;s:42:\"EXT:timezones/Resources/Private/Templates/\";}s:17:\"partialRootPaths.\";a:1:{i:0;s:41:\"EXT:timezones/Resources/Private/Partials/\";}s:16:\"layoutRootPaths.\";a:1:{i:0;s:40:\"EXT:timezones/Resources/Private/Layouts/\";}}s:9:\"settings.\";a:2:{s:10:\"pluginPage\";s:1:\"0\";s:8:\"logging.\";a:8:{s:10:\"emergency.\";a:2:{s:4:\"file\";s:28:\"typo3temp/logs/Timezones.log\";s:5:\"table\";s:7:\"sys_log\";}s:6:\"alert.\";a:1:{s:5:\"table\";s:7:\"sys_log\";}s:9:\"critical.\";a:1:{s:5:\"table\";s:7:\"sys_log\";}s:6:\"error.\";a:1:{s:5:\"table\";s:7:\"sys_log\";}s:8:\"warning.\";a:0:{}s:7:\"notice.\";a:0:{}s:5:\"info.\";a:0:{}s:6:\"debug.\";a:0:{}}}s:12:\"_LOCAL_LANG.\";a:1:{s:8:\"default.\";a:1:{s:9:\"read_more\";s:7:\"more >>\";}}s:12:\"persistence.\";a:1:{s:27:\"enhancedLazyLoadingStrategy\";s:1:\"0\";}}}s:5:\"page.\";a:3:{s:11:\"includeCSS.\";a:1:{s:9:\"timezones\";s:48:\"EXT:timezones/Resources/Public/Css/timezones.css\";}i:100;s:7:\"CONTENT\";s:4:\"100.\";a:2:{s:5:\"table\";s:10:\"tt_content\";s:7:\"select.\";a:2:{s:7:\"orderBy\";s:7:\"sorting\";s:5:\"where\";s:11:\"{#colPos}=0\";}}}s:23:\"fluidAjaxWidgetResponse\";s:4:\"PAGE\";s:24:\"fluidAjaxWidgetResponse.\";a:4:{s:7:\"typeNum\";s:4:\"7076\";s:7:\"config.\";a:4:{s:8:\"no_cache\";s:1:\"1\";s:20:\"disableAllHeaderCode\";s:1:\"1\";s:18:\"additionalHeaders.\";a:1:{s:3:\"10.\";a:2:{s:6:\"header\";s:24:\"Content-Type: text/plain\";s:7:\"replace\";s:1:\"1\";}}s:5:\"debug\";s:1:\"0\";}i:10;s:8:\"USER_INT\";s:3:\"10.\";a:1:{s:8:\"userFunc\";s:42:\"TYPO3\\CMS\\Fluid\\Core\\Widget\\Bootstrap->run\";}}s:7:\"module.\";a:3:{s:9:\"tx_belog.\";a:1:{s:9:\"settings.\";a:3:{s:29:\"selectableNumberOfLogEntries.\";a:7:{i:20;s:2:\"20\";i:50;s:2:\"50\";i:100;s:3:\"100\";i:200;s:3:\"200\";i:500;s:3:\"500\";i:1000;s:4:\"1000\";i:1000000;s:3:\"any\";}s:21:\"selectableTimeFrames.\";a:8:{i:0;s:8:\"thisWeek\";i:1;s:8:\"lastWeek\";i:2;s:9:\"last7Days\";i:10;s:9:\"thisMonth\";i:11;s:9:\"lastMonth\";i:12;s:10:\"last31Days\";i:20;s:7:\"noLimit\";i:30;s:11:\"userDefined\";}s:18:\"selectableActions.\";a:7:{i:0;s:3:\"any\";i:1;s:14:\"actionDatabase\";i:2;s:10:\"actionFile\";i:3;s:11:\"actionCache\";i:254;s:14:\"actionSettings\";i:255;s:11:\"actionLogin\";i:-1;s:12:\"actionErrors\";}}}s:10:\"tx_beuser.\";a:2:{s:12:\"persistence.\";a:1:{s:10:\"storagePid\";s:1:\"0\";}s:9:\"settings.\";a:1:{s:5:\"dummy\";s:3:\"foo\";}}s:20:\"tx_extensionmanager.\";a:1:{s:9:\"features.\";a:1:{s:20:\"skipDefaultArguments\";s:1:\"0\";}}}s:4:\"page\";s:4:\"PAGE\";s:9:\"sitetitle\";s:14:\"New TYPO3 site\";s:6:\"types.\";a:2:{i:7076;s:23:\"fluidAjaxWidgetResponse\";i:0;s:4:\"page\";}}}'),(3,'da4e787af2263d40bc4daf3ae33ec5ce',2145909600,'a:0:{}'),(4,'75ee55664f41258d9a2ab089d0b3c7f0',1616934344,'a:1:{i:0;a:3:{s:11:\"doNotLinkIt\";s:1:\"1\";s:14:\"wrapItemAndSub\";s:3:\"{|}\";s:8:\"stdWrap.\";a:2:{s:7:\"cObject\";s:3:\"COA\";s:8:\"cObject.\";a:27:{i:1;s:13:\"LOAD_REGISTER\";s:2:\"1.\";a:1:{s:11:\"languageId.\";a:2:{s:7:\"cObject\";s:4:\"TEXT\";s:8:\"cObject.\";a:2:{s:6:\"value.\";a:1:{s:4:\"data\";s:24:\"register:languages_HMENU\";}s:8:\"listNum.\";a:2:{s:8:\"stdWrap.\";a:2:{s:4:\"data\";s:28:\"register:count_HMENU_MENUOBJ\";s:4:\"wrap\";s:3:\"|-1\";}s:9:\"splitChar\";s:1:\",\";}}}}i:10;s:4:\"TEXT\";s:3:\"10.\";a:2:{s:8:\"stdWrap.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:4:\"wrap\";s:14:\"\"languageId\":|\";}i:11;s:4:\"USER\";s:3:\"11.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:6:\"locale\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:11:\",\"locale\":|\";}}i:20;s:4:\"USER\";s:3:\"20.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:5:\"title\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:10:\",\"title\":|\";}}i:21;s:4:\"USER\";s:3:\"21.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:15:\"navigationTitle\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:20:\",\"navigationTitle\":|\";}}i:22;s:4:\"USER\";s:3:\"22.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:16:\"twoLetterIsoCode\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:21:\",\"twoLetterIsoCode\":|\";}}i:23;s:4:\"USER\";s:3:\"23.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:8:\"hreflang\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:13:\",\"hreflang\":|\";}}i:24;s:4:\"USER\";s:3:\"24.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:9:\"direction\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:14:\",\"direction\":|\";}}i:25;s:4:\"USER\";s:3:\"25.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:4:\"flag\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:9:\",\"flag\":|\";}}i:90;s:4:\"TEXT\";s:3:\"90.\";a:2:{s:5:\"value\";s:21:\"###LINKPLACEHOLDER###\";s:4:\"wrap\";s:9:\",\"link\":|\";}i:91;s:4:\"TEXT\";s:3:\"91.\";a:2:{s:5:\"value\";s:1:\"1\";s:4:\"wrap\";s:11:\",\"active\":|\";}i:92;s:4:\"TEXT\";s:3:\"92.\";a:2:{s:5:\"value\";s:1:\"0\";s:4:\"wrap\";s:12:\",\"current\":|\";}i:93;s:4:\"TEXT\";s:3:\"93.\";a:2:{s:5:\"value\";s:1:\"1\";s:4:\"wrap\";s:14:\",\"available\":|\";}i:99;s:16:\"RESTORE_REGISTER\";}}}}'),(5,'d2d0a044fa76037f9dd31e136b965336',1616934355,'a:1:{i:0;a:3:{s:11:\"doNotLinkIt\";s:1:\"1\";s:14:\"wrapItemAndSub\";s:3:\"{|}\";s:8:\"stdWrap.\";a:2:{s:7:\"cObject\";s:3:\"COA\";s:8:\"cObject.\";a:27:{i:1;s:13:\"LOAD_REGISTER\";s:2:\"1.\";a:1:{s:11:\"languageId.\";a:2:{s:7:\"cObject\";s:4:\"TEXT\";s:8:\"cObject.\";a:2:{s:6:\"value.\";a:1:{s:4:\"data\";s:24:\"register:languages_HMENU\";}s:8:\"listNum.\";a:2:{s:8:\"stdWrap.\";a:2:{s:4:\"data\";s:28:\"register:count_HMENU_MENUOBJ\";s:4:\"wrap\";s:3:\"|-1\";}s:9:\"splitChar\";s:1:\",\";}}}}i:10;s:4:\"TEXT\";s:3:\"10.\";a:2:{s:8:\"stdWrap.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:4:\"wrap\";s:14:\"\"languageId\":|\";}i:11;s:4:\"USER\";s:3:\"11.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:6:\"locale\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:11:\",\"locale\":|\";}}i:20;s:4:\"USER\";s:3:\"20.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:5:\"title\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:10:\",\"title\":|\";}}i:21;s:4:\"USER\";s:3:\"21.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:15:\"navigationTitle\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:20:\",\"navigationTitle\":|\";}}i:22;s:4:\"USER\";s:3:\"22.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:16:\"twoLetterIsoCode\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:21:\",\"twoLetterIsoCode\":|\";}}i:23;s:4:\"USER\";s:3:\"23.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:8:\"hreflang\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:13:\",\"hreflang\":|\";}}i:24;s:4:\"USER\";s:3:\"24.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:9:\"direction\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:14:\",\"direction\":|\";}}i:25;s:4:\"USER\";s:3:\"25.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:4:\"flag\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:9:\",\"flag\":|\";}}i:90;s:4:\"TEXT\";s:3:\"90.\";a:2:{s:5:\"value\";s:21:\"###LINKPLACEHOLDER###\";s:4:\"wrap\";s:9:\",\"link\":|\";}i:91;s:4:\"TEXT\";s:3:\"91.\";a:2:{s:5:\"value\";s:1:\"1\";s:4:\"wrap\";s:11:\",\"active\":|\";}i:92;s:4:\"TEXT\";s:3:\"92.\";a:2:{s:5:\"value\";s:1:\"0\";s:4:\"wrap\";s:12:\",\"current\":|\";}i:93;s:4:\"TEXT\";s:3:\"93.\";a:2:{s:5:\"value\";s:1:\"1\";s:4:\"wrap\";s:14:\",\"available\":|\";}i:99;s:16:\"RESTORE_REGISTER\";}}}}'),(6,'34f3e89cf8586d9998ea72391ba73878',1616934357,'a:1:{i:0;a:3:{s:11:\"doNotLinkIt\";s:1:\"1\";s:14:\"wrapItemAndSub\";s:3:\"{|}\";s:8:\"stdWrap.\";a:2:{s:7:\"cObject\";s:3:\"COA\";s:8:\"cObject.\";a:27:{i:1;s:13:\"LOAD_REGISTER\";s:2:\"1.\";a:1:{s:11:\"languageId.\";a:2:{s:7:\"cObject\";s:4:\"TEXT\";s:8:\"cObject.\";a:2:{s:6:\"value.\";a:1:{s:4:\"data\";s:24:\"register:languages_HMENU\";}s:8:\"listNum.\";a:2:{s:8:\"stdWrap.\";a:2:{s:4:\"data\";s:28:\"register:count_HMENU_MENUOBJ\";s:4:\"wrap\";s:3:\"|-1\";}s:9:\"splitChar\";s:1:\",\";}}}}i:10;s:4:\"TEXT\";s:3:\"10.\";a:2:{s:8:\"stdWrap.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:4:\"wrap\";s:14:\"\"languageId\":|\";}i:11;s:4:\"USER\";s:3:\"11.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:6:\"locale\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:11:\",\"locale\":|\";}}i:20;s:4:\"USER\";s:3:\"20.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:5:\"title\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:10:\",\"title\":|\";}}i:21;s:4:\"USER\";s:3:\"21.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:15:\"navigationTitle\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:20:\",\"navigationTitle\":|\";}}i:22;s:4:\"USER\";s:3:\"22.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:16:\"twoLetterIsoCode\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:21:\",\"twoLetterIsoCode\":|\";}}i:23;s:4:\"USER\";s:3:\"23.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:8:\"hreflang\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:13:\",\"hreflang\":|\";}}i:24;s:4:\"USER\";s:3:\"24.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:9:\"direction\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:14:\",\"direction\":|\";}}i:25;s:4:\"USER\";s:3:\"25.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:4:\"flag\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:9:\",\"flag\":|\";}}i:90;s:4:\"TEXT\";s:3:\"90.\";a:2:{s:5:\"value\";s:21:\"###LINKPLACEHOLDER###\";s:4:\"wrap\";s:9:\",\"link\":|\";}i:91;s:4:\"TEXT\";s:3:\"91.\";a:2:{s:5:\"value\";s:1:\"1\";s:4:\"wrap\";s:11:\",\"active\":|\";}i:92;s:4:\"TEXT\";s:3:\"92.\";a:2:{s:5:\"value\";s:1:\"0\";s:4:\"wrap\";s:12:\",\"current\":|\";}i:93;s:4:\"TEXT\";s:3:\"93.\";a:2:{s:5:\"value\";s:1:\"1\";s:4:\"wrap\";s:14:\",\"available\":|\";}i:99;s:16:\"RESTORE_REGISTER\";}}}}'),(7,'6bd1617f573c885300a3689b647f5c5d',1616934358,'a:1:{i:0;a:3:{s:11:\"doNotLinkIt\";s:1:\"1\";s:14:\"wrapItemAndSub\";s:3:\"{|}\";s:8:\"stdWrap.\";a:2:{s:7:\"cObject\";s:3:\"COA\";s:8:\"cObject.\";a:27:{i:1;s:13:\"LOAD_REGISTER\";s:2:\"1.\";a:1:{s:11:\"languageId.\";a:2:{s:7:\"cObject\";s:4:\"TEXT\";s:8:\"cObject.\";a:2:{s:6:\"value.\";a:1:{s:4:\"data\";s:24:\"register:languages_HMENU\";}s:8:\"listNum.\";a:2:{s:8:\"stdWrap.\";a:2:{s:4:\"data\";s:28:\"register:count_HMENU_MENUOBJ\";s:4:\"wrap\";s:3:\"|-1\";}s:9:\"splitChar\";s:1:\",\";}}}}i:10;s:4:\"TEXT\";s:3:\"10.\";a:2:{s:8:\"stdWrap.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:4:\"wrap\";s:14:\"\"languageId\":|\";}i:11;s:4:\"USER\";s:3:\"11.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:6:\"locale\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:11:\",\"locale\":|\";}}i:20;s:4:\"USER\";s:3:\"20.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:5:\"title\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:10:\",\"title\":|\";}}i:21;s:4:\"USER\";s:3:\"21.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:15:\"navigationTitle\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:20:\",\"navigationTitle\":|\";}}i:22;s:4:\"USER\";s:3:\"22.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:16:\"twoLetterIsoCode\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:21:\",\"twoLetterIsoCode\":|\";}}i:23;s:4:\"USER\";s:3:\"23.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:8:\"hreflang\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:13:\",\"hreflang\":|\";}}i:24;s:4:\"USER\";s:3:\"24.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:9:\"direction\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:14:\",\"direction\":|\";}}i:25;s:4:\"USER\";s:3:\"25.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:4:\"flag\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:9:\",\"flag\":|\";}}i:90;s:4:\"TEXT\";s:3:\"90.\";a:2:{s:5:\"value\";s:21:\"###LINKPLACEHOLDER###\";s:4:\"wrap\";s:9:\",\"link\":|\";}i:91;s:4:\"TEXT\";s:3:\"91.\";a:2:{s:5:\"value\";s:1:\"1\";s:4:\"wrap\";s:11:\",\"active\":|\";}i:92;s:4:\"TEXT\";s:3:\"92.\";a:2:{s:5:\"value\";s:1:\"0\";s:4:\"wrap\";s:12:\",\"current\":|\";}i:93;s:4:\"TEXT\";s:3:\"93.\";a:2:{s:5:\"value\";s:1:\"1\";s:4:\"wrap\";s:14:\",\"available\":|\";}i:99;s:16:\"RESTORE_REGISTER\";}}}}'),(8,'d086ca68c27b5984bf91267abbb64ddc',1616934365,'a:1:{i:0;a:3:{s:11:\"doNotLinkIt\";s:1:\"1\";s:14:\"wrapItemAndSub\";s:3:\"{|}\";s:8:\"stdWrap.\";a:2:{s:7:\"cObject\";s:3:\"COA\";s:8:\"cObject.\";a:27:{i:1;s:13:\"LOAD_REGISTER\";s:2:\"1.\";a:1:{s:11:\"languageId.\";a:2:{s:7:\"cObject\";s:4:\"TEXT\";s:8:\"cObject.\";a:2:{s:6:\"value.\";a:1:{s:4:\"data\";s:24:\"register:languages_HMENU\";}s:8:\"listNum.\";a:2:{s:8:\"stdWrap.\";a:2:{s:4:\"data\";s:28:\"register:count_HMENU_MENUOBJ\";s:4:\"wrap\";s:3:\"|-1\";}s:9:\"splitChar\";s:1:\",\";}}}}i:10;s:4:\"TEXT\";s:3:\"10.\";a:2:{s:8:\"stdWrap.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:4:\"wrap\";s:14:\"\"languageId\":|\";}i:11;s:4:\"USER\";s:3:\"11.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:6:\"locale\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:11:\",\"locale\":|\";}}i:20;s:4:\"USER\";s:3:\"20.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:5:\"title\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:10:\",\"title\":|\";}}i:21;s:4:\"USER\";s:3:\"21.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:15:\"navigationTitle\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:20:\",\"navigationTitle\":|\";}}i:22;s:4:\"USER\";s:3:\"22.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:16:\"twoLetterIsoCode\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:21:\",\"twoLetterIsoCode\":|\";}}i:23;s:4:\"USER\";s:3:\"23.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:8:\"hreflang\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:13:\",\"hreflang\":|\";}}i:24;s:4:\"USER\";s:3:\"24.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:9:\"direction\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:14:\",\"direction\":|\";}}i:25;s:4:\"USER\";s:3:\"25.\";a:4:{s:8:\"userFunc\";s:71:\"TYPO3\\CMS\\Frontend\\DataProcessing\\LanguageMenuProcessor->getFieldAsJson\";s:9:\"language.\";a:1:{s:4:\"data\";s:19:\"register:languageId\";}s:5:\"field\";s:4:\"flag\";s:8:\"stdWrap.\";a:1:{s:4:\"wrap\";s:9:\",\"flag\":|\";}}i:90;s:4:\"TEXT\";s:3:\"90.\";a:2:{s:5:\"value\";s:21:\"###LINKPLACEHOLDER###\";s:4:\"wrap\";s:9:\",\"link\":|\";}i:91;s:4:\"TEXT\";s:3:\"91.\";a:2:{s:5:\"value\";s:1:\"1\";s:4:\"wrap\";s:11:\",\"active\":|\";}i:92;s:4:\"TEXT\";s:3:\"92.\";a:2:{s:5:\"value\";s:1:\"0\";s:4:\"wrap\";s:12:\",\"current\":|\";}i:93;s:4:\"TEXT\";s:3:\"93.\";a:2:{s:5:\"value\";s:1:\"1\";s:4:\"wrap\";s:14:\",\"available\":|\";}i:99;s:16:\"RESTORE_REGISTER\";}}}}'),(9,'e61fcbb5702068d957a3816aa894faac',2145909600,'a:2:{i:0;a:3:{s:8:\"TSconfig\";a:3:{s:4:\"mod.\";a:4:{s:9:\"web_list.\";a:4:{s:28:\"enableDisplayBigControlPanel\";s:10:\"selectable\";s:15:\"enableClipBoard\";s:10:\"selectable\";s:18:\"tableDisplayOrder.\";a:9:{s:9:\"be_users.\";a:1:{s:5:\"after\";s:9:\"be_groups\";}s:15:\"sys_filemounts.\";a:1:{s:5:\"after\";s:8:\"be_users\";}s:17:\"sys_file_storage.\";a:1:{s:5:\"after\";s:14:\"sys_filemounts\";}s:13:\"sys_language.\";a:1:{s:5:\"after\";s:16:\"sys_file_storage\";}s:9:\"fe_users.\";a:2:{s:5:\"after\";s:9:\"fe_groups\";s:6:\"before\";s:5:\"pages\";}s:13:\"sys_template.\";a:1:{s:5:\"after\";s:5:\"pages\";}s:15:\"backend_layout.\";a:1:{s:5:\"after\";s:5:\"pages\";}s:11:\"tt_content.\";a:1:{s:5:\"after\";s:33:\"pages,backend_layout,sys_template\";}s:13:\"sys_category.\";a:1:{s:5:\"after\";s:10:\"tt_content\";}}s:12:\"searchLevel.\";a:1:{s:6:\"items.\";a:6:{i:-1;s:82:\"EXT:core/Resources/Private/Language/locallang_core.xlf:labels.searchLevel.infinite\";i:0;s:75:\"EXT:core/Resources/Private/Language/locallang_core.xlf:labels.searchLevel.0\";i:1;s:75:\"EXT:core/Resources/Private/Language/locallang_core.xlf:labels.searchLevel.1\";i:2;s:75:\"EXT:core/Resources/Private/Language/locallang_core.xlf:labels.searchLevel.2\";i:3;s:75:\"EXT:core/Resources/Private/Language/locallang_core.xlf:labels.searchLevel.3\";i:4;s:75:\"EXT:core/Resources/Private/Language/locallang_core.xlf:labels.searchLevel.4\";}}}s:8:\"wizards.\";a:2:{s:10:\"newRecord.\";a:1:{s:6:\"pages.\";a:1:{s:5:\"show.\";a:3:{s:10:\"pageInside\";s:1:\"1\";s:9:\"pageAfter\";s:1:\"1\";s:18:\"pageSelectPosition\";s:1:\"1\";}}}s:18:\"newContentElement.\";a:1:{s:12:\"wizardItems.\";a:5:{s:7:\"common.\";a:3:{s:9:\"elements.\";a:8:{s:7:\"header.\";a:4:{s:14:\"iconIdentifier\";s:14:\"content-header\";s:5:\"title\";s:98:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_headerOnly_title\";s:11:\"description\";s:104:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_headerOnly_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:6:\"header\";}}s:5:\"text.\";a:4:{s:14:\"iconIdentifier\";s:12:\"content-text\";s:5:\"title\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_regularText_title\";s:11:\"description\";s:105:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_regularText_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:4:\"text\";}}s:8:\"textpic.\";a:4:{s:14:\"iconIdentifier\";s:15:\"content-textpic\";s:5:\"title\";s:97:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_textImage_title\";s:11:\"description\";s:103:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_textImage_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:7:\"textpic\";}}s:6:\"image.\";a:4:{s:14:\"iconIdentifier\";s:13:\"content-image\";s:5:\"title\";s:98:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_imagesOnly_title\";s:11:\"description\";s:104:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_imagesOnly_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:5:\"image\";}}s:10:\"textmedia.\";a:4:{s:14:\"iconIdentifier\";s:17:\"content-textmedia\";s:5:\"title\";s:97:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_textMedia_title\";s:11:\"description\";s:103:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_textMedia_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:9:\"textmedia\";}}s:8:\"bullets.\";a:4:{s:14:\"iconIdentifier\";s:15:\"content-bullets\";s:5:\"title\";s:98:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_bulletList_title\";s:11:\"description\";s:104:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_bulletList_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:7:\"bullets\";}}s:6:\"table.\";a:4:{s:14:\"iconIdentifier\";s:13:\"content-table\";s:5:\"title\";s:93:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_table_title\";s:11:\"description\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_table_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:5:\"table\";}}s:8:\"uploads.\";a:4:{s:14:\"iconIdentifier\";s:23:\"content-special-uploads\";s:5:\"title\";s:98:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_filelinks_title\";s:11:\"description\";s:104:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_filelinks_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:7:\"uploads\";}}}s:4:\"show\";s:57:\"header,text,textpic,image,textmedia,bullets,table,uploads\";s:6:\"header\";s:81:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common\";}s:5:\"menu.\";a:3:{s:9:\"elements.\";a:11:{s:14:\"menu_abstract.\";a:4:{s:14:\"iconIdentifier\";s:21:\"content-menu-abstract\";s:5:\"title\";s:94:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_abstract.title\";s:11:\"description\";s:100:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_abstract.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:13:\"menu_abstract\";}}s:25:\"menu_categorized_content.\";a:4:{s:14:\"iconIdentifier\";s:24:\"content-menu-categorized\";s:5:\"title\";s:105:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_categorized_content.title\";s:11:\"description\";s:111:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_categorized_content.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:24:\"menu_categorized_content\";}}s:23:\"menu_categorized_pages.\";a:4:{s:14:\"iconIdentifier\";s:24:\"content-menu-categorized\";s:5:\"title\";s:103:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_categorized_pages.title\";s:11:\"description\";s:109:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_categorized_pages.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:22:\"menu_categorized_pages\";}}s:11:\"menu_pages.\";a:4:{s:14:\"iconIdentifier\";s:18:\"content-menu-pages\";s:5:\"title\";s:91:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_pages.title\";s:11:\"description\";s:97:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_pages.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:10:\"menu_pages\";}}s:14:\"menu_subpages.\";a:4:{s:14:\"iconIdentifier\";s:18:\"content-menu-pages\";s:5:\"title\";s:94:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_subpages.title\";s:11:\"description\";s:100:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_subpages.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:13:\"menu_subpages\";}}s:22:\"menu_recently_updated.\";a:4:{s:14:\"iconIdentifier\";s:29:\"content-menu-recently-updated\";s:5:\"title\";s:102:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_recently_updated.title\";s:11:\"description\";s:108:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_recently_updated.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:21:\"menu_recently_updated\";}}s:19:\"menu_related_pages.\";a:4:{s:14:\"iconIdentifier\";s:20:\"content-menu-related\";s:5:\"title\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_related_pages.title\";s:11:\"description\";s:105:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_related_pages.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:18:\"menu_related_pages\";}}s:13:\"menu_section.\";a:4:{s:14:\"iconIdentifier\";s:20:\"content-menu-section\";s:5:\"title\";s:93:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_section.title\";s:11:\"description\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_section.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:12:\"menu_section\";}}s:19:\"menu_section_pages.\";a:4:{s:14:\"iconIdentifier\";s:20:\"content-menu-section\";s:5:\"title\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_section_pages.title\";s:11:\"description\";s:105:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_section_pages.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:18:\"menu_section_pages\";}}s:13:\"menu_sitemap.\";a:4:{s:14:\"iconIdentifier\";s:20:\"content-menu-sitemap\";s:5:\"title\";s:93:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_sitemap.title\";s:11:\"description\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_sitemap.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:12:\"menu_sitemap\";}}s:19:\"menu_sitemap_pages.\";a:4:{s:14:\"iconIdentifier\";s:26:\"content-menu-sitemap-pages\";s:5:\"title\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_sitemap_pages.title\";s:11:\"description\";s:105:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_sitemap_pages.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:18:\"menu_sitemap_pages\";}}}s:4:\"show\";s:191:\"menu_abstract,menu_categorized_content,menu_categorized_pages,menu_pages,menu_subpages,menu_recently_updated,menu_related_pages,menu_section,menu_section_pages,menu_sitemap,menu_sitemap_pages\";s:6:\"header\";s:79:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu\";}s:8:\"special.\";a:3:{s:9:\"elements.\";a:3:{s:5:\"html.\";a:4:{s:14:\"iconIdentifier\";s:20:\"content-special-html\";s:5:\"title\";s:98:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_plainHTML_title\";s:11:\"description\";s:104:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_plainHTML_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:4:\"html\";}}s:4:\"div.\";a:5:{s:14:\"iconIdentifier\";s:19:\"content-special-div\";s:5:\"title\";s:96:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_divider_title\";s:11:\"description\";s:102:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_divider_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:3:\"div\";}s:12:\"saveAndClose\";s:4:\"true\";}s:9:\"shortcut.\";a:4:{s:14:\"iconIdentifier\";s:24:\"content-special-shortcut\";s:5:\"title\";s:97:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_shortcut_title\";s:11:\"description\";s:103:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_shortcut_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:8:\"shortcut\";}}}s:4:\"show\";s:17:\"html,div,shortcut\";s:6:\"header\";s:82:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special\";}s:6:\"forms.\";a:1:{s:6:\"header\";s:80:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:forms\";}s:8:\"plugins.\";a:3:{s:6:\"header\";s:82:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:plugins\";s:9:\"elements.\";a:1:{s:8:\"general.\";a:4:{s:14:\"iconIdentifier\";s:14:\"content-plugin\";s:5:\"title\";s:96:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:plugins_general_title\";s:11:\"description\";s:102:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:plugins_general_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:4:\"list\";}}}s:4:\"show\";s:1:\"*\";}}}}s:9:\"web_view.\";a:1:{s:19:\"previewFrameWidths.\";a:12:{s:5:\"1920.\";a:4:{s:5:\"label\";s:66:\"LLL:EXT:viewpage/Resources/Private/Language/locallang.xlf:computer\";s:4:\"type\";s:7:\"desktop\";s:5:\"width\";s:4:\"1920\";s:6:\"height\";s:4:\"1080\";}s:5:\"1366.\";a:4:{s:5:\"label\";s:66:\"LLL:EXT:viewpage/Resources/Private/Language/locallang.xlf:computer\";s:4:\"type\";s:7:\"desktop\";s:5:\"width\";s:4:\"1366\";s:6:\"height\";s:3:\"768\";}s:5:\"1280.\";a:4:{s:5:\"label\";s:66:\"LLL:EXT:viewpage/Resources/Private/Language/locallang.xlf:computer\";s:4:\"type\";s:7:\"desktop\";s:5:\"width\";s:4:\"1280\";s:6:\"height\";s:4:\"1024\";}s:5:\"1024.\";a:4:{s:5:\"label\";s:66:\"LLL:EXT:viewpage/Resources/Private/Language/locallang.xlf:computer\";s:4:\"type\";s:7:\"desktop\";s:5:\"width\";s:4:\"1024\";s:6:\"height\";s:3:\"768\";}s:7:\"nexus7.\";a:4:{s:5:\"label\";s:7:\"Nexus 7\";s:4:\"type\";s:6:\"tablet\";s:5:\"width\";s:3:\"600\";s:6:\"height\";s:3:\"960\";}s:8:\"nexus6p.\";a:4:{s:5:\"label\";s:8:\"Nexus 6P\";s:4:\"type\";s:6:\"mobile\";s:5:\"width\";s:3:\"411\";s:6:\"height\";s:3:\"731\";}s:8:\"ipadpro.\";a:4:{s:5:\"label\";s:8:\"iPad Pro\";s:4:\"type\";s:6:\"tablet\";s:5:\"width\";s:4:\"1024\";s:6:\"height\";s:4:\"1366\";}s:8:\"ipadair.\";a:4:{s:5:\"label\";s:8:\"iPad Air\";s:4:\"type\";s:6:\"tablet\";s:5:\"width\";s:3:\"768\";s:6:\"height\";s:4:\"1024\";}s:12:\"iphone7plus.\";a:4:{s:5:\"label\";s:13:\"iPhone 7 Plus\";s:4:\"type\";s:6:\"mobile\";s:5:\"width\";s:3:\"414\";s:6:\"height\";s:3:\"736\";}s:8:\"iphone6.\";a:4:{s:5:\"label\";s:8:\"iPhone 6\";s:4:\"type\";s:6:\"mobile\";s:5:\"width\";s:3:\"375\";s:6:\"height\";s:3:\"667\";}s:8:\"iphone5.\";a:4:{s:5:\"label\";s:8:\"iPhone 5\";s:4:\"type\";s:6:\"mobile\";s:5:\"width\";s:3:\"320\";s:6:\"height\";s:3:\"568\";}s:8:\"iphone4.\";a:4:{s:5:\"label\";s:8:\"iPhone 4\";s:4:\"type\";s:6:\"mobile\";s:5:\"width\";s:3:\"320\";s:6:\"height\";s:3:\"480\";}}}s:9:\"web_info.\";a:1:{s:17:\"fieldDefinitions.\";a:5:{s:2:\"0.\";a:2:{s:5:\"label\";s:69:\"LLL:EXT:info/Resources/Private/Language/locallang_webinfo.xlf:pages_0\";s:6:\"fields\";s:75:\"title,uid,slug,starttime,endtime,fe_group,target,url,shortcut,shortcut_mode\";}s:2:\"1.\";a:2:{s:5:\"label\";s:69:\"LLL:EXT:info/Resources/Private/Language/locallang_webinfo.xlf:pages_1\";s:6:\"fields\";s:26:\"title,uid,###ALL_TABLES###\";}s:2:\"2.\";a:2:{s:5:\"label\";s:69:\"LLL:EXT:info/Resources/Private/Language/locallang_webinfo.xlf:pages_2\";s:6:\"fields\";s:93:\"title,uid,lastUpdated,newUntil,cache_timeout,php_tree_stop,TSconfig,is_siteroot,fe_login_mode\";}s:4:\"seo.\";a:2:{s:5:\"label\";s:64:\"LLL:EXT:seo/Resources/Private/Language/locallang_webinfo.xlf:seo\";s:6:\"fields\";s:102:\"title,slug,seo_title,description,no_index,no_follow,canonical_link,sitemap_changefreq,sitemap_priority\";}s:13:\"social_media.\";a:2:{s:5:\"label\";s:73:\"LLL:EXT:seo/Resources/Private/Language/locallang_webinfo.xlf:social_media\";s:6:\"fields\";s:63:\"title,og_title,og_description,twitter_title,twitter_description\";}}}}s:8:\"TCEMAIN.\";a:2:{s:18:\"translateToMessage\";s:16:\"Translate to %s:\";s:12:\"linkHandler.\";a:6:{s:5:\"page.\";a:2:{s:7:\"handler\";s:48:\"TYPO3\\CMS\\Recordlist\\LinkHandler\\PageLinkHandler\";s:5:\"label\";s:77:\"LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:page\";}s:5:\"file.\";a:4:{s:7:\"handler\";s:48:\"TYPO3\\CMS\\Recordlist\\LinkHandler\\FileLinkHandler\";s:5:\"label\";s:77:\"LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:file\";s:12:\"displayAfter\";s:4:\"page\";s:9:\"scanAfter\";s:4:\"page\";}s:7:\"folder.\";a:4:{s:7:\"handler\";s:50:\"TYPO3\\CMS\\Recordlist\\LinkHandler\\FolderLinkHandler\";s:5:\"label\";s:79:\"LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:folder\";s:12:\"displayAfter\";s:9:\"page,file\";s:9:\"scanAfter\";s:9:\"page,file\";}s:4:\"url.\";a:4:{s:7:\"handler\";s:47:\"TYPO3\\CMS\\Recordlist\\LinkHandler\\UrlLinkHandler\";s:5:\"label\";s:79:\"LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:extUrl\";s:12:\"displayAfter\";s:16:\"page,file,folder\";s:9:\"scanAfter\";s:9:\"telephone\";}s:5:\"mail.\";a:4:{s:7:\"handler\";s:48:\"TYPO3\\CMS\\Recordlist\\LinkHandler\\MailLinkHandler\";s:5:\"label\";s:78:\"LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:email\";s:12:\"displayAfter\";s:20:\"page,file,folder,url\";s:10:\"scanBefore\";s:3:\"url\";}s:10:\"telephone.\";a:4:{s:7:\"handler\";s:53:\"TYPO3\\CMS\\Recordlist\\LinkHandler\\TelephoneLinkHandler\";s:5:\"label\";s:82:\"LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:telephone\";s:12:\"displayAfter\";s:25:\"page,file,folder,url,mail\";s:10:\"scanBefore\";s:3:\"url\";}}}s:8:\"TCEFORM.\";a:1:{s:11:\"tt_content.\";a:1:{s:12:\"imageorient.\";a:1:{s:6:\"types.\";a:1:{s:6:\"image.\";a:1:{s:11:\"removeItems\";s:18:\"8,9,10,17,18,25,26\";}}}}}}s:8:\"sections\";a:0:{}s:5:\"match\";a:0:{}}i:1;s:32:\"9197d75d22693b7d9878adecd2041a45\";}'),(10,'8c67f9e9eef63119c6b83a4a1181302e',2145909600,'a:2:{i:0;a:3:{s:8:\"TSconfig\";a:3:{s:4:\"mod.\";a:4:{s:9:\"web_list.\";a:4:{s:28:\"enableDisplayBigControlPanel\";s:10:\"selectable\";s:15:\"enableClipBoard\";s:10:\"selectable\";s:18:\"tableDisplayOrder.\";a:9:{s:9:\"be_users.\";a:1:{s:5:\"after\";s:9:\"be_groups\";}s:15:\"sys_filemounts.\";a:1:{s:5:\"after\";s:8:\"be_users\";}s:17:\"sys_file_storage.\";a:1:{s:5:\"after\";s:14:\"sys_filemounts\";}s:13:\"sys_language.\";a:1:{s:5:\"after\";s:16:\"sys_file_storage\";}s:9:\"fe_users.\";a:2:{s:5:\"after\";s:9:\"fe_groups\";s:6:\"before\";s:5:\"pages\";}s:13:\"sys_template.\";a:1:{s:5:\"after\";s:5:\"pages\";}s:15:\"backend_layout.\";a:1:{s:5:\"after\";s:5:\"pages\";}s:11:\"tt_content.\";a:1:{s:5:\"after\";s:33:\"pages,backend_layout,sys_template\";}s:13:\"sys_category.\";a:1:{s:5:\"after\";s:10:\"tt_content\";}}s:12:\"searchLevel.\";a:1:{s:6:\"items.\";a:6:{i:-1;s:82:\"EXT:core/Resources/Private/Language/locallang_core.xlf:labels.searchLevel.infinite\";i:0;s:75:\"EXT:core/Resources/Private/Language/locallang_core.xlf:labels.searchLevel.0\";i:1;s:75:\"EXT:core/Resources/Private/Language/locallang_core.xlf:labels.searchLevel.1\";i:2;s:75:\"EXT:core/Resources/Private/Language/locallang_core.xlf:labels.searchLevel.2\";i:3;s:75:\"EXT:core/Resources/Private/Language/locallang_core.xlf:labels.searchLevel.3\";i:4;s:75:\"EXT:core/Resources/Private/Language/locallang_core.xlf:labels.searchLevel.4\";}}}s:8:\"wizards.\";a:2:{s:10:\"newRecord.\";a:1:{s:6:\"pages.\";a:1:{s:5:\"show.\";a:3:{s:10:\"pageInside\";s:1:\"1\";s:9:\"pageAfter\";s:1:\"1\";s:18:\"pageSelectPosition\";s:1:\"1\";}}}s:18:\"newContentElement.\";a:1:{s:12:\"wizardItems.\";a:5:{s:7:\"common.\";a:3:{s:9:\"elements.\";a:8:{s:7:\"header.\";a:4:{s:14:\"iconIdentifier\";s:14:\"content-header\";s:5:\"title\";s:98:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_headerOnly_title\";s:11:\"description\";s:104:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_headerOnly_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:6:\"header\";}}s:5:\"text.\";a:4:{s:14:\"iconIdentifier\";s:12:\"content-text\";s:5:\"title\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_regularText_title\";s:11:\"description\";s:105:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_regularText_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:4:\"text\";}}s:8:\"textpic.\";a:4:{s:14:\"iconIdentifier\";s:15:\"content-textpic\";s:5:\"title\";s:97:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_textImage_title\";s:11:\"description\";s:103:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_textImage_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:7:\"textpic\";}}s:6:\"image.\";a:4:{s:14:\"iconIdentifier\";s:13:\"content-image\";s:5:\"title\";s:98:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_imagesOnly_title\";s:11:\"description\";s:104:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_imagesOnly_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:5:\"image\";}}s:10:\"textmedia.\";a:4:{s:14:\"iconIdentifier\";s:17:\"content-textmedia\";s:5:\"title\";s:97:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_textMedia_title\";s:11:\"description\";s:103:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_textMedia_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:9:\"textmedia\";}}s:8:\"bullets.\";a:4:{s:14:\"iconIdentifier\";s:15:\"content-bullets\";s:5:\"title\";s:98:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_bulletList_title\";s:11:\"description\";s:104:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_bulletList_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:7:\"bullets\";}}s:6:\"table.\";a:4:{s:14:\"iconIdentifier\";s:13:\"content-table\";s:5:\"title\";s:93:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_table_title\";s:11:\"description\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common_table_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:5:\"table\";}}s:8:\"uploads.\";a:4:{s:14:\"iconIdentifier\";s:23:\"content-special-uploads\";s:5:\"title\";s:98:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_filelinks_title\";s:11:\"description\";s:104:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_filelinks_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:7:\"uploads\";}}}s:4:\"show\";s:57:\"header,text,textpic,image,textmedia,bullets,table,uploads\";s:6:\"header\";s:81:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:common\";}s:5:\"menu.\";a:3:{s:9:\"elements.\";a:11:{s:14:\"menu_abstract.\";a:4:{s:14:\"iconIdentifier\";s:21:\"content-menu-abstract\";s:5:\"title\";s:94:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_abstract.title\";s:11:\"description\";s:100:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_abstract.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:13:\"menu_abstract\";}}s:25:\"menu_categorized_content.\";a:4:{s:14:\"iconIdentifier\";s:24:\"content-menu-categorized\";s:5:\"title\";s:105:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_categorized_content.title\";s:11:\"description\";s:111:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_categorized_content.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:24:\"menu_categorized_content\";}}s:23:\"menu_categorized_pages.\";a:4:{s:14:\"iconIdentifier\";s:24:\"content-menu-categorized\";s:5:\"title\";s:103:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_categorized_pages.title\";s:11:\"description\";s:109:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_categorized_pages.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:22:\"menu_categorized_pages\";}}s:11:\"menu_pages.\";a:4:{s:14:\"iconIdentifier\";s:18:\"content-menu-pages\";s:5:\"title\";s:91:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_pages.title\";s:11:\"description\";s:97:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_pages.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:10:\"menu_pages\";}}s:14:\"menu_subpages.\";a:4:{s:14:\"iconIdentifier\";s:18:\"content-menu-pages\";s:5:\"title\";s:94:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_subpages.title\";s:11:\"description\";s:100:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_subpages.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:13:\"menu_subpages\";}}s:22:\"menu_recently_updated.\";a:4:{s:14:\"iconIdentifier\";s:29:\"content-menu-recently-updated\";s:5:\"title\";s:102:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_recently_updated.title\";s:11:\"description\";s:108:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_recently_updated.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:21:\"menu_recently_updated\";}}s:19:\"menu_related_pages.\";a:4:{s:14:\"iconIdentifier\";s:20:\"content-menu-related\";s:5:\"title\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_related_pages.title\";s:11:\"description\";s:105:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_related_pages.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:18:\"menu_related_pages\";}}s:13:\"menu_section.\";a:4:{s:14:\"iconIdentifier\";s:20:\"content-menu-section\";s:5:\"title\";s:93:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_section.title\";s:11:\"description\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_section.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:12:\"menu_section\";}}s:19:\"menu_section_pages.\";a:4:{s:14:\"iconIdentifier\";s:20:\"content-menu-section\";s:5:\"title\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_section_pages.title\";s:11:\"description\";s:105:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_section_pages.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:18:\"menu_section_pages\";}}s:13:\"menu_sitemap.\";a:4:{s:14:\"iconIdentifier\";s:20:\"content-menu-sitemap\";s:5:\"title\";s:93:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_sitemap.title\";s:11:\"description\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_sitemap.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:12:\"menu_sitemap\";}}s:19:\"menu_sitemap_pages.\";a:4:{s:14:\"iconIdentifier\";s:26:\"content-menu-sitemap-pages\";s:5:\"title\";s:99:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_sitemap_pages.title\";s:11:\"description\";s:105:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu_sitemap_pages.description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:18:\"menu_sitemap_pages\";}}}s:4:\"show\";s:191:\"menu_abstract,menu_categorized_content,menu_categorized_pages,menu_pages,menu_subpages,menu_recently_updated,menu_related_pages,menu_section,menu_section_pages,menu_sitemap,menu_sitemap_pages\";s:6:\"header\";s:79:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:menu\";}s:8:\"special.\";a:3:{s:9:\"elements.\";a:3:{s:5:\"html.\";a:4:{s:14:\"iconIdentifier\";s:20:\"content-special-html\";s:5:\"title\";s:98:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_plainHTML_title\";s:11:\"description\";s:104:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_plainHTML_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:4:\"html\";}}s:4:\"div.\";a:5:{s:14:\"iconIdentifier\";s:19:\"content-special-div\";s:5:\"title\";s:96:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_divider_title\";s:11:\"description\";s:102:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_divider_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:3:\"div\";}s:12:\"saveAndClose\";s:4:\"true\";}s:9:\"shortcut.\";a:4:{s:14:\"iconIdentifier\";s:24:\"content-special-shortcut\";s:5:\"title\";s:97:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_shortcut_title\";s:11:\"description\";s:103:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special_shortcut_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:8:\"shortcut\";}}}s:4:\"show\";s:17:\"html,div,shortcut\";s:6:\"header\";s:82:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:special\";}s:6:\"forms.\";a:1:{s:6:\"header\";s:80:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:forms\";}s:8:\"plugins.\";a:3:{s:6:\"header\";s:82:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:plugins\";s:9:\"elements.\";a:1:{s:8:\"general.\";a:4:{s:14:\"iconIdentifier\";s:14:\"content-plugin\";s:5:\"title\";s:96:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:plugins_general_title\";s:11:\"description\";s:102:\"LLL:EXT:backend/Resources/Private/Language/locallang_db_new_content_el.xlf:plugins_general_description\";s:21:\"tt_content_defValues.\";a:1:{s:5:\"CType\";s:4:\"list\";}}}s:4:\"show\";s:1:\"*\";}}}}s:9:\"web_view.\";a:1:{s:19:\"previewFrameWidths.\";a:12:{s:5:\"1920.\";a:4:{s:5:\"label\";s:66:\"LLL:EXT:viewpage/Resources/Private/Language/locallang.xlf:computer\";s:4:\"type\";s:7:\"desktop\";s:5:\"width\";s:4:\"1920\";s:6:\"height\";s:4:\"1080\";}s:5:\"1366.\";a:4:{s:5:\"label\";s:66:\"LLL:EXT:viewpage/Resources/Private/Language/locallang.xlf:computer\";s:4:\"type\";s:7:\"desktop\";s:5:\"width\";s:4:\"1366\";s:6:\"height\";s:3:\"768\";}s:5:\"1280.\";a:4:{s:5:\"label\";s:66:\"LLL:EXT:viewpage/Resources/Private/Language/locallang.xlf:computer\";s:4:\"type\";s:7:\"desktop\";s:5:\"width\";s:4:\"1280\";s:6:\"height\";s:4:\"1024\";}s:5:\"1024.\";a:4:{s:5:\"label\";s:66:\"LLL:EXT:viewpage/Resources/Private/Language/locallang.xlf:computer\";s:4:\"type\";s:7:\"desktop\";s:5:\"width\";s:4:\"1024\";s:6:\"height\";s:3:\"768\";}s:7:\"nexus7.\";a:4:{s:5:\"label\";s:7:\"Nexus 7\";s:4:\"type\";s:6:\"tablet\";s:5:\"width\";s:3:\"600\";s:6:\"height\";s:3:\"960\";}s:8:\"nexus6p.\";a:4:{s:5:\"label\";s:8:\"Nexus 6P\";s:4:\"type\";s:6:\"mobile\";s:5:\"width\";s:3:\"411\";s:6:\"height\";s:3:\"731\";}s:8:\"ipadpro.\";a:4:{s:5:\"label\";s:8:\"iPad Pro\";s:4:\"type\";s:6:\"tablet\";s:5:\"width\";s:4:\"1024\";s:6:\"height\";s:4:\"1366\";}s:8:\"ipadair.\";a:4:{s:5:\"label\";s:8:\"iPad Air\";s:4:\"type\";s:6:\"tablet\";s:5:\"width\";s:3:\"768\";s:6:\"height\";s:4:\"1024\";}s:12:\"iphone7plus.\";a:4:{s:5:\"label\";s:13:\"iPhone 7 Plus\";s:4:\"type\";s:6:\"mobile\";s:5:\"width\";s:3:\"414\";s:6:\"height\";s:3:\"736\";}s:8:\"iphone6.\";a:4:{s:5:\"label\";s:8:\"iPhone 6\";s:4:\"type\";s:6:\"mobile\";s:5:\"width\";s:3:\"375\";s:6:\"height\";s:3:\"667\";}s:8:\"iphone5.\";a:4:{s:5:\"label\";s:8:\"iPhone 5\";s:4:\"type\";s:6:\"mobile\";s:5:\"width\";s:3:\"320\";s:6:\"height\";s:3:\"568\";}s:8:\"iphone4.\";a:4:{s:5:\"label\";s:8:\"iPhone 4\";s:4:\"type\";s:6:\"mobile\";s:5:\"width\";s:3:\"320\";s:6:\"height\";s:3:\"480\";}}}s:9:\"web_info.\";a:1:{s:17:\"fieldDefinitions.\";a:5:{s:2:\"0.\";a:2:{s:5:\"label\";s:69:\"LLL:EXT:info/Resources/Private/Language/locallang_webinfo.xlf:pages_0\";s:6:\"fields\";s:75:\"title,uid,slug,starttime,endtime,fe_group,target,url,shortcut,shortcut_mode\";}s:2:\"1.\";a:2:{s:5:\"label\";s:69:\"LLL:EXT:info/Resources/Private/Language/locallang_webinfo.xlf:pages_1\";s:6:\"fields\";s:26:\"title,uid,###ALL_TABLES###\";}s:2:\"2.\";a:2:{s:5:\"label\";s:69:\"LLL:EXT:info/Resources/Private/Language/locallang_webinfo.xlf:pages_2\";s:6:\"fields\";s:93:\"title,uid,lastUpdated,newUntil,cache_timeout,php_tree_stop,TSconfig,is_siteroot,fe_login_mode\";}s:4:\"seo.\";a:2:{s:5:\"label\";s:64:\"LLL:EXT:seo/Resources/Private/Language/locallang_webinfo.xlf:seo\";s:6:\"fields\";s:102:\"title,slug,seo_title,description,no_index,no_follow,canonical_link,sitemap_changefreq,sitemap_priority\";}s:13:\"social_media.\";a:2:{s:5:\"label\";s:73:\"LLL:EXT:seo/Resources/Private/Language/locallang_webinfo.xlf:social_media\";s:6:\"fields\";s:63:\"title,og_title,og_description,twitter_title,twitter_description\";}}}}s:8:\"TCEMAIN.\";a:2:{s:18:\"translateToMessage\";s:16:\"Translate to %s:\";s:12:\"linkHandler.\";a:6:{s:5:\"page.\";a:2:{s:7:\"handler\";s:48:\"TYPO3\\CMS\\Recordlist\\LinkHandler\\PageLinkHandler\";s:5:\"label\";s:77:\"LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:page\";}s:5:\"file.\";a:4:{s:7:\"handler\";s:48:\"TYPO3\\CMS\\Recordlist\\LinkHandler\\FileLinkHandler\";s:5:\"label\";s:77:\"LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:file\";s:12:\"displayAfter\";s:4:\"page\";s:9:\"scanAfter\";s:4:\"page\";}s:7:\"folder.\";a:4:{s:7:\"handler\";s:50:\"TYPO3\\CMS\\Recordlist\\LinkHandler\\FolderLinkHandler\";s:5:\"label\";s:79:\"LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:folder\";s:12:\"displayAfter\";s:9:\"page,file\";s:9:\"scanAfter\";s:9:\"page,file\";}s:4:\"url.\";a:4:{s:7:\"handler\";s:47:\"TYPO3\\CMS\\Recordlist\\LinkHandler\\UrlLinkHandler\";s:5:\"label\";s:79:\"LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:extUrl\";s:12:\"displayAfter\";s:16:\"page,file,folder\";s:9:\"scanAfter\";s:9:\"telephone\";}s:5:\"mail.\";a:4:{s:7:\"handler\";s:48:\"TYPO3\\CMS\\Recordlist\\LinkHandler\\MailLinkHandler\";s:5:\"label\";s:78:\"LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:email\";s:12:\"displayAfter\";s:20:\"page,file,folder,url\";s:10:\"scanBefore\";s:3:\"url\";}s:10:\"telephone.\";a:4:{s:7:\"handler\";s:53:\"TYPO3\\CMS\\Recordlist\\LinkHandler\\TelephoneLinkHandler\";s:5:\"label\";s:82:\"LLL:EXT:recordlist/Resources/Private/Language/locallang_browse_links.xlf:telephone\";s:12:\"displayAfter\";s:25:\"page,file,folder,url,mail\";s:10:\"scanBefore\";s:3:\"url\";}}}s:8:\"TCEFORM.\";a:1:{s:11:\"tt_content.\";a:1:{s:12:\"imageorient.\";a:1:{s:6:\"types.\";a:1:{s:6:\"image.\";a:1:{s:11:\"removeItems\";s:18:\"8,9,10,17,18,25,26\";}}}}}}s:8:\"sections\";a:0:{}s:5:\"match\";a:0:{}}i:1;s:32:\"9197d75d22693b7d9878adecd2041a45\";}');
+/*!40000 ALTER TABLE `cache_hash` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cache_hash_tags`
+--
+
+DROP TABLE IF EXISTS `cache_hash_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache_hash_tags` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `tag` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `cache_id` (`identifier`(191)),
+  KEY `cache_tag` (`tag`(191))
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache_hash_tags`
+--
+
+LOCK TABLES `cache_hash_tags` WRITE;
+/*!40000 ALTER TABLE `cache_hash_tags` DISABLE KEYS */;
+INSERT INTO `cache_hash_tags` VALUES (1,'d07b003d9fce07cd551ada22027bf881','UserTSconfig'),(2,'92ae9e039e0feb5e6f1ddf9a7d594bf2','ident_TS_TEMPLATE'),(3,'da4e787af2263d40bc4daf3ae33ec5ce','ident_TMPL_CONDITIONS_ALL'),(4,'75ee55664f41258d9a2ab089d0b3c7f0','ident_MENUDATA'),(5,'d2d0a044fa76037f9dd31e136b965336','ident_MENUDATA'),(6,'34f3e89cf8586d9998ea72391ba73878','ident_MENUDATA'),(7,'6bd1617f573c885300a3689b647f5c5d','ident_MENUDATA'),(8,'d086ca68c27b5984bf91267abbb64ddc','ident_MENUDATA'),(9,'e61fcbb5702068d957a3816aa894faac','pageTSconfig'),(10,'8c67f9e9eef63119c6b83a4a1181302e','pageTSconfig');
+/*!40000 ALTER TABLE `cache_hash_tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cache_imagesizes`
+--
+
+DROP TABLE IF EXISTS `cache_imagesizes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache_imagesizes` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `expires` int unsigned NOT NULL DEFAULT '0',
+  `content` longblob,
+  PRIMARY KEY (`id`),
+  KEY `cache_id` (`identifier`(180),`expires`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache_imagesizes`
+--
+
+LOCK TABLES `cache_imagesizes` WRITE;
+/*!40000 ALTER TABLE `cache_imagesizes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cache_imagesizes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cache_imagesizes_tags`
+--
+
+DROP TABLE IF EXISTS `cache_imagesizes_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache_imagesizes_tags` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `tag` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `cache_id` (`identifier`(191)),
+  KEY `cache_tag` (`tag`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache_imagesizes_tags`
+--
+
+LOCK TABLES `cache_imagesizes_tags` WRITE;
+/*!40000 ALTER TABLE `cache_imagesizes_tags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cache_imagesizes_tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cache_pages`
+--
+
+DROP TABLE IF EXISTS `cache_pages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache_pages` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `expires` int unsigned NOT NULL DEFAULT '0',
+  `content` longblob,
+  PRIMARY KEY (`id`),
+  KEY `cache_id` (`identifier`(180),`expires`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache_pages`
+--
+
+LOCK TABLES `cache_pages` WRITE;
+/*!40000 ALTER TABLE `cache_pages` DISABLE KEYS */;
+INSERT INTO `cache_pages` VALUES (2,'b79ccd75d4854a2dbd6e3eeb4a87a428',1616934355,'xúÌ<ks7í˘z˛≥{µõ*ô‚˚!Ÿ[2EŸr$J%“π\\m∂X‡H¬\ZÃ%:ÒønºÛ`L)Ÿ∫≠›¯ÉÃÈ\ZçF£—›Ë2Ë\r~éı„Aï˘4åŸÇQQ=âÕ∆†:Ôˆ=œÔ∂˝VØ›\"\rÓwhì“yãÙ∫§’ËaªÓ†∫!K:c~ıÑ\rÍ\n‚Ò0bào¥€@ÈÙÎÛõ·ÙoGïUº^ø8≈ˇ*	óØ™4<˙0©\"åˇıãßk\Zìä∑\"\"¢Ò´j/ézà˛˙Ë®Ú‚ø¶+UË<b1≠¿œ\r†Ç˙ï˘ÆÙoöï£\n£\r,\\V6îoZây%rÙkË.€@?RYJ+|C√Jƒ·— Pq]π&!Ãhç?/Y”.ÓÅ(ã	Ç]≈îƒjƒÔH¥°¢2π\'D¨¯«\n	˝J¿<\ZFÄOBpo«jooØ^:C{|≥lπä+ı~øw‘8n‘+|ë\'ˆ≤2zv\"∆C‡VPß4éWîâä†–≈ãŸ&ÚR¡0ó·Çã5â°ü‰◊B∞y¢\01,@ºâµZº€ÊK.ñµGG ˆJ¬ﬂ|ÛÕÙrz5ÚHøYo6zÕ9∞∑®w⁄^õ6H≥ﬁÔ5§øX@ª\nˆ3ùÆG”≥C˚ÿN√…dvu˘fÚ‘¡∞ﬂÂxxı·¸…|™ÆWó„É{⁄ÆÔü«Ï˚gÛ˙˛Ÿ¨æùùèÓŒœ_ì”ö⁄~ßsÓÔÄR˛©øÊﬂ©œ∂Êø™zıj≈HΩ™.pT‰ﬂ#ü.Hƒ˙	‘ã!IPi	»é\'Ò—1ÏÂJÓﬂóäùœÓôAù*æ≤|‰⁄î/∂9]5å0J&vÊytì¨KL#ê\rW\rü%S[5“Ó˘ôÓG¸ ≥ZQ3ÕÁ	Ôw_á/Ù<≠ÅíΩ~·ŒW˝óid±q®\",äˇÉ’p ÷Ùit	g“„ø¢‚Â$fÏr<ùMÜwó∑”ót1üìNßÁ˜zÕ˙¢’&~≥ÂìnΩÈ7€Ìˆ¢éˆKı≈ëgÈY=µÁéåŸ≈ÕÕtt˜¸ì„∑¿‰ô˝UØß#Í¸\0@G=@Ù-=‚≠ËÃ\'1©ûêA]ŒétlâÂÑˆï/9eq@oﬂÇG\n.\r‚à«RPè_ÇÍÍA›áj¡≥t≥~^O~rAº5ºì}oÛTO>C«A5¢<*O∑Ô“ùPÓêÖ\'EØHXNrN¡£˙AÒC¬òı˙†\Z?ŒËc<\'ïc7ql‡eΩı“9‚§‚ï‡8¬ò«<À—#,‡“].Œ<¸H¬¯\rΩ£∂‘órTèÂ‰Í‡ÄÉgÅ\r§p•≥l\0e\Zíy@œíò£œË\rq°Ü%Ë?k*uÈ«√*&XAc7í∆$3àiŒq~©3\nÙåÓŸÊ\\ôÂ3±L–∑é“û%@¸±APgA0í,]0\Z¯`∞ﬁPgúM≈∏Ê[™	æü`ú\n¯À\"$ÅaóÖÈ$ﬁ¥1•ÎÕ®	R§RÚı8çﬁG=>Qí\"Ûfx+ËÇ……¡rêNU£QØœπá«\n¬ÄéDµ›ïBÃ¨ﬂ”ïR¸éØ©ö5–ú«W0!M9	K7apÄ·,‡)I√1Xì∏π•b∆”8{|àh›@£÷ŸÄAﬁ1Úñ·I“\r…vfQZ–zM}FËΩ:t\rE\0¨ò·¶\0-Rƒ1[€aª®õæÈ°vÕñÇ\'WwÍµÙ°?Âìdé´9D|~Ø÷JâcbœªCõ8RêΩ Ò±ˇXÑE35Q¯éD◊∞„ô#sT\rúÒ¿¬õíÈÄ/Y8[sﬂN5~Nº{`{¶§3a≥Äni`Ö˜Yo_8Åµâ\'ÿ&N´)áûíÆÅ¡È⁄gIQqëÑûå¸ªÆæéîyRz˚§≈Çlé^ã$¨Í˘QßéâU\rÎqò`$ ”z›≤∫1ΩﬁÕ¸£Ï◊?©‹⁄-óÉ!„rˇGüCcày≥OwÉmÿ7ÉFßdH\0Eœ—™ÑÊ1Ó.µêhI0†∆ÁÜ“ÓÄ.bk4£ÿˇòÏçê;§ﬁÍ»s™kQ`&`Àz`DÙÓXq~ØE œº;Ñr(<Ê\"\Zk˛ß|ò°ì%@xŒ9Xﬂ–ÿ∞íÜ/ı6#BêùŸ\0ƒóFDZû)YFzﬂ¡b;ﬁ-6*R“#¶ei‘]t°w˜y∏,¿aÓÍ‰ó\\“x\n\Z£!¢å–≠ø§¸m4ß£üù0Ì¥Oí=ã+Ì¶t®¯‘≥OÖnÄ\nìı(bù˙¡ŸR®L¯;õœ1£``sÛçÖ5äcpìYä~ä+2–ï\\.FÎMºªÇcú¨ıÏÇÙ©ﬁ+iV £≤≈8	Ç]É)ì)STùzUﬁÎ\rh–}y/â*ÎÏõaœ>ïÈ$P7}Ui+DŸ8¿œ-)U<Ωé≈ßû}*ÆRÀ±\"e&è|˙S¬ÑrÁ≤lˆSdÅr•UØ©wŒùC4øªê©L£2}\"0I€2}PòBÈ◊ãà⁄Ì\0fÜÀ}µ!Ò û¶I©Yz7Ωæí-DQ∏„R|À—&`%Ü≥ÅR‹ƒìŸﬁ“q7Çq¡Ü$ «MÒe:ÜYl£€`≈óä˚∂BîÓµ0ﬁ*6;T◊† FYëhUXé∂ÇóWÅDqåé∆î™Xª94ôZ.}‹ê–G3R.®øÁÄ†ZÈÒßÚOÃ	Q4q“a1WÓ°‚–Lgyö`ô‰¬Rh§œÜ@?ïm28JãSmIx©.Äï˚ŸV?À÷hæãïÛTX#â)ïH2wŒjµ£`_É√cΩ0€§Lû‡‹FÜIx‘î\rfœ:∞Õ;äJñ˝ÿAóäD·¸l´üÂ{ï<|z‹/ë<ÍÄ€¢‘O¬Ëm≤°#¡oòJ»tã≠\n§\Z-åNpÿÔ…ñ(◊¸{$%ú°ØøØu©˚‡Û\"‡7ú¥¬æFA8¯\"k0tâçl\"∏T—JGÈhDÈ:¿\\»&¬X¥(–£{∫{Ä†∂D∂˝Y¶J,©0G\'H¯Aˇî∑ìWj|,∂ëÔZwë{,<ÓÛ\0µ/7‹„J4è‚˝˝ôeìFNœT¨‚∆-ä7ã,Îâ7x+Òâú˘;?€Íg©B>ßßLÙuY¶?%RÔhpôv†«Ô∏GÓc?},Û≤`!6‘\\Y?]„ éT≤)Ô’5®}≥jñœ™YÍ q©?ŸÁ	¢ªümS∂§<â˜Ó\0ã€≥¿ıâœ”8+w¸¶¯“-çJzHƒ‚∂ª„ΩMõrIÏq»◊Î“X≤ïkQ&Í≥¯N„ípˆÿ¡ÓÎzKB∫ÁX≤ËRa –}Îº≠ªß˝-H¢‹qGßÖŒìeq‰é∆î1,F¸EÜ-zoﬂ=kÏ†s}?´ÉÏ´oøÚ‹d ÔëÆQÒN¯g9πÈËá©Ï}|@n¸DKhx6LdûQÅË’ÊL Ú…I¢3úuÅbWRú]éÂÙ∫çgQΩUÍπl“&£ªÉ\'ç{´@§ßà€Ω	ÌÂ\nT‡‚Új$ÁÌ˙‘0uïëπº>{;:òÃÂ\Z”Oy22¡y˝vv7ö‹|∏*r˝C…·ïñÔî/Ïx:“Bkæ∞e§ÓF√õªÛ…¡§TbøTfÔÆG„RÖQ∂wå\n\"ºÛHpM√§(>`ÁÍÊÏ‰˜ˆr2’ vàé\\qÅ˛ÔÖäJáﬁ2¨»ÙÊnî°‹9d°aQ–zÓ%é‹çÆoØŒ¶jµŸÀxÖ@0X*Äã´óÁíá(–Eê0/] ;˘˛≠úÛ!“ú¿·≈’˜¿≈[8\"`Õä\n\0|çŒ/ß∑g„ëå¥⁄ÌhèÃqï#˜Ÿ…ÆíA∑£/ÉÙıOCü≥Ç?ú”H∆pF„†˙f&Ω7™´”)éb≤ﬁH@ßﬁi6˚≠zCa<·Î;!çi‘ıÕç\'ˆ [\0Ë”\0‚Nˇ˜Ω—L£_≈E,vß°Z‚âpÔﬁﬁº†ø∞ãfòíN∞B1…ﬁtı^8ÉY:\'.¯8ú)ã‚ﬁñ)∞∫üò¥lÈ“mk∫>[,X\"TF2h4ı’ƒp*/§∆Z≤<\0_¬>™⁄	=J”<œÃ\r⁄X£¡‡è1µ®„\'ëbnØLgÜI’ÒâI∏cÙUít[ûdT√fãÄ>b)a\nî43Yf¢ÅËmàGgÍñ;ÉÎ\ZYÄ	»†0◊B•√®Ôê-#·˝îO10ﬁªÑ„¨BçÍ4Œ)”8ØJ„º∆òı@xKXS{X≤y∆\'üM¸ıõÆU3‡e	ÿ√ÎD˜~QÅ”-jÓoƒgÈ®©ö©{-ùósLM/[\ZT›ß]v˜ı–ªÙw±º¬1ã9OÿÔ—Ã\\¥JŒ˙X0¿Õ|WÄÈÑ⁄ÌÜ[—8r&¬÷ÆÄé5‡Å˘ò<N≈&°∏z©ÿ˙\Z\n{,≤—4ùsu±g«—◊ñëÏ≠uahK\'ã¥òÕ8«ø≤9“öÅÚ‚\Z:U/¢µ±≠J¢ÇÂHmj∫µ”QÚf ≈IŒ>qæv5*gs“ªˆ¨±–Íg4h∂au„œe∑∑Ω7w6xj•‡\\Ç∂É\n…>Qj˚É]f˚DÛ]¬úvVç4ÿc°à;\rÒ∏#bIcf\r®)ÙKDƒ∂¥†i+jÓé\r8c4°7rz˙∑«uPŸb˘\r_UÎ/è´ôdX˚Æä€+∞•Cü ƒW’,pÂoØ_úNõ@3Óë*o;≈s>≠’;çVî∆Ü\"~UçŒGπ øSc7Mõ†ÿF∂ì7>ñ–ãΩ:2Ëk\\q¶¶ÿWˆﬂb\"”Ùﬂ A¨Y9˙Ôe|\"Q\'YX¥‚yE»„O`\rNkråﬁkí˘‹ƒkfÊé¥jR\\{≈wK‚U~Çœ‡ñ—áó±v*Ô8èëÙD˜¥πÓ|]·ˇkxe9˛È£q°Okjœú÷‹›T’«Ò0{√Ê,`ÒÆP…ÑÂŸÛ›FZË¥Çß?ãuyÉ1≥≤ﬁ5õ˙≥2C√v3[Ù‡òÓwbÒËhZŸ§˛›\n8[3SÎ“heê`%\"-F≤~«+ë\r‚ÖÆÑ2g±;#Ñ™bµØæ˝J∂7ÁLœúóÇ‡d„ÅÆ√ñ„¡œ∫Æè2aÅ/¥òlñsVπ◊Y∂W”ñv|OÇÔËŒ)0°≥{Ê¢æÒèˆ‹“-ÓtI¶ˆ±,üÉÜI¯e\ZNyL◊«…`«Úñ‘ı\0TÑQämd±È§\Z»›äz˜∑ÃüÕâÆJÿ‘›*√W™L¨A¢ú<~g›∏ÚÍe±”¸IáäÁ6∏:wÑ⁄2ûá	‡ﬁ:*aË;ŒÔU \Z©vbÁ––≈3N£3·“©K::ôÍ¥rö(=æ/◊KìÊ…¥Dù«¶œ±ÓÄäx uﬁÀ»s%ÍÆ§Ñq™BLùä¿zGs¬7™åL˙ñâñÀÁùÚxx• Ù§¬k«!NΩÌã„°.ﬁÎdã˜f“6@®ÆK†}∂’Jã/‹}© ⁄ö%ﬂó€ìÔ‰~5;©aJ›ö†AßËU\r^›êáò@™VVÇ.^Uk’⁄Î⁄	z? ˚‘±Ãg®_¿^O©kÅdZ§∑ôŸ=ô∂N&™°|X[Ø\'mKÎ´o§J\neÂü¥¿Ø-kµ˙ÿ^`#“lË%oe\Z—|*LSuU5ƒxâ˘FPr]æ6© ”4Õé£ï√DKÍÊ€8c5Gz/GPÎ5ÂJ≤ñ∆±l¡(	–éÇ,⁄Y\\!ñ}íoˆ©h:ê9+ˆ◊á°‹CÌ∂Æôw\"x\ZÖK‡eπ;õ:á≥Ö`˜Ñ®õDòÚı3AÊÃ”–πâzﬁ(d˙r¿¶$ÌM,âHûπêÇ\n)xeå√^\"” _&$Oˇj\ZD:U:¸D=√´O4KÁ$Lg`k„ﬁR±∂#®k VPzoÄ‹‰ﬂEK™¢nDòiM6.ijRï#∞\rŒti¢á|C¢ü‘}?^Åôπﬁ¢Øo/ò_∞–°Ω‡Lßë%bƒ~Åˆ+=âÖò\rœLhÆ0ïøIH|b$∂4ØoAGºt¯ïœ;:Ù¡@ôIEÉÛ≈PhC¡A…Râ€ª$Ã¨.ã4‚“£∞∏æUfîÌV=mˇëËﬁês:È{—˚2m\'W1Ãqø÷3¯nµVfÅ\\Oˆ;ÿ/ñåR}‹bW,^%ƒY…`´Ω\"Ò6ØçxÆ	86xo»\\C»Óª\n±él˚¿aÑFœìÿÍphTpÃ≈uÊ∫1ıï∑‹ŸûÀ˙-≤…2°∂néí7wÊ<x#»\'ÜíÆd€aÕ◊¬Ω„kwÍ\"—SøK\"G]≈Éë˘w,‹ÒÄÅ©∆E¶0s-1ª*\nÙîJù¢üÙ»g¡‹92’)*Êÿ¨≈‰Å˙©T} &™Vƒ,El(Lqü6MLÂıá{Aò3‚ñ1~œhÇi≈Ûieú!kä¶Ç¯≠ö√Ã*ã¯≈û^ìÕF{Ä˚Ÿ±â¯√»…3ÔS∆t·kã≥qME†›‰\0¸…®˘“63>⁄õÃˆ¡6vC˘Ó˜∆‘›õΩ≤6LÆM…C™Q¶Ç»Æ.˛0¬WÎ$S<π„√…÷4ﬁö%¯dieÆ»?≠f√±‘*æ˚.”W\r°p4e€ß>§:6œeÿF¶ŒøÜN∂ÎiŸwfÏ∆˙Ïä=ãF3¸›∑Æ=Wµ∆9á)zÈŒ°õﬂ“s{iÔ»qL∏H”œ\0˛…´V«cÍ∏ÙrÿæF^±yî\r•ú>9§ˆú¢t$ıQ[U51uQS9ÿ\Z¥™uèÎmØÁµà˜“ã‘‘éuQ¿Ç©Ô‡æÚ I(ÂW’Å;‡„u≠\0ˆ›!Ù!cBÛ°y/}yÀu°ÑõP¶ÁFˆ@≈‘ò¿ã˜Âã>Ëí\r≠Á&ﬁπM¶bÕPÇ–~—÷OΩV¶\Z~V7≠rÓX5Z˜æf¢5¥Dµ€dÁr\r\\√ΩWúøï‰?G ıÉ§<~ñÄ«Y—éUÏtl45´¡:Ω`∏E+=¶˙Û¯≤÷†b^R3$`êâùΩJ∫¶ÿŸbQf‚;O2¢6I\Z1`Ú√J÷∫jˇ^9ﬁèÎ‡VÄ/œB÷=sÔÇ˚0˜Âs∫bP@c¢^’±[Sô%]ïµ%ÕÙ˝„(ˇÑo†∏∂yï	™≠[\r\\Œ££wÁ≥/ÍGGØ]ÇãL] xÒÇıT˘u›ÆºeêÄ◊øú÷‘	ÔZ5™èÈò∞ÅrŸ˘•˙⁄Ÿ®©¶-Ï”íèı∏çAXi±˙àèD7›çd»Oß“yà_™ï⁄k≥UPıa•Æ¡òMão◊bfﬁ≠óòy¥Zô$á¡VêàIt¸π˛ß®˙Á∆ü\"3N]çó⁄‘‰ˆû93ËÜ±Eå‚\r/EáiÜ≥ﬁƒ‚û?æ¶Ú´ƒˇ¯ö ≥I‘ÛèØ©¸Ò5ï ø¡◊Tπ9gÖπbΩ0^3‚—”¡Bó–πÆ≤`[hY3˘›®vMXàyÂó+˝Êíé≥ÙKïÔÂ}∞<d⁄ä™«-:ﬂi˙ª6T>FÕ·ê¯Ê= ˜iú“Àé3¥ﬂ@Q«ISÑ∫t˜ŒÂÁö˚I@±∆>*\\Pl$Cw˚»Í`UπñW:dΩ\"s\Z∏§∫˚\ZÂÉR∑!8÷XcÌ,Õò´\0¡π•h°√†p4,Ø™xuZ˚òÊÿ_ø®}{˙ıﬂá¯	öøã^öæ≥)÷æ˝«?^Ï¥¶\Zø÷>\\«u¢£®8*∫\r2$r≈¿)?ö˙‰†≥\r∏7úqëHvX0çÑ‡¢Ë¡ÄZÇ®&Å~a”π¨KÇÙ.ÌFj_Ó\Z‡Zµ2ˇ+G]ÿNu!`Ó8“k9s∞§‡$cUE¢ÉÆ@Ω2.’ûÒﬁ™~ŸaMwQ€~P\"K≤x´cH‚kÅÌ<¡ÃGs≤iÀ∫\ZTVM≠Sï∞‘_“=l‘˜≤1ÇNø¯TK¨ˇ›√JfQÒkBÜìË(á?vÎ&,÷¿f∫˚òô™nC\"¸ﬂãÑ·>yíJ√Vé§”Y5~‚bﬁ<±√†cæ[ÑÒ\rêı!æá»4Nì{  ?%‰7=õ≤‹¡‡ïi0‘g±\n<m6Cœ#¥“[uA¨m•ˆ≤∆˘.-EFÊ9:nKkd\Zgøº⁄lπÌœÇÄ?\\√∂	Ëçß™§Lu&CÒ%s=”›Ñb¡EÃM˛k‡Duõå4Ã˛{‚Nøyjè÷Eﬁ´◊’[p ¿ëí†9ù:ÚÉN+Ó#»wn›\ZU\'ø*Zâ¡I@•Ô∏:@Å_∆nµDΩcó‰»$äü®#*ˆ4DTë¡S	4m\n˙HûYO¶ KQp∞≠û>∏˙¶l~œû>≤¨Ö—ìè∞˙Ç≈ª#|Ô’€=ôVo ´”6\\ƒu|Œ›¬ìÆ¸Z¯Q—≥D-ﬂ<ÚTı‰ì)tΩH≤\\ìˇL[\"gúﬂvÈÁŒ¥„∞fﬁÛ©Ä	1T”ë]%œügæy7ÏêN⁄T˝˙Ç®ØJôDˆ^√v¨gŒóc¨›Aò ÜªI)Äñ⁄44\'Ä√‰Ò¨`ëà Où$>„y ~®Œ¢‹Âêp‡Ø¡ı+\nuMg◊X÷°\"Qí_.£¶–È’“Ωˆ®_]›€)ı{Ê;Ñ_Ï˙ÎLŸó´\\˘(ÎtË,∑ı`ÄÔî´iõr¸…);\n˚ØºSÕ©ˇÚÊY›æ|˛˜L5îˆyq+]Íˇ· àU-~∫0∫ö÷Ç∑!÷R=ãZ?•VæiõiÉ¸^wPV„„#Øo pbõÄÏËa≥2o∂}Y≈’[¸î¨3£÷”Q¡q;h»æâs—Ü\rÿf≈›¨<æ¯„†∏[aõñµ÷Tà£-]M√Öıà∫ ˚/9_¯A©]vyÄL)™•®qüˇ≠éÛ≤\r˘kG:æï¨◊DÏ9–üú≤∏yz}Ç¸Vk˘YΩÓ˚ƒ¯w≠ûù◊$:ƒ†ﬁÎü∏ÄÙ{\'˘,Ñ\0÷€\'Ÿd\0¿:Õ\\Ã.Õ„û†&e%K9ÜÍ’,=…~]÷Í%(kuœ≤ø:˘ı—&K›\\·q.WXha.ˇ0pô`√æﬁì≤&µ&Ù2(oŸıÚ’[Õ˝f´)kÎoB˜Z›æ™∫o:ﬂ˘≈kf∑‘®Ï3πh‰.TVZ|Nøjäl:•ß∆∫Ùg¯©‘œˇ≤ØÉ–'),(3,'6b952ea57841f3117a81d35685ceffdc',1616934357,'xúÌ<ks€8íÛıÚ+4⁄›´›©RÙ~⁄…ñ#Àâ2∂Ï≤îπΩ⁄ŸRA$$!¢\rH VfÚﬂØ|(ë=3w[{õ±à\Z@£—oízÉüÉAΩ6(3ó˙![2* g¡†Ÿî;ã~ªAIª€k’óÕzΩKzu∑ŸÓÙ⁄].]˚uÂY—9sÀgl–P-˜C@Üzß”\ZîœøΩºŒ˛˚nTZá[Ôıãs¸SÚàøzU¶~Â√¥åmî∏Ø_º8ﬂ“êîú5\r_ï£pYÈ!¯€J•Ù‚?fkîË\"`!-¡œ†Ç∫•≈°¯oõ•Jâ˘¡é	ÊØJ; w-Öº\0:˙-ó}`)-•%æ£~)‡ëphi®V]∫!>Ïhã?ØŸ“.6ÄîÖåxﬁ°‰JB5„˜$ÿQQönk˛±D|∑‰1á˙¿#ﬂÿ€…áÍ€ªÎó÷‘ﬂ[≠√RΩﬂÔU\ZµFΩƒóYd/K£GXN¿∏´‘\Zù√5e¢$(qB∂áç<¯T0Õÿ_r±%!åìÎ¡≥l©Ü ‹Éj5<ÏxÛ%´ÍãJ»˛BQ¯¯√l<ª—Z≠ŸÓ-˚ı˙ÇÙ˚NΩøpöÀVç6jN√]Ùk–ØÑ„Ã†õ—Ï‚‘1Ò†·t:øøô>u27ûØ?\\>yùjËıxrÚ»xË˚Á-ˆ˝≥◊˙˛ŸK}7∫∏›_^ú~&ÁUu˝Œ‹=\0¶¸SˇõÁ.€óò˚™Ï¥ %«#A™ºƒ˚QíˇW\\∫$ëÍ\'`/ZÒX`û=r‡QX©¡M.e˛}ΩA-Ê≈≥Gû>˛E™…9ûÃÊ”·˝¯nˆ≤—iˆöΩz≥Ì8Õz´—Ô-[J®S#›F≥’Ø!ıTø˚ñæ2Úº\nßı:À∫Û´€€ŸË˛˘¸k #?sº\Zı4vV|lç\nGj\"–qq÷tÓíêîœ»†Ö™Ø#’’í≠∞E)√æ“i3zÙN=hF≠o ú†Æl™cSFËé8Uû•∏ˇqx3˝q»˝ÒŒ ¸Ò^éΩÀNP>˚ÂÄÚd™,ﬁæçwJπÖûæ<bπ…Ω@ıÉZ?L	s÷ÎÉr¯8ßè·ÇTŒ›ƒπa-€ΩìÏ7Æ¿&<º‚†·Fè›°j//¸;$~¯Üﬁ”Ä{{ÍJ∫ 5ππ:ò†·\n‘wh≤À`¶>YxÙ\"\n9Í.gà5Ù(A=Æ±‘ÒoN1⁄¡	¬K–¸Ähäˆ15êi	J:˝hÕ#É\r€]*9u!VÍ¯ 	}⁄`≠| ‘ÖÁç‰íÆı‹`Ïø°÷∏õ6íqÀ˜T#|?≈∏–€¬\'ûY.Û=Ê”ixhcF∑ª+ÊQ4ñÍÜ)˘v+\rﬁÿZ;Sî\"ã\0vx\'Ëí…Õ¡q†NYÉëØ/πÉr€\0èµ,ﬁïDLùﬂ”ôP6ÂÈö?îB∂•ü∏O’˛õ‡<ºf>’$∆µ√Il≥S&!Óû\"ıÑ{Ü”	õ{*Ê<ÈÅtPçÅ’Z7≠A\'nöÅÚ!ÆRìÂﬂ üÄ◊\'˚y“$Åﬁ[Í2b5¡\rP˙»`ÑÜ5s¡\06\rÄ¶!ÓŸ¥uëK]ª•á|6_	Ìl.™w¯ÓåO£ûG`!q˘Fùö\"À‘à†	á>a†ZÊÃwº»≈ÒMÃ—¯E‚[›¬mÁÕëI‚∆9˜‚ˆ¶\\¥«WÃüoπoyAú\r,{Æ®3˜asèÓ©Ô3Œò?ÂzÍîøı)‡?¡yõ;˜¸„Npüyœ|Ì˘‡µ{÷7u€ÖâliJ¿©Üí≠cpœÒ3\'\n®∏ä|È\\6ª∂»\Z)\r•D◊†B\n≤´ºëoxÑ\ZóiBbô0”,#`ÁE@”F›±∫—æŒÌ‚£◊ÎUnÌñΩÇ+!]D˜GÌ*Bgpø“O˜˝>ùÉF∑hà:EÔ1Ê?C∞ä+Pô†ognLÎ—eÎÕ tˇ6{+§P™∑:“TÈ∆ – µ–#Z,Æ9ﬂhH≥ÁÏ˚-p≤ı˙g|	°˝v@º‡∞o‘XA«ó˙æ!»¡\\‚J=\"ïœå¨}·∞å*ÔÊ;Â1Èì•q‘mpnt/ºø µ√ﬁïÒ\'7∏¢·8FwB@¢%\Z\0öêÚ∑·úé~Œ\r¬»1JˆbX·0≈C˘ß^¸î ?⁄ﬁÛá\"÷—~§¨+ÖÃ¥Ñﬂ°uI–î1bX0◊®V√(0∑ ©£Ë\'∞¸∫r„Âhª◊`˘M¢≠ﬁùó<’{›r»`V∂úDûó[B◊@äh ÷‹†^*ı8hS<JÇäFy«vÿãüäx∞õ1´¥†hXœ)d<}é˘ß^¸î?•ñ%EäD⁄zÙßà	e—ßóŸOÄ9ÃM§V~æ¶æ9˜“ÏÌ¬E•:ÒÉÄH⁄ÒÉÇ‰∆H◊N4æ f∏ºW;Æc\ra∫ä•w≥õkŸC‰âÅ7.Å-9ÿy¨@p6êä;è82X8ÔN0.ÿêxNÒº	ºà«0†jx§¯J≠æ≠\0ÖwÕ˜ âIO’5†¢Y÷$XÁé£≠⁄ãÑ´@\'2?GGC\nY§›öårä>ÓàÔ¢)&T?¢ ®fz¸©Ï£!Ú\"NZé\"‰ NT+åÃ`©ÕLcë‡2∆–Hû\rÇ~“Tt…@ïÊ∑⁄íÌÖº\0fTÊg[˝,:£≈!T∆SÓå$§ê\"—¬“’ÍF¡ΩÉ\'∂¬‚.E‰pﬂ·52ãÑGçŸ@éú€Ωø∏‡ÿk∏ê$z\nÎg[˝,æ´‰·ÉFæ√› #ÿ=\nÌ$t‡ß;Í0‚\r1ŸQÄ¶õÔïC’h°õÇ≥¿çxOˆDôÊ?/*X⁄˙«zö.è}#¿HÀ›k$Ñœ/\r¶.êëMl.d¥¬Y:\ZPx∞≤0ëß—Ü∏ph€OÄE¨ƒ|ü\n£:Å¬˙ßLîX°â°çÏ–∫\r<\"·Èò®mπ·+PÇyﬂHu(⁄4ÆÙB˘*∂ﬂ¢÷ãFb2…c6ëµÎg[˝,§Åœg`Ùëænã¯Á°ÄÍ›\\ƒhÒ[Êë˝ÿOã¨,8àçW⁄N◊∞\"ïJv≈£∫tlWÕ‚]5M9éN\"uß«,A4˜”}äéîG·—√é‹\00}¬Àƒœ ®ﬂ^x•ëIOÒXÏ~c?<⁄µ)èd…á|ª-Ù%[ôE‰†.«†ç‹Ÿö=6Ùé¯ÙàZä¡ÖƒîÆ˚4‘°{€wO˙;†D±·éF]D´¸Ã\r)Z∞ÚÁÉèé=rˆ5ú˚Y)≤oæ˚∆±É)CL3ﬁ „‹œrs≥—ﬂfrtÌÑÿ:¯©M°·≈tt2í!XF9$¿W√€IÀ\'â.p◊9å]âq>û»Ìuœ¬:ˆUˆ°h”¶£˚ì7çw+á§ßêò5∂{\'\":∫*`Å´ÒıHÊN⁄ı∞aˆ$(B3æπx;:Õxã·ß,\Z‡ºy;øMo?‹∫˛©Ë0ÎÖï$≈;ôç4—ößl™˚—ˆ˛rz2*ï€)§Ÿªõ—‰Éd·SòÌ£ÇgÕ‚›P? ìñs}{q	Ù{;ûŒ4≥ù¬#◊úÄ£ø¬‘`ûÈ–ZÜô›ﬁèRò;ß4\nJœ£»qu£õªÎãô:ÌSÓ2fÒ<p	pu˝a|ôBy\n]ysè‚≈Ù«oÂûO°Êsó?¿oAE¿ôÂ\0÷5∫œÓ.&#Èiµ€\'‡uïA˜ŸäÆíA∑£ÛC:#‘“zVáK\ZHüt4N™I*©°¥SÑdªìÒÒNΩ”l5Í\r\rqÑ´”DRoúiÁ≥Û$%ÖÈÍÅﬂÈ˛.ô¥´∏•!\0owTO‘Ëw6qÊÌÖC0«êtÑ≈rQ:˘Â’{˛<diúÿÕ5Æ$äù@SÕ*S693Iµ9le„mkº.[.\r8\"dF2h4ujb8ì©©â¶,˜¿ñà±\"√DÕŸÍynRi=çn{å©CùúYÅì∂4ÉU\'g&L`œ—WA“yØIz5læÙË#Vµ%ç≤®h.´êt#öC;‚–π*tH¡∫Fñ R åµPi0Í2Çx!˛f∆g	ò=¬Iö°&9vödòiíe•IñcÃâ:@ºúiú˘-∏<ì≥œ∆ˇ˙Uô÷TÛ™†Ÿ¡t¢ù_TÕ…5˘E’éEÛd÷ÑÕT^K«Â,K“úEÏC{hN∫áPÁlÃ3D‹Ú`n≠r=}¨Ò@±s◊&[≤\r∂á°õ4¨Â≥≠Mñönx`.Üåb…V<≥ÑX}›\n7+0¬-Ó∫‡*ùœ£Û÷ÒB“IÎﬂk˘&´O4qÕ<µ/\\âT“π‡^ÿ‚M\nil´⁄í \'/Iö\\ËTÍ:u˘à°‰¸Á[õè2í&)≠HãÕt&¡;ﬂ±∫·àÙ•éÀ$¨kù»Ê%òî¿„¿BrLêH<Ñ‡êy¿>—Ï0Ú?ﬁU£\0RX(‰VGTrD¨®ÕÃ±ÿåI\n„\"∞=Õq⁄ööå±iNâJç+=ˇÎ„÷+Ì±Óä˚Ø ıóµrIF\0_´ÍÍ\\dﬂ%ÒU˘\0\\˙ÎÎÁ≥Ê √8{†Í\ZœQª\'ıõÁ¡ö“∞ƒêƒØ ¡ÂË*S‹yn§•È„Â˚»~2œ#z`°≥FÛ-Å«\".Ù¡‰« Ò{_öÒ{9IúıØ¸Á*<÷¸·,›${g⁄ä,êi?Å48Ø 9\n÷^ïãœlºjvnQ´*…uî|w$\\g7¯<Ó}xjSÚûÛQ?ÅtO€Îë˘¡ú¡z˘ˇ´Èï‰¯›gˇÍAüW’ù9Ø⁄∑©¨’q0f√Ãc·!W»ÑEÈã√NJË§nß>œ*HYÂÅúM›yë]°€Û∏‘¡›!ﬁƒºÍh∆≤K¨>‘ﬂ™Ãn∂e¶¬•—JA˛x<àDRÇOî”˛ñ-\";ÑK´˛)k)a´™M¸Êªod£g¬pnΩïöç{Ó•vVjÉüuA\'Òdòﬂ®01,KWŸI¨xT3.Ë¯Åxﬂ”ÉQIcDÁÊ~ÙÇæª	¯«XoÈ˜∫W[VÒ:-ÊKuúÒêx∂çìÇNdn‘∂\0î_Qm§°…¶\Z∏∫5u6wÃù/à{©JÿTFù∂Ò0HÇi«ØA◊}ûMØ^\Z:Àj:d<ª√ı•E‘ñ±<å€n≠≠£¬Ñ‡wæ„|£‹œ@ıá.ô±:]O]‚—!T´ó’EÒ¨{º]ô‡N™\'Ú<∆-]é’TÑ3Æ£]∆-^(Rw%&ÙN`fU÷;z%|ßä«§=/¢eØÛ^Y‹øV≈yí·µ·&6ˆ’á…PóÏu“%{s)¿A◊µÔ.€k¶≈7ææV^ã%◊ï◊ìxÔ‰}57©a\n‹Zhy†T‘{w‘Á>Üç •µ†ÀWÂ*j‰J\\ÕY}˝B[DÔßCôRù»êpj™+∏¯…Tö:©IB3}Aì√È‘5îAóÏ…{ﬁËÙ±ÚØŸ(,óñˇ%5~mY˛®y).‰Üez˙¸[©Cî•\n“TCU%9Ê1ﬂJ6¡ï‡[\r2]ì\09ä<êR¥`¢n∂è5WCq¶˜rux3Æ(„®…n‡èÖ*–¢ù£≈5BŸ\'˘ûôzÄÆV@≤‚x≠ÂÖj∑ıõñªO#Êº¨¡íwSÍp±lCàJ∂ ¿ºƒp!»Ç9∫ua\\†7<ôŒoC≥©J{y+\"ÄcrC`!/i^õ„pçydZ˙ÛîÂÈ_Lá@GKáü®c÷ÍΩ§K‚\';àÀ„ﬁR±çgPô@VP∫1ç‹Ñ‡µ?‚´“~òmMw6jj¢ï#÷vi§ß|CÇüT ≥`fØwh¯«ùóL7_1ﬂ¬Ω‰¶ôNÉâ!˚æg±÷õXä˘¬8Î\nR˙Ûê¯ƒ%Üb+OØı-àìLø6‰yGÇ>òVf¢—`â1”(4ä°‡¿d	äHìÌ]‰ßNó\Z0v(Æ≥	3Ã6ÜSO˙$zÇ˜Ëúlzc⁄ﬂÇ+øJ˙o<c·)˙©)6[ΩÉÔ◊[%F∞ëÎÕ~˜%F£XØÿ5◊±N“€ÎÖ^ìpü4o\rynX9¶qc–‹ÄˇÓ⁄±\r‚˛^\\á·ºå¬òá}√Ç.®µ◊ù)±º„÷ı‹≈KøØ6ZE4.ΩÚÊﬁ(á7Ç|bHÈR∫ñÕpM‹{æµ∑.\"Ωı˚(∞ÿU<öœ¸Ë•jX`j3ßﬂs´Oo	[©5Cìû˘¬[ÿ3¶@eJ≈¬j6g1}†nBU\"à)Ç51G\Z≥HlíÆë)æ˛∞ÑY3Óô!„åÜ>Xî1y>≠çeã¢ô Ó_ FÇXeøßËŒ”≤€iS`?[2:9¶≈˘î]¯#ñEûπ∏¶(0æ‰–¯ìaÛU‹Õ`¯ˇÿ•Æˆâ/îóæ1¢ncÓ ÷,rk™é2EDÒÈ‚C|uN2ﬁì¢;˛0+ŸõŒ{süÃ!≠Mñ¸”z>úB≠ì∆wﬂßz‚©a+®¶tˇƒ†TjÛR÷ÄÄldJˇ5tº]oKæ6°]u±>€dOÉQF[ÆÎUÕqñ2Eì›R∫Ÿ˘c|ˆ(mYÜ	I\Zö?2€jYL”.-Ü¥ØÅ◊l§˝*kL®-ß ôIΩY‘VEEMåcTU@∂\nΩ™›ZΩÌÙúq^:Å⁄ZM◊,ôr˜N+≥NB1ø*<¿\Z–y◊øGÑ6§gDh÷OÔ%ØŸ&‘íÉ∑pÎÀX„¬–∞òö\Z„Âc˝ﬁ£|·M≤alπIÔwGV±lx®kxÅhøhÈß^.T?´d´‹;éV¡÷Ø∆——™Ò`ÇÍ]¥\0Ω\\”0%ÁØE˘˚Pπ~ï\'œ\"$M⁄âr§jÜS”¨c\rfµ\rTßÙAåﬂ◊\ZîroÆ\\0€4&É\n≈&–%ŸcIQÍB‚˚O“œ6°È:†3Ú∑µ¨{’Üæ≤¿∑ﬁù‡_]¯‡¬;&É2ÛA£f—;†!QØÌƒwT…E]\"ï*Õå˝˜ß9~áOsÿBzùrµc‚∑\Zxúï ªÀ˘◊‹˜JÂµçpôr®sØûÄ∞û‹]√+s≤·ı/ÁUıC∂wc6™oºòpì2ﬂ~˘•¸⁄∫»©¶/‹≤Ço»ÿùÅXI5±˙∂å7Ìãd–¡öŒ±IG\'~)ó™ØÕUA÷áì∫Å˚;Àølç°ô5òπNdˆ—j•BZB$&¸Òß˙ÉÚü\ZÃ<u≠#«ZÊdÓûQû9p√•D≠\rÛ•√$ÓŸÍBÛøøÒQ˙W˙∆«ãdÄ≈≤&ˇse¥8¸Ëo≥¡RWıÿ™[∞=Ù¨öxSPΩá„\\/◊˙e\nm˜È˜ºﬁÀdï‰ß∂¬ÍÄãõ7íp\\u®D]’Z!qÕ´]Ôª©óûgôCquSﬂG]MxoØÁÜªëG±Ï7»EOwrA˜«–j„Yi∏kmB_ìılT›cù≤F≤›Ù;&ÄÉ#ì%<e∞dC®\nV¬õˆ™åyùÍ«$Ê˜˙EıªÛoˇ>ƒ£¸˝;T:†T¨~˜èºÜ∂Û™Í¸Z´íé≠ÀÉ ?+J/i¢Ÿì¢!óùM}êÀÃâﬁﬁ\rk^Díû÷p#!∏»R`K ’‘”ÔêYôÑƒ.I˝∑í˚2a…’À¸UˆÇà\rTÄ“ƒ\\ìúÅ	OÆ(ËjåÎË€;¯.=ÚïëÏGÊ{´∆•ß5^ﬁ¢v¸é{\Ze> lP‚õJÌ,¬‘ß\\“n]ºt5©,È0\\ßäÛ®ª¢GñQ?∫å˙ÌVÅ/Ä]∑¬íƒ#KI*~„∆¨‰ Z∆ﬂn9¯’ÖÍ∆Ç≈tè-f¶Ü\râp´Â`ﬁì\'±4\\e,ﬁptò]˙nO;Ã€\'tÃ◊t–Ã;÷£.∏` áI∞AI˘«JD*xÈ¡ÊïπX√∑8AP_Ñ ˛çù\"¥Ä+(•˜*{•e•6;&Ÿ!-ÖF˙]ªß6yRù”ﬂ%l∂Ï˛û«n‡ß‰÷Q)UISÌP©u—BÔÙ0•ò\rπÒ«ñqπKQ√‹ø\'ﬁÙ€ßé8·\\d“ØÆ^D}(=ëä¢†—N˘ô°5∑2•Ú5@ªÄŒä˜HÜVd∞‚‰µ;´Q‡˜öÑù ≠w‚#©ò¿’yDô¿â Ä>A3âU§Œz2Y\'>k∞~˙‰Í3pI¯Ü=}fô®◊õ05Ã¬C_≈sO∆’»“ô∏+)v|¡Ì¨xWæ@\rvT,RÀö*é*Ìz2Üæ™EV[ÚˇSñ»gØ]=˛Ùñ6b¨•ôWJ B÷df[BI˝ÛÂõ5√N§E’óD}˚NH ó[MÔúØFƒr€TtŒˆç°µP¶°8∆∞Ê9…ÄHxYÏ$rœ6‚Á”¨F§ªú˛Loëí¢\0QiÉ¯åe]2ußŸ„2L`äï¨Q-=Í˚’UA≠P5õØ„}uËóøÔa”GI7¿CÁ©ˆ∏X≈4‡kÆ™ö⁄¢∂©oçù?πeãaˇôo™—˙œ1 oü5ÏÎ˙øg™3¥Õ;pà]ıeCêˇOgFÃ≤ª…¡ËR?3	ecIı,l˝[Ò•m&≤w›≈⁄:≤¸¶áA∂Û»Åû∂+Û≤Õ◊Y\\ΩXL…65k=ô∑ì¶Ï?eÿÄÌ÷‹‚[	nÆo+\\”¢ﬁ\Z±∏•´qÿm=É¿nD^ê„WúØ<¸∆Õ!}<Ä¶‘RÿÚ∞œˇRÍºËB~I•„K—vKƒ·Ö˛‰ê≈Ì”«h\rÚk•Âgı‚˝ﬂ≠z∂‹_ËÉzØfG`†•ﬂ;ÀF!,Ω}ñ@[ßôÒŸ≈†Yk†5!+ôZ™˜FÙ&˚uY;òß†¨ºHPÎ’¡Øèq∞‘é÷2±¬\\ìÉ@«eäI’c£ßE=LhM&`ı1(kŸ∂Ú’ãñ˝f´ŸÓûºúŸku˚\"øµ`æ!ãŸ.ªÙ·ÀÛD)!Ò©LU~°ÔÁ‰ìÜ&OáXzj˛±;o‡6˛Ø$≤'),(4,'1292ba6ea088fee373a2825359c261af',1616934358,'xúÌ=ks€8íÛıÚ+4⁄›´›©RÙ~⁄Òñ#Àâ3∂Ï≤îππ⁄ŸRA$$!¢\rH VfÚﬂØ©Dˆ<nvW˘‡Hh†—h4\Z˝¢HzùﬁOAØZÈôK˝êÕ≈ì†WØıä’Z∑6%-J*ùŒå“zªNjùZ≥ﬁÏ:µVïÃ∞_ªW\\ì9ù0∑x¬zu’‚p?dØUÎÄ˚ÙÎã€˛¯ÔÖE∏ÚŒ^ú‚è¯ÛWEÍóﬁèäÿFâ{ˆ‚≈ÈäÜ§‡,àh¯™Ö≥R¡_óJÖˇ5^∞†@ßi>Æ˘‘-L∑¿[/î\nÃ÷L0^XSæˆh!‰Ö\0–—Øa∏Ï„Ha&(-5ıèÑC}Eu·Ü¯∞¢~ºdE∏XR2‚y€Ç#(	’åﬂí`MEa¥$D,¯áÒ›Ç«Í\0è|`oÜÔÀoÓÆ_ZS;|Ωlæ’n∑S™Uj’üÌ\"{Y<9„>P+®5:á DAP‚Ñly©`ö+∆≈äÑ0N“É{!ÿ4R\r!l@∏zÂr∏]Û˙K.ÊÂ•∞˝Ö‚ü˛ÙßÒ’¯zPk∑€Œ¨ﬁ©ÕÍçFÖN€n´’hWjï˙¥C›ˆ˙pút3ü:&‘ç&◊WØGOù«]\r˚◊Ô/ûLß\Zz}5<xd<Ù›Ûà}˜lZﬂ=õ‘∑ÉÛã¡˝≈˘·{rZV«Ôt ›-`*¿?ı◊¸;uŸ¶¿‹WEßY,8	ÇW≈ûèÇ¸[rÈåD^®øÅx—í«Û›#[Ö•\nú‰¬Œø/7(b^<{‰·„_§öëùW√Òd‘øø∫øl◊+¥€©–VΩ€n:°§”m9¯a:k¥¶.ÚQOıõ/È#OÀ∞[gIßüﬂ—÷Ëév*ÕYwZk7™›zÕÌ¥ß”J›©¥*›zãv:›⁄oGwî—‰Úˆv<∏æN˙%P5=sº\Zı4•4(*4!–∂@´≈!ŒÇN\\í‚	È5–òiId∆Êÿ¢ÃõÆ≤R∆,ÙËù‡∞u‡≤Dx\r·`≤Íp· ¶*6u`ÑÓàS5‡ªº¿Ëﬂå~ËsA∏3∏ócÔv\'(û|ÇÅΩb@y2’.ﬁÆçwDπÖæ)|YƒrëS\n7=’_˝0%ÃY≠ˆä·„Ñ>ÜSP9wÁZV\'Y#.*\\˛Ä3yx…¡f<:tç∆¬’Ï‹¡ˇ˚ƒ_”{\ZpoC]…˜^±\"W#lñ\0îıö¨≤ò©O¶=èBé÷à”«çÍ{î†e¶±T•Öª≠aaéÿrÄË\nLß«‘L¿¶ò]X<÷,02X≤ıÖ“SÁb°’$#°O,€πå:˜ºÅ$ÈíQœ\rÆ¸◊‘öW”D6Æ¯ÜjÑÔFÿóñòâg»eæ«|:\n∑≠çÈj}…<äÊo’%_≠Å“‡]Ä≠ï≈)2\r`ÖwÇŒò\\lÓ5¯Â˙Ç;®g±\rHP√í]…ƒ‘˛=](’BG‘À±0f+˙ë˚Tq\0	Œ√kÊSÕd§>Hv◊ÅeÊ„ä‡[§æ·™a¬˙Üä	Oz \'T„C`µVMk¬ûõf )D:5cﬁÚï¸x}≤ôƒ ÕËΩ¢.#Vúu#å–∞`.85¶p¡î\"Ÿ*û∂çrÍ⁄-î¥…\\hmÀQµ•ƒ¿w«|MqGâÀójﬂ;pcFF	\rq8Ù	’2aæ„E.éjÜ∞`Ç\r2ﬂ‚Ë\nŒc8±xéb7N∏∑◊%—ü3≤‚nºî˛)qñ@ˆDqg‚√*&›P/fﬁ\'ú1ªÀ’‘.◊Ì]Œï¬?¿éõs˜¸\rOp‰Ôzœn}Âwﬁz≠≈¡&˙Fé`Î0÷Øç∫j˛⁄˜Æ9˛Ãâ*.#ﬂë°Ö∂≠∂ÍñRÍÎ5p!YóŒD‰ı˙®qÑá$÷\nFdc¨ΩX`z¿®;V57∞s;˝ «u∫¿ï€^≥aSp)§„Ô˛†\0–Ñ2˝Ìû¢7Í≥Wk„í\0\rÒ‡^—kåÂ|ˇï¨í\nºP–c«Ô5•ÿ<:„ª3›ˇÅ≈ﬁ\n©òA´7Z“\\i« ∏-@s;póh≈∏‡|©Y Mü{⁄v@hÌ4‘Ùèy?BGc\0Òîs∏Ñ}sïÂt|©œÇlÕQ ÆºK‰4&Û@@ÿ,sù∑≥ù≤òÙå	EiUú›ƒÔœ3Ì∞ve\0 Œi8â—ùêáhÜFÄf§¸l$ß•øga\\k\';1,wòí°Ï∑N¸-3@~¥∫Á9L¨¢\rIﬂ[G\nÖiüCÎê†~5äX0◊\\ÆFP`nAR[—M`Y⁄íÄ´Ÿ`µ∑◊`˝\r£ï^ùó|´vr∫eê¡¨l6å</CB€@Úx ÷Ã†N ı\Z$hô?JÇÚFy˚VÿâøÂ…$`7c,Qi*@ﬁ<@œ…<ΩèŸoù¯[vó\Zñ…S!hÌ—#&îUü&≥õ\03òÎ»≠Ï|u}rÓ-§ªßâJu ì\'\0ï¥…ì…åëÓùh|@ÕpyÆ÷$\\ƒ7ÑÈí´ñﬁéoÆeëeû∏ûGr∞ˆXé‚¨!◊qd89wﬁµ`\\∞>Òú¸yxûåaò‹»6hÒπ¢æ©\0πgÕ7 ëIO’6†ºY$Xd∂£©⁄Ûî´@G2;GKCrE¥›öå]Á2ä>ÆâÔ¢\Z…gTﬂsAP-Ù¯QŸ\'ÊÜ»™8i9äê+;QQ7ò¡Ú63çy\ZÄ≥C-˘ntì¶ºCWiv©\rŸû+`FÌ|l™èy{4›Ü x ÏëÑ‰r$öZwµ:QpÆ¡‡â≠∞∏K;¡◊xåëUc6ê=˚¿÷o¡7ŒŸˆäŒeâû¬˙ÿTÛœ*yx/ºÅÔp7áÛ(vè\\;	ù¯—ö:åx}LaÂ†ig{eP’\ZË¶‡,p\"ﬁë\rQ¶˘wƒãr(C[_Ô\\Û¡Â—‘£Øiôsçå∞‡Y“`ÍY«Ê\\AÀù••π˚\0k!Î\0√YŒÄ-ÈˆÅ7á∑›ò\'JÃ˜©0W\'p¯AîÈOÀU>1¥∂;¥j˜hx⁄ﬂgj[Æø«\nî`Ñ˚«◊RÚçîû+_≈ˆ[m10o$¶=ñcYÎ∑>6’«\\¯|FOÎ´60O~r∏ﬁ“Õy“ÅøeŸ_ª…◊<+6bM„ã+mßkXﬁïJ÷˘£⁄¥oUı¸U’sM9éN\"uG˚,A4˜”}Ú∂îG·ﬁ√ˆú\00}¬ãƒœ⁄π~xÓëF!=ƒc±˚]˘·ﬁÆuπ%3ˆÿÁ´UÆ/ŸÿÈë«Í≤\nn„w∂bA˜\rΩ#>›s-≈‡\\fJ◊}ÍΩÌª\'˝p\"ﬂpG£ÖN£yvÊñÜ‰,Ü˝YÇcﬁ±{ˆæbÅw∆~RŸWﬂ|Âÿ¡î>¶\ZoP.¯\'π∏Ò‡˚±]9 6É~™Es®>\Zå§ñQ	»Uˇˆ\\ÚÚ…A¢s\\uc[bú\\\rÂÚ⁄µgaΩÚU\"o—ÔGÉ˚Éçg+É§£ê\ZõùÌ•\nD‡ÚÍz Û\'ÕÍÿ0É‰°π∫938Õ’\n√OªhdÄÛÊÕ‰~0∫}ﬂWË∫á¢√Ã÷ÂoÏp<–L´æ±y®Ó˝€˚ã—¡®T~\'ógoo√˜RÑ∂∑å\n\"úsàwC˝(À> Á˙ˆ¸¯˜Êj4÷¬vàå\\sé˛”ÉY°Ckvd|{?Han≤—∞)®=˜\"GÍ7w◊Ácµ€áúeÃ‰y‡Ê2‡Ú˙˝’E\nÂ!tÈEÃ›ã–éæ{#◊|7G∞Aòø¸æpÒÆÿ≥¨\0\0]Éã´Ò›˘p =≠fÛ\0‹s]Ì†˚dEWIØ›“\"ùjÍ{Vá\ZHüÓhúT\'8ídR]›Naí’Z∆«[’VΩQ´∑4ƒÆNHSßúÅŸÉIíî¬Ùı¿ÔtìÃ⁄U\\Ñ“`‡[µTOº—=Ó,„Ã⁄€`Ç!ÈK £t˙À´v¸	x»“8±õ+˛Di;Ö¶öUÆlxb“j.ÿ‹∆€‘x]6õ$∞E(å§W´Î‘D,SSCÕYÓÅ-≈:/\rµd´ÔìJÍit3ÿcLmÍƒ\n§òƒ•Ã0®:<1a{éÆ\níN¬ò&È’∞…Ã£èX´ò4 ¬¢â¨D“çh≠âC\'™ÿ!kôÅ\nHÅ0÷B•¡®K	bB¸Âòè10‹ªÖ√¥@\r3‚4‹¶·Æ(\rw%∆Ï®Ãõ√û∆πﬂú√3<˘d¸Ø_îkM5œsöL\'⁄˘E’úQì_TÌX1IfMƒLÂµt\\Œ∞$Õô\'N1¥ÉÊ§ª\ruŒ∆å¡0C‰¡)&&—*ÈÈbµàK0qm∂%À0`{∫iA@√¿\"ü≠l∂Tt√s1dú0K∂‚û%ÃÍÍV8YÅ…Ì≈]ß\\•Û‚ytﬁ:&$ù¥Œ»Ω÷o≤E3◊ÃS˘ÃëH%ùsŒÖ≠ﬁT±êñ¡¶™/	2˙\"—§…ÅN•ÆSá?ÅNN>ræ≤ÂhG”$≈i°ÖŒ$x\'kV5ë>‘q°Ñu¨›<ìd‹Û‘ò —x¡!ìÄ}§ªC¿ËˇxUµ0ha°ê[Òí#bNmaé’fÃRâÄmhF“‘dåMsJU¬h§ÙÙÔè+Ø∞¡⁄+Óø*V_VädXRØjÊpê}óx¿ƒW≈-lp·Ôg/N«ıK@Üqˆ@’6û‚Ìû‘pûJ√Cø*ÉÀùœS£-M/€Gˆìyû—ùö/ha‹qÆ7&;Véﬂ`¯“åﬂ»I‚¨ÈøÁ·I ´GNv\Z¸aßI¢ÿi?Ç68-À9rh/K‚w^6+∑∏UñÏ⁄Àæ;.v¯<n}xjSÚûÛQ?ÅuO[Îû˘¡ú¡ß ˛ø¶Wö„7ü˝ã}ZVgÊ¥lü¶¢æûàÉ16e∑ôB&,∫H˜òn◊RC\'u;y…Ó)´<\0PwígWË∂Ì$.u∞Twà\'1{u‘cY\'Vﬁﬂ™Ãn∂b¶¬•÷HAˇx<àDRÇOîπ˝-[DvgV˝”Æ•Ñ≠™:Ò´oæí˝Õ=ÜÎY#∏Ÿ∏Á^hg•“˚IuOÜ)9√≤Ó*;âè™«ﬂÔ[∫5W@“—…íπº†Î.˛!æ∑tè{]è´-´òŒ^”Ñ˘R«<$ûm„§†Côµ-\0ÂW‰Bkih≤®\ZR∑†ŒÚéπì)q/T	õ ®¢£”4	B0Ì¯5‹uÔÖgÛ´ìÜéwo:<ª√ıÖ≈‘Ü±<å€n—÷RaB;ﬂræTÓg†˙â≠ÖCóÃXùŒÖçß*ÒË™’ÀÍ¢‰ËæZÕMp\'’e„ñ.«j*¬1◊—.„O´€zß\n0∂*´-M	_´‚1iOƒD4l:Ôï5¿˝kUú\'^abc_æˆïKû.Ã˚“S«¬ºcaﬁ±0/oÿ±0ÔXòw,Ã3DÛéÖy«¬ºdñcaﬁ±0o’±0ÔXòg¿«¬ºcaﬁ±0ÔXòw,Ã;ÊÛéÖy«¬ºcaﬁ£0Øuí_[tha^ß—®v€\'9ÖyiwO˛\0ÖyÕjÌ‰Xòw,Ã;Ê˝Öyf˜é5yöØøSMû]Wv,Ã;Ê˝kÊVÉó[øw,Ã˚ÏZ˜Ã,Ã;ÊÛ~Qa^ÀÑ˘éÖy«¬ºgÊ}R»Ìﬂ“õH›\0∫˛aZóm¥–‚ÏÈ∑ocµ‰∫ÚxÔ≠<ØÊ$’LÅ˛Ë)Z@AΩWpF}Ócÿ®XX:{U,+ÖT2∂[±|ˆB€DÔF}ôT †pj≤K8˙…dö?©IJ3}Dì˝—»’î]Ì…ìﬁ∆∫√[…êú_3ïí*ø¶¸ÂS-MÒÔ¨Å&CK@#’°è⁄TAÍj®˙°WÃdæî,ÉK¡W&d∫&!rTz†ßhŒDÌ›>÷\\5ƒôﬁ…‘ˆçπ‚lå£\"ªÅGJ<T´¿ãfÜ◊eÂ˚´/–µ\'»VØÔFy§öM˝√∆ñ◊ﬂ˛zY3ÇøHkäŒgÇ-	QÈòﬂ>d ›:5û–k¯Lg∏°Ÿ‘•Ωéº9	¿1Yâ>àêó4/Lî±ø¿L2-¸uƒÄÛÙo¶C†„•˝è‘1¥∫DìtA¸dqÅ‹*VÒ*˜ﬁJó¶ëõ ægÅ¯Íów`ñ5Z€®©âW@UXÀ•ëûÚ5	~TIÃÉôµﬁ°Èwû1›|…|˜åõf\"8\rb$ÜÌó¯3»ΩàôòÙœçªÆ ÖøˆâO\\b86˜4≠o@Fúd˙Öaœ[:Ù¡¥2è[åôF°QÙ!KPDömo#?µª,–Ä+á¬Ê∫±ò0#lW∞ÎIˇDOé\0üìE/M˚ËÁIˇ•gl\"‹E?5≈r•WÌb•‘6rΩÿo·ºƒhîË„ªf·\"\"÷NzMË5	7IÛ ∞ÁÜÄùc\ZóÕ\r∏ÒÆ-´ ÓÔ≈ïæ¡ã(åeÿ7\"8‰‚ÅZk]õ\"À;nœuL˙¯µ—<¢qÒ‹,ØÔÕıZêè9]H˜√¬Æô{œWˆ“E§ó~ñ∏ä√Ûoôø%‚˝T\rLuÊ»„bNU‡È%a+µf~‘3ü{S{Ê¿î®å®òZÕf/F‘MX†ä1I∞ f+BÉaâe“52Â◊ÔóÇ0k∆\r3l¸é—–õ2fœ«Ö±çbU4ƒ˝[—\\Ü†VY¿Ô):ÙÙÜ¨◊⁄X\0ÿOñNƒÜOéiq>¶T~àuëgÆ)å94˛hƒ|w3>ƒ÷©„É}‚ÂÌ_\ZU∑4geeà\\ô∫áD¢LQºª¯¡0_Ììå¯§¯é%”yc∂‡£Ÿ§Ö…ì\\L˙C√®E“¯ˆ€TO‹5lÖ´)›?1)’µy!´@@72uˇ’tƒ]/K˛b∫v~‘¡˙d≥=\rF5¸	≠πv|Øjâ≥.S4⁄≠Kww˛ü=J[Gña¬EÉÜÊÅÃ∑ZSÀ¥Kãa⁄’¿k6\r“ûï5f®-ß ôI˝ÏwSï’1íQVqŸ2Ù*∑+’¶”q\ZƒyÈji]0c ·;x¨Ã;	%¸™Dp4†˚Æ ˛âo¥!=£Bw=ıNÚ˚∂	5„‡/‹˙2⁄85º,¶™∆¯˘X¡˜(ãM≤~lπIˇw\Z«V±p∏Ø´xÅi?kÌß~˚_u¸§“≠rÌX:Zkø«GÀ∆á	 w—ÓÂ2òÜ	x/;) ﬂÜÀ’É∏<|Éái÷ï+U1íöñ`m0‘¢=?§˙Ì_¯SÍΩBŒœ l0ﬂ(fÑ\n«&–Ÿ`YQÍH‚3P“◊6·È<†;Ú˝B÷æjS_Ÿ‡è+ÔNpèœœ}p„ìá¡#πÛ4s—¢@C¢›âO©“<ä!∫L*≠VÍ\r{|⁄o64[M/RÓvÃ¸F\r∑≥Tz{1˘í_*ùŸg)ó:ÉÚ	´…9–uº2ˇ Œ~>-´≤ΩãY_ΩVœ¿∞A˙u{?œ¨Åíj˙¬ëÕymü›òïT´◊˘Ip›>H–täM:BÒs±P>3GEvÍŒÔ8˚6œ,¿–u\"≥éF#˛0–\"1!êøTˇˇR˚s`Ê©Í[ÚJkùù≥gÆœ∏f‘R¢h√úi?â}v@˙ÒµjÖ˝/·:æVÌﬂmGˇı^´fÌ®•ÑLVÔ“Xfp¬ﬂè{3]´eõcÇm†gŸƒÉÚ\r8°ª|π–è»h[^?Ω˜N¶ •ˆj*¨4k‡%!÷r_]^eãB‚öˆﬁ%∂p\'=O?~ö“Su≠auçËΩMœ\rw#èb1wêââØ%A˜˚–jáHŸ,◊⁄-∫&SÍŸ®⁄˚:Ì:>vG∞ÿ0≠Ïô,â *#‘å„M§`<iØäò≠+H‚∏g/ ﬂú~˝è>æãÓﬂ‡ıØ”¿≈Ú7ˇ¸Á¥ùñUÁ3m¥lÎ,≤≥‚}$Õn{R4ŒwgSoµ5s¢Gãg√öë§ß5F˘@.≤W#à%∞j‰È\'≠¸Pbi&Èõ[)};°Ê’À¸Ø,@Í©†≥â£\'ô rûS∞æ0VßﬂS÷¬W°\\ôªzœ|o‘∏Ù¥∆S«S‘åπ ç2õ90(Ò˘≥Ê.¬‘€Û“ÆzL∫öTVÎ©S%ó‘ù”=dT˜í1ÄAø¯∏XÍs,4›CJjSÒµÇÜí[(+T=r†G¯¿B›òCL{1c5¨OÑ˚këÉmxNû$“pî±$«—©Èè?m3oü8†◊2/0D√<è∫‡8ÇÀ&$•ÂK)·°/Ffÿ\rüÕE}*è&vs—ß)°ñﬁ®ú§÷ï⁄ÏÓi(424“≤{j#6’πùzπwΩa˜?˜<˛p∏ô∑éJîKûjY—DSΩ“Ìàbé?‰&∆“≥‹ÖuäÊ¸=Ò§ﬂ>uƒ˚\"SπUıx‹á“∑,)ö€	ÅQ∏‡V˛[>‹i◊FZ1<)–ä\rVê#yò“j¯äLa\'Ë´≠xKJ&˘DQNçA¢Ú⁄OEPè√ú%yg=É,Åú¡≈∂x˙‰Í«K‡ê%{˙Ã≤¸B/>¿Ñ?∑%|¿“Ÿ>Wß\'¢÷‡Ä¶ƒA)∑k⁄Ú±x∞£Çg±Z>¶VrT¡ﬁì1¥<2_ëˇL]\"Wº{Ï™ÒªNµcëf()Ä\n1Xìôm\r%Ôüg\\æªfÿ!É¥™˙¸Ü®◊\rK…M˘úb´ËïÛyœËÄXÔ`õä∏⁄—hÕ’i®N\0ÜQ…IF3 ﬁ.vπåÔ6‚k≠F‰ªú.¸òﬁ\"•E¢RAÒÀZ$Íév∑ÀÅ)A≥F5Ù®=‚WUπ!E°ÆW7/$˛‚–œ?≈cÛGi7¿C\'©ˆ∏…4‡√À™Pﬁ‚∂©Zéù?πdK`ˇ»\'’‹˙œ1 oü5ÏÀ˜«T‹hõ∑ÁªñœÜ†¸.åX9·&£8Õ$fè5’≥∞ul˘á∂ûtÿ=Î(ñ¯√Ëÿï7•8≤µG∂Ù∞UôG®æ,‚ÍqqJV©Y´…¨`∏4e◊¯π®√zlΩ‡v∏8q3≠xZ·òÊı÷Xà%-mç√nÎv# Ç?Á|Ó·/m”€hrA\rÖ-˚ÙouùÁ»œ]È¯<N¥Z±=‰Br»‚ˆÈcÙ\rÚKµÂ\'ı\\È˝ﬂï˙nπø&–!z’>ÓôD`†•€9ŸçB Ωyí@õ|ªÉÌ≥ã^ΩR√‘Ñ¨dπ@_=\r§Ÿ≠ z–,e=ËyzÄ¢Wø>ƒ¡R;VXŸâfzò¨:.#LîÔ= ÎaBk2©Æ∑AYÀ∂ïØüÌ÷ıfÁ$˜ë€vWB‰/h¿B«®É1ió≥|ÈÌÈÿ,∞†2˝¸Ÿﬁüí´4ŸÁ8Ã“Q4\\πì:.Âˇ\0!„Mh'),(5,'bb4bf65cf73c6881e6e9d040a994ccfb',1616934365,'xúÌ=kw„∂±˘z˜W(j””Ê≠ﬁO{›cÀÚ⁄[ˆ±¥πΩßÈ—ÅHH‚ö\"êî≠Mˆøw/Ç\"µ+;Io⁄j?x%0ÉyQ$ΩNÔß∞W≠ÙäûKÉ»õyîè¬^Ω÷+NßçÈ¨’tfÌ∫”Ít™¥Eªn•Q!›n√qfSÏ◊ÓWdN\'û[<ÚzuŸ‚∞ dØUÎÄ˚¯ÎÛ€˛¯ˇÓÖE¥ÙO^„üÛ7E\ZîﬁèäÿFâ{ÚÍ’ÒíF§‡,iÙ¶G≥R¡_óJÖWˇ3^xa·ëNC/¢¯∏bèîS∑0›\0ˇmΩP*xA∏Ú∏Ã+ V>-D¨:˙5}`)Ã8•∂¢A!d1wh°/©.‹ê\0V¥ƒèú,È#„Ä‘ã<‚˚õÇ√)â‰åﬂëpEyaÙ@_∞∏ﬂsh<\\ÄΩæ/øΩª~mMÌ∞’Ü{ÛET®vªùR≠R´ÿlŸÎ¬‡	»	=\0µúZ√†s¥†/p\nCú»[√B CòÊ*ò1æ$åÙ‡^po\ZÀÜ6 ZÖΩr9⁄¨X˝5„ÛÚ´R	ÿ˛Jr¯¯√¯j|=hW;ÆK‹ná“È∫›F£QitÍÕz£÷tjÌÙ+‡8=Ëf0>›wå‘ç&◊Wg£ÁNÜ„ÆÜ˝Î˜Áœ¶SΩæ\ZÓ=“}˜2bﬂΩò÷w/&ırpz>∏??›OéÀÚ¯OôªL¯\'ˇÍ«Æ∑.xÓõ¢”,üÑ·õ‚œGA¸-πtFb?Rﬂ@ºh…˜B˝›\'G•\nú‰¬÷ø/7Hb^Ωx‰˛„_•öëùW√Òd‘øø∫øÆ8§Jú™€≠Õöùj≥“n∂·◊úÓ¨’®’[S‰£öÍ7_“Fóa∑NíNØ>ø£≠ˇ“≠ukı©€™7¶ïNç‘ªµö”òv:N≈©5:’v„˜∑£[ hrq{;‹ø\\\'˝®ö^8^ézûÇíö	öh[†’‚gA\'.âHÒàÙ\ZhÃ¥Ñ2ÛÊÿ\"ÕõÆ¥R∆^‰”;Œ÷`Î¿eâ\Z¬¡d·‘a‹MUlÍ¿’ßj¿wqÅˇ–ø˝–gú˛pß˛p/∆ﬁmOP<˙{≈ê≤d™mº]Ôà2-|ì¯≤à≈\"ßnz™æH˙aJò≥ZÌ£ß	}ä¶$§bÓ:Œ\r¥,◊N≤F\\T¥‡Ïg≤ËÇÅÕ2xrË\nçÖ´Ÿ©Éˇ˜Iù—{\Z2M]¡˜^±\"W#lñî\rö¨≤òi@¶>=ç#Ü÷à”«çÍ˚î†e¶∞TÖÖªØ`aéÿrÄË\nLßß‘L¿¶ò]1X<÷,02|VÁROùÚyåV[òåÑ>M∞lÁ0Í‘˜Ç§è˙nxúQk\n\\MŸ∏dk™æa\\\nXb< æ&◊|/†£h„”⁄ò.WûO—¸≠j°dÀP\Zæ±µr$9E¶!¨é”ô\'€AÄ;E~Bπ>gÍYl<‘∞dW01µœJπ–ı¡r,åΩ%˝»*9\0¯8c—µP≈d§>v◊ÅiÊ„ä‡[,ø·™a¢˙öÚ	Kz \'d„chµVuk¡ûÎf )B:c.ŸR|ºYOH1z/©Î´	ŒÄºë4FhXx.85∫p¡î<äº•ô∂çrÍ⁄-î¥…ú≥xeÀQµ%≈ p«lOqGBâÀ‰æIv‡∆å¥\Z‚pËÖ≤e‚éª8~®‚Öthê˘Góp£â≈s”8aæiØ¢}6˜Ç…íπf1(˝S‚<\0Ÿ…ùI\0´ò¯tM}√ºO8cvó´©]Æˇ⁄ªú+ÖøÉ◊ÁÓÂû‡»ﬂıû›˙ øxÎïõË9‹[EFø6Í∞Ø˘kﬂ3∏fÛòáî_ƒÅ#Bm[m\r‰-%’◊p!å8YïNx’˙®vÑáƒh-2°6V~,–=`‘ùW’7∞s;˝ ∆u∫¿ï€^≥aSp¡Ö„Ô˛†\0–Ñ2˝Ìû¢7Í≥Wk„í\0\rÒ·^Qk4ÚæÑJVJ^(Ë±„˜öTl>ùEÊÓ#˜a±∑\\(f–Íçñ0W⁄∑hnÓ•å=(”Áº∂-Z;!ç˝c÷è9W—@<e.·@_e9_´ÛF8\'}à+Óqç…<T6K_ÁÌlß,&5cBQ\ZG’gF7Ò¿ÛL;¨]\ZÄbÅs\ZçAbT\'‰!ö°†)>k…i©ÔôA◊⁄≈…éÅÂì2î˝÷1ﬂ2√\0ƒÀ{ˆò√ƒ*⁄êÙΩu§Pòf9≤	ÍW-`†àπÁÍÀU\nÃ¡,Hj+∫	,K@[p5,W—Ê\Z¨øaºT´Ûìo’NN∑2ò’õ\rcﬂœê–÷ê<ûzkfP«ÄÚGùÅ=‰è†ºQ˛ÆvÃ∑<ôÏzå%*M	»õËπ#πÇßˆ1˚≠cæew©aië<Ç÷˝1ˆ∏¥Í”dv`sπïùØÆNŒΩÖt˚t!Q©NyÚ‡Ñ†í÷yÚ !ô1¬Ω„!5«‘ÁjE¢Öπ!tó\\µt9æπ=xñx‚x…· ˜rg\rπ∏Úâ#¬…πÛÆ∏«∏◊\'æì?oœì1ìkŸ->ó‘7% ˜¨—Z:2È©⁄\Zî7ÀÇÑãÃv4e{ûrÂËHfÁh)HÆËÄ∂õÇB±Î\\F—ß	\\T#˘åJ‡;.™Ñ?J˚DﬂY\',G1i\'J\nMÉ,n3›òß¡83j…wç†õ4Â2∏J≥Kmàˆ\\Y\03jÎcS~Ã€£È&í∆Sfè$ó#Ò‘∫´ÂâÇs\rè±¬Ló<v8ú≠i\"·´¬¨!;ˆ¡[]Çoú≥ÌúÀ5Öı±)?ÊüUÚ¯û˚É¿anÁQÏπv:Ò£u<‚˜1ÖïÉ¶ùÌïAUk†õÇ≥¿âxG÷DöÊﬂ?Œ°m˝]ΩsÕó≈Süûq0“2Á\Za¡≥§¡‘9:≤éÕπÇñ;KKr˜÷BV!Ü!≤ú9z†õG∆›ﬁv`û(yA@πæ:Å√èÍ£HjXÆÚ1–⁄ˆ–™\r‹°·ió®lπ˛+PÄYÌ_Ku»[4Rz*}€oë¥`ﬁHL˙^éMd≠ﬂ˙ÿîsy∞1=y¨Ø⁄¿<˘yÃ·zK5ÁIZ¸ñydÌ&_Û¨,ÿà5W⁄NW∞º+ï¨ÚGµ5h◊™Í˘´™ÁörùDÍévYÇhÓß˚‰m)ã£ù\'¿¿vú\00}¢Ûƒœ⁄∫~xÓëF!›«c±˚]—ŒÆu±%3Ô©œñÀ\\_≤±’#è‘ı¢+∏çs‹Ÿä›5Ùét«µd¿πÃÆ˚(R·{€wO˙;‡Dæ·éFù∆ÛÏÃ-…#X\04˚≥Œ±;ˆæbÅ∑∆~íŸWﬂ~Âÿ¡î>¶\ZoP.¯\'±∏Ò‡oc1∫≤Gl¸Tã‚Pˇt4ÿI,£ê´˛Ì©‡Â≥ÉDß∏Í∆∂¿8π\ZäÂµk/¬z»Dﬁ¢ﬂè˜{/\ZœVIG\"—46;{\"⁄Ià¿≈’ı@‰Oö’=∞a%ÃCsus˙v∞7ö´%Üü∂—à\0ÁÕ€…˝`t˚˛æ/—u˜Eáô/¨ ﬂÿ·x†òVﬂcÛP›˙∑˜Á£ΩQ…¸N.œ.o√˜BÑ˜∂Kèr¬ùÖÁˇÜqñ}@ŒıÌÈ9ÔÌ’h¨Ñmπf˝9¶≥Bá÷2Ï»¯ˆ~ê¬‹⁄g£aSP{ÓDé‘\rnÓÆO«r∑˜9Àò…Û¡Ãe¿≈ı˚´Û }Ë¬è=w\'^@;˙˛≠XÛ>‹¡a˛Ú{¯¬¯[∏\"`œ≤\0t\rŒØ∆wß√Å¥öÕ=pÙuµÖÓì]%ΩvKeàTN®©ÓYŒœi(|∏£qRï‡HíIuy;EaDñ+oU[uÃ(à√]ï(“ê¶J99≥ì$)ÖÈÍÉﬂÈ˛&ô¥´èÑ!‡Åo’í=ÒF˜ôÛ`2/h/l¬	Ü§c,Åå”È/ø⁄	&‡!„ƒnÆ©QÏölñπ≤·ëN´M˜Ê6ﬁ¶¬Îz≥ôF[Ñ¬Hzµ∫JMÙ«\"55Túe>ÿÊ+÷yaòh®$[~üËT⁄PM£ö¡Û‰¶è¨@äN\\Í¡UáG:L`œ—ïA“Idh^ç7ô˘Ù	kìFQX4ïH™Õ°qËD;§`m\r#3P)∆Z®0U)Å!$x≥1FÜ;∑pò®aFúÜ[¬4‹•·∂ƒËuÄysÿSì˚Õ9<√£O⁄ˇ˙Eπ÷TÛ<ßŸ¡t¢ù_îÕ…’˘EŸéÖìd÷DÃd^K≈Â,K“úy‚d†4\'›M§r6zÜbNy8—âVAO´E|∏X¬âk≥-YÜ€√–MC\ZÖ˘ﬁ“fKE5<z.ÜåfâV‹≥ÑY]’\n\'+‘π=”u d:œÃ£Ú÷Üêt“:#˜Jøâ\n≈\\=OÂ3G\"ïtŒ9∂zì≈BJõ≤æ$ÃËãDì&:ï∫N˛¢99˘»ÿ“ñ£-MìW§UÑ:ù‡ù¨º™ñàÙ°6Ö÷±NtÛLJêqﬂóc¬D„!áLBÔ#›\"ZˇõU’r¿†ÖπDnuƒKé9µÖŸ®M√RÛ–[”å§-®ŒÎÊî™Ñ—HÈÒ_üñ~açµW,xS¨æÆ\"ËaIΩ¨ô/¿A\\‚ﬂ7∞¡Öøûº:◊/\0∆ŸCY€xå∑{R√y.(ç\n≤¯M1<\\lxkm©˚¯Ÿ>¢ü»ÛDè^‰,–|AÉ„∂Sµ1Ÿ±b¸\Z√óz¸ZLb≤˛•?Õ££PTèm5.ÿ„Vì@±’}mp\\s‰–^ƒo-º¨Wnq´,ÿµì}w$Zl/e\\{ÙÒu§L…{∆\"D˝÷=o≠;ÊsüÇ¯ˇö^jéﬂ|ˆ/nÙqYûô„≤}öäÍz\"∆lº©Á{—&S»ÑEÈ”ÕJhË§n\'>Ÿæ Eï\0ÍNÚÏ\n’∂ôòRKuGx≥WG›@»*±˙˛ñÕ`v{KOW∏‘\Z) ËüÖ1OJêÃDô€ﬂ≤EDáhf’?m[Jÿ*´ø˙ˆ+—_ﬂ3Q4±û5Çõç˘ÓπrV*ΩüTQ\'ÒEòüì—1,ÎÆ≤ìXfT›t|O¸ÔËF_IcL\'û˚¡ªÓC»>ò{Kı∏Wı∏ ≤2tˆö:ÃóÍ8fÒm\'ä‹®mHø\"ZKCìE’ê∫uÓ<w2%Óπ,aìUttö⁄√ a¶ªÜªÓ=˜m~u“–ÒˆMáÇgw∏>∑ò⁄–ñáv€-⁄Z2L~Á%c“˝e?æ±p®í´”)∑ÒTBµzY]§›WÀπÓ§z¢Ãc‹“eXm@y4f*⁄•›‚©du[`BÔT∆VE`µ•(a+Y<&Ï	CD√¶Û^Z,∏ñ≈yB‡ï·%6ˆ≈˚a_∫‰È¬º/=≈p(Ã;Ê\nÛÚÜ\nÛÖyá¬<M‘°0ÔPòw(ÃKf9Ê\nÛ∂Q\nÛÖy\Z|(Ã;Ê\nÛÖyá¬ºCaﬁ°0ÔPòw(Ã;Ê˝>\nÛZG˘µE˚Êu\Zçj∑}îSòáêv˜ËwPò◊¨÷éÖyá¬ºCaﬁø¢0OÔﬁ°&OÒı_Tìg◊ï\nÛÖyˇÖy˚’‡Â÷Ô\nÛ>ª÷Û\nÛÖyá¬º_Tò◊“aæCaﬁ°0ÔEÖyü$r˚∑Ù&B7ÄÉÆ~ò÷ı÷JhÒˆøÙ€∑F-πÆ8ûƒøÁUü§ö.p´∂AÑé—*pÍøÅC\Z∞\0„F≈¬Ç”ŸõbYj§í6ﬁ˛\Z=MRÜ‹7Õ3\"n˝oöÁoƒ¸\'p6ér∫9∆L¿ÆÊÚ›ùK.ﬁ¥:ùNµ’È∂f.m◊¶⁄Ït∫5«≠∏≠n}⁄ôÀ\'ØîEˆn‘)›°Ißñzä\'Y™⁄ùTè$°öVIè˛hdÅj“™6%ÉBœ¥±ÍÒVlGŒo©ä?IçaS¸Ó™íeÛ+Ø@F®»PÚ◊HuË£.óê∫*fÛ®gúíáÇ≥•éFÈÆIÄU.hIö3Q{ªè5WMq¶wb)<c&9kpTD7áâèJx—Ã‚\Z°ﬁGÒZ˘∫ˆDXŸä„’Õ,t≥©~VŸÚô‡€ òÉ;!*V˜pu©≈Èå{Ñ»dÙ/ür2ı’:’~ÿOÂ◊°YW≈ù≈˛ú‡ËúHD»Oö:∆Ÿ_`õ˛<ÚÄÛÙ/∫C®¢µ˝è‘—¥∫DëtNÇd¶<Ô-ÂK3ÉÃ<Ç∑ú“›»tﬂÚ@˘ªø–À\Z≠l‘TGK†®¨Â“XMyF¬e…f·ÙZÔ–Ò0ùgûjæ˜åÈf¬\r\rÕˆ¸ÊÖZƒåO˙ß:X !Ö?˜I@\\¢96˜≠oAFúd˙Öfœ%ùr˙®[=\rK–”ç\\°ËsBñ†à€.„ µª^®\0WÖÕuçòxZÿÆ`◊ì˛àö‡>\'ã~–Ìo)„Û§ˇÉØ-2‹≈ 5≈√R≠‡ª≈R™ldj±ﬂ¡y1h§Ë„ªˆ¢EL¨ùÙ◊ä–k≠ìÊ•fœ\r+K7>h47ƒ°Æ-À–Ù˜MH†E<éåZáå?Rk≠+]‚y«¨„π2§ﬂÅWœcjJó‡^;ª◊ó”\'=‰t!›ÀvòbÓ=[⁄KÁ±Z˙}Z‚ 5œøÛÇ\r·èË%+X®kCG>[}™B_-	[©5C¯£ö˘‘ü⁄3á∫@fD˘‘j÷{1z§n¬Y¢à)ä—[i„ò?$]c]¸˝˛ÅœöqÌi6~Ô—(\0ã÷∞Á„B[fFç9qˇR‘ó!®U/d˜√	ÙÜ¨V TÿOñNƒöOénq>¶T~0∫»◊W%öCç?j1üõn\Z√Ûaï:>ÿ«({¯ÉVu˙¨,5ëK]uëHî.b2ªã4ÛÂ>âxSäÔ¯AS≤÷ù◊z>ÍMZË,˝«≈§?‘åZ$çóﬂ•z‚Æa+\\MÈ˛âA+ØÕsQÉ∫—ì˜_M≈˚’≤ƒÔµ+◊K¨O6€”`T√ü–ñlõ{UIúuô¢À`]∫€Û|ˆ(eYÜ	„Iö?Ñ\"€kYL-›.,Ü-hWØΩiòˆÎ¨1[@e9Ö…LÚG«õ≤®©éqî≤å\nó°Wπ]©6ùé” Œk\'îK´®∫Ñô\'›ÕΩ«ä¨ó¬/7@î\0òG“◊*t;N–I~ﬂﬂ6°fºï€@ƒ:ßö˜ÄE◊ÙË(÷>â_Gì¨o,7·}OMdÀñ˚™Üòˆ≥“~ÚÕ≤„\'ôÏk«¬’2¯\Zec≠óµñÔ‚)‹Àe0\rNv˛Rîø\ró´{qy¯\"”¨JGÆ¢%5-¡*÷°©E{~H’ª«á‹{Öúµ◊ÿ`æëaÑ\'–YcQSÍH‚X¬”◊¡#·<†;Ú∑Ö®ºU¶æ¥¡üñ˛∏fl~\Z∏ÁÃ—Y <í[o`”-˙4\"Ú¡!sJ•ÊëQEZiµRo¿ÿ√ªÿ~Éw±Ÿjzërˆ\rÛ5‹ŒRÈÚ|Ú•\0B©tb#ú•\\Í¬ãg ¨&Á@UãÏáh8˘˘∏,?àˆ∂≥æ|©ü\0giÎe?O¨Åí™˚¬ëÕyi†›òï‘3Àó	\np›>H\Z–tåM*<Ús±P>—GEvÍŒÔ8˚.-¿–ubΩéF#{—–\"—Òóo™ãﬂ‘˛Íy™ÍñºRZgÎÏÈÎ3ÆiµîÅH⁄0c€O\"Ø›ê~x©[a˜+¿/u˚O€—øó∫Y;j)!ùSº–ñú¡ﬂ∆Ωô™≥Õ1Ó≠°gY«√Ú\r8°ª|ΩPË([^=;¯N$@ÖˆjJ¨„4k‡%!÷r_^^eãB‚Í«ﬂ%∂p\'=OﬂºäMÍ©∫“∞™Bıﬁ¶ÁÜπ±O±î<ÃD‰WÇ†˚]hïC$mñkÂ]ì)ımTÌ]ù∂ª#XlXTÓò,â J#‘\nÀ7&í∞û¥7EÃñ?$q‹ìWÂoèø˛{ﬂÑ˜˜oÒ˙WI\n‡b˘€¸„⁄éÀ≤Ûâ2Z∂uÜŸYÒ>f∑=)\ZÁ€≥…wÍÍ9—£≈≥aÕãH“”j£|¿9„Ÿ´ƒX5Ú’sâVv*±4ì‰—≠êæ≠PÛçÏ•ˇó 7Éz2Ë¨„ËIJáúÁ¨/å’©∑§µ≈I(W˙Æﬁ1ﬂ[9.=≠ˆ‘Ò5ÕÔ&§Qf3\Z%>˝÷‹Fòzw_⁄U7§ÀIE≠êñ:YI›9›AFu\'ÙÎQÅ´Ä•>«2◊§§6_j®)πÖÅ¢>ˆ◊#zDè^§\ZsàiÔ\"f,áı	w-r∞\rœ…≥D\Zé29*u\"¸ÒÁmÊÌ3ÙZ˙ıâh8Ég‚SGpy¢$Ä$µ¸S)&%<Ù‡≈à¸æÜ·ì¡†®O#È—7}öjÈµÃà*]©Ãé·ˆêÜD#B#-ªß2bSù€©Wã◊vˇSﬂgè7¡7Û÷ëiz¡SÂ\"K:¬x™V∫Q¨0àòé±Ù,waï‚Ü>œ<È∑œ±«æàDrU>‹˜°-KíÉ˙vB`-òï}èñ⁄ïôVO¥dÉ‰HÂ¥\Z9æ†ì€Â’ñŸííF>SF§S£ë»¨˙s‘Mò≥$Ó¨gcò3∏ÿœü\\˛t\nˆ‡=fQ¸°bπÅmJ¯xß≥y6ÆNOîc≠¿MâgSfWZ¥≈C˘`GÖ/bµxHÆ§Í\0ûç°Öèˇë˘í¸wÍ±‚ÌcW5oZUFåEö~ú•\0*DcMf∂5î∏^p˘nõa˚R™ÍÛ\"_v,$6Âsä≠¢VŒÊ=≠åﬁ¡6qµ£–ö´”Pù\0£íìåf@Ã˝mÏ$v=∂›àÔÀµ\ZëÔbJ∏ó`zÛîàLô=µ*(H‘moó]\0gçj®Q;ƒØ*sCíBU-Ø_á¸≈°ü\' <CdÛGj7¿C\'©vS\0•—iY¶oq[◊LÁO,ŸÿﬂÛI’∑˛K»€\r˚Ú˝ﬂ—7 ÊÌ9ƒÆ$¥!(ˇ˚#VN∏…∆®ÚQ=	ÜŸç¶z∂nÇ-ˇ–÷ì€g›âﬂèémyìäC#[˘dC˜[ï~ÄÎÀ\".VßdôöµöÃ\nÜ€^Svµüã:¨Á≠Ã˜‚„.n¶O+”ºﬁ\n±§•≠pÿmç¿nDY„ÁåÕ}¸›§Mz{\0M.®!±eaü˛£ÆÛº˘π+üäóK¬7˚\\ËœY‹>å∫A~©∂¸$üj}¶ˇªîﬂ-˜W:xØ⁄¡áMì¥t;G€Q§7è“¡\0hÔñ∞}vﬁ´WjxÉÍêï(ËÀgë‘\"ªUQöÂ†®=MêÙ™‡◊,µcÖï≠Xa¶áŒ*°„2¬D˘Æ—£º:¥&íÍj§µl[˘Ú·›nΩQo5èr¯mwD¸~,tå:Ûóv9Àóﬁ›éÕ‚Ò*“œüÌ˝)˘©Lù}6añé§· ù‘q)ˇ	v');
+/*!40000 ALTER TABLE `cache_pages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cache_pages_tags`
+--
+
+DROP TABLE IF EXISTS `cache_pages_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache_pages_tags` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `tag` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `cache_id` (`identifier`(191)),
+  KEY `cache_tag` (`tag`(191))
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache_pages_tags`
+--
+
+LOCK TABLES `cache_pages_tags` WRITE;
+/*!40000 ALTER TABLE `cache_pages_tags` DISABLE KEYS */;
+INSERT INTO `cache_pages_tags` VALUES (2,'b79ccd75d4854a2dbd6e3eeb4a87a428','pageId_1'),(3,'6b952ea57841f3117a81d35685ceffdc','pageId_2'),(4,'1292ba6ea088fee373a2825359c261af','pageId_3'),(5,'bb4bf65cf73c6881e6e9d040a994ccfb','pageId_3');
+/*!40000 ALTER TABLE `cache_pages_tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cache_pagesection`
+--
+
+DROP TABLE IF EXISTS `cache_pagesection`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache_pagesection` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `expires` int unsigned NOT NULL DEFAULT '0',
+  `content` longblob,
+  PRIMARY KEY (`id`),
+  KEY `cache_id` (`identifier`(180),`expires`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache_pagesection`
+--
+
+LOCK TABLES `cache_pagesection` WRITE;
+/*!40000 ALTER TABLE `cache_pagesection` DISABLE KEYS */;
+INSERT INTO `cache_pagesection` VALUES (2,'1_222419149',1619439955,'xú≈ò›éõ:«_•‚J¿˘ ÏU€”£=R[UõTÍr`6k’`ÑM“tïwÔòØµW≠L{¥p03˛ÒõÅ–òƒè< πwC„E¸xïq{ïÍ+@É¯ë≈<	√Œªdôw£mÕ®nGé∂±ß»	™D<yãﬁxñÜ5Ë≠RQΩyÖV¶8éeºåΩ[ë7ßò∑†ßd∏Ñ)Ω÷;áåQ√¥é=N/¢V}F4<∞,É¢7`.ú≤RäÂ√¥õÿÉ\"3-®¡=$«J‘•Nã¥ãÊàÈ‡ªBÁΩÿ’áíA\ZI2ÒM]JËÂ¿$˚]*ä{vÙn>ÈpÙQ≤µ$¨HyùÈ¯Où L&í)–‚äÊ¢.TbhÑÜ1|∞ìöã#+í\\d√ÕÑ(‘Å¶ﬂ;i’I\nºãÑ√	¯ ﬁı⁄®UâÛÆŒu·…∫Ø<iO4Rã•3~§¨xµøîbóV¨TØÓ0=T¨8ÍiCÌ∏÷ÑlÉmps’aC¨-˜û„ ëÍ¬!CEPSÂøkî©+™ò(¸ß‹~/«\nIﬂ›«Ml“\'£¢CT˘™≈*¸3ä∫·˝=—DCcfÈ®àIEöMê√QÄtKB:wà1·“úp”¨Èï√¬µ-]Ã íÆSnê¬w˛Îg˛¿ïi¯„Œc˙ØııZB’XÜ.\"2#Ü≠)ÒÆsZ‡÷Çw≠À≥’∑!èvˆO¥ÚœÁ≥ˇ†rÓø>‘åg˛>noA|yëòŒˇ≥∫ﬂ/°“◊µﬂ{9^ÎÑr(O–nõUm7Àm≥m6\\¢püi%·ﬂ∫H›\\ÅÕµy.[-ˇmÕ9(È¶m:2	›?Ï‰&#ì,∂gd∑@ÒŸÏÜ[⁄pÀi‡0≥me£≠&A˚/«GÖõm=álòÒ¯ÿÿh—$hªQ©¥ÅÕQ’==U›ŒQ’=fp¢Öœö¬v2¥Ê}€Õ7Ks–|%s∑Æ0úÉÓK…Õ‹≠+¥~tMA˜ä˙ÕA™ä¶#ñü›&»tàÔ[Ò(*ˆ≤Ó™÷nd1Ïg˝°ËF]œ±≠5ÍHæÕ\\K≥ˇ÷v#⁄\r%|°◊Â_!B™Ω‹Ñv[	ßy4«’öÿ-&ún-ﬁAäß¸Ú•Ãpen“`.AÔÄk¬ëÇÜ≥≠L¶ ß•õêÃ∂2[¬ëBZ›\'\Z˝ ÿ¸ﬂ{,	™°ë’M¢—µˇ]¸øŸØ◊ü”◊âr'),(3,'2_222419149',1619439957,'xúÕòmoõ0«øJ≈ÁÅ–W[∑©ì⁄™j2iÔênj’`ÑM≤¥ wﬂôßÿ›&”mÖΩ	p>?ˇœ«Apà¬g?fÃ9«·$|>ä0ùÇsyE3¢å~¯L√â:ÒÔú&Œπ≤UWe}Â¡’2t$⁄ë\"‚\'o“\Z˜B≥z≠UH,IkûÅïJ◊\"úÜŒ%O´Sàõ·]‘\rAHßˆNIB±föá√^ 6\"híê¨5@,∏e!%Mª€.Bádân\rÓI¥-xô´∞@;©éé|ó‡ºÊ´rì„-ZêÑ? CNZ9 »zÛÏûnùÛ5|§®-ÕbV&j˛M#ë†í(Ò5ES^f2“4˜|Õq÷ŸQÕ¯ñfQ ìn1>µ¡Ò#`Gµ:Q´àŸ÷âwTw¸9Àûëeˇ_gYAØ¯˛L©ˇƒ≥ˇ#ﬂMÙøH˜)∆Øs~\Zˇ9ÒìÅ¨d+¯~U¶™‚—º-yTü®ı’kTØ1ÕŒ÷áúØ‚ÇÊÚÏ¬ìÇf€zÉÄ„‹õ#¥Ùñ^ª©ö8P‘P’˜6ìêFê‘ïÓE%OY`IyÊûbª≠∂3 ˝ÙmVs£zr‘k∂ÂuTçbÊøébn∞æM\'4zîÜ\nÈT®™ã∫\nÑ]‘@ÿßh7úÍ7\\Tª{ÉE∑ÖMK3gfH◊(◊I°]7˛Û˛;SÛÔÆˇÖÓ?W„• E;¡043}FW§Vù‚ä¥õ¸ª±&ŒÚ‘ﬁT!Ç≥ª√ÖªﬂÔ›ô2˜›¶§,q˜d„B°s‰äÉÄpÓÎÚ~IXN\n5Æ¸>1í¬·ù\n(∫ÙxuŸÃÇ`πò.´≤ôòpﬁõ¬›‚Bêœe€π<ìkÒ6\\¶ZÓáí1\"ÖùŒ7È– tÈŒNÜŸl/».	Üg≥nj¬MáÅÉ»v¥ôâ6ÌK\nè\n;€|ŸÆ®ËÒ¯Xòh¡ h&W»∏ÏÅåë’5ﬁ∞Y]éë’5D∞¢˘/ö¬r0¥Í≈€Œ7JsP|9µ∑.ﬂÉÓkŒ8NÏ≠À7|á\rAwM≤Ú˝F»«=∂üŸ&–pà˘∏Â}\"I3já5öå{´>Ì®Û1 Z°ˆ‰[åµ5€Øn;¢ŸP¸7z]˛\"âïóù–l+˛0/Ä\Zaø\\#≥≈¯√Ì≈;√);|Õ(†ƒNÍç%Ëaä∞ß†˛h;ìJí‚‹NàF€ô5aO!çÓÙ~e¨˛o¯=ñ ≤Ï°ë—MÇﬁ’ˇ]¸››è«ù(p'),(4,'3_222419149',1619439958,'xúÕòmoõ0«øJ≈ÁÅ–W{Ë‘I€45ô¥w»ÄõZ3aì,´Ú›wÊ)v◊ l]ao>ŒÁˇÛq¢^¿èÉs.q8ÔO\"Bß‰\\~§9QF?ºß·Lù¯≠wASÁRŸÍQ’å<≠CG¢=)#~ˆfùÒ 4´◊YÖƒítÊX©d0·<tÆyVüB‹Ô£˛Ñt\ZÔå§k¶eË0|‰ïÏ\"Ç·é¶)…;ƒÇ%K)i÷/ª\níß∫4∏%—Æ‰U°¬Ì¨>B8ÚCÇÛño™∏¿;\"¥ )ˇ.èÈ‰Ä €M¬Û[∫s.?´È‡#Ecâhû∞*UÛ?∑ÇP	*â_S4„U.#Msœ◊ågΩ’–åÔhe<Ìo∆°bú|Ï®Q\' ·.\"FˆÑı‚ù‘äøgŸ3≤å˛uñ=l#âºÿÇ˛?y˛dºç˛åÑüc<ûıÛıﬂS?9ıßZ∂í6U¶j-ª¢GÕâ∫øÊUƒOòÊ€c¡7IIyq·IIÛùZ÷WéKoâ–⁄[{›∂j„@YC]ﬂ2ÿNBIAPW∫oky™K s˜€Ì¥]\0È’∑mXœçö…—†Ÿ>ÿI4äÖˇgpÉ˚;”C£Gi©êNÖÍ h™@ÿ%A-Ñ}ä∂‡\\_pUÔÓã~õñvŒ¬êÆUÆóB∑˛À˛1Åù©˘˜„÷•˚/’ıJê≤õ`⁄Å>£/Rwù·ä¥ü¸‘µ6Œ˙‹‡T!Ç≥ª«•{8‹;ô1˜U\\Qñ∫ªPËπ‚( ú˚gyø&¨ •∫Æ¸Æ…‡J}zº¶lA∞^Õ◊uŸÃL8ÔE·æ‡Rê˜Uûÿπ<ìkı2\\¶ZÓõä1\"ÖùŒ7È–(tÔËﬁNÜFŸl»Æ	Üg≥nn¬Õ«ÅÉ»v¥Öâ∂ÌCè\n;€r\nŸ>R1‡Ò±2—ÇQ–6wºîI5\0/ò\"´[≥Y]Oë’-D∞¢˘ö¬z4¥˙≈€Œ7IsP|µ∑.ﬂüÇÓk¡8NÌ≠À7|âçA˜â‰’ÎX»\'∂üŸ&–xào·r«K˙ì§ÌU;¨Ÿ8–l\nÿ/Íì—é∫ú¢¨Í@æ’T[≥˚Í∂#ö\r≈°◊Â«I¢ºÏÑf[Ò«y‘áÂ\Zô-∆o/ﬁêNŸÒkëB•vRo*AoSÑı\'€ôTívB4ŸŒl\nitü`+c˝√”XÇ»jÄFF7	K‘¸wÒº’Oß_T)');
+/*!40000 ALTER TABLE `cache_pagesection` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cache_pagesection_tags`
+--
+
+DROP TABLE IF EXISTS `cache_pagesection_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache_pagesection_tags` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `tag` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `cache_id` (`identifier`(191)),
+  KEY `cache_tag` (`tag`(191))
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache_pagesection_tags`
+--
+
+LOCK TABLES `cache_pagesection_tags` WRITE;
+/*!40000 ALTER TABLE `cache_pagesection_tags` DISABLE KEYS */;
+INSERT INTO `cache_pagesection_tags` VALUES (3,'1_222419149','pageId_1'),(4,'1_222419149','mpvarHash_222419149'),(5,'2_222419149','pageId_2'),(6,'2_222419149','mpvarHash_222419149'),(7,'3_222419149','pageId_3'),(8,'3_222419149','mpvarHash_222419149');
+/*!40000 ALTER TABLE `cache_pagesection_tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cache_rootline`
+--
+
+DROP TABLE IF EXISTS `cache_rootline`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache_rootline` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `expires` int unsigned NOT NULL DEFAULT '0',
+  `content` longblob,
+  PRIMARY KEY (`id`),
+  KEY `cache_id` (`identifier`(180),`expires`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache_rootline`
+--
+
+LOCK TABLES `cache_rootline` WRITE;
+/*!40000 ALTER TABLE `cache_rootline` DISABLE KEYS */;
+INSERT INTO `cache_rootline` VALUES (1,'1__0_0',1619439944,'xúMêMr√ ÖÔ¬	¸”¶≠|ÅÆ≤Iˆ1äÀ#èn3ô‹Ω≤]ª¨@è\'È(··†hT<\"‘†gU3≥•JkUJıäÎ	GMˇä≤ÿ‡wÃhπ—»Üq√ØB{©#ºÄ˙§~πäo0ìﬁüƒR≠Í≠3:ÄÚÊNâ7G_ŒZ/i92ª~o˚\nÉÕ…;®+Ín§4Ã∂2m±úbá?,‚3ù“e0∆Ãƒ“çÔnqà…˘‘R∏∫N5«˘ªh8ÆDª–˙dÁˇ«ø@\\‘—1éDú%⁄S\n¨≥ÃÀ*Éö¸ŒÎehOù∫\'ª/SIP”ﬁdlΩ¶£Él°=NË˜ûœ_X[õ/'),(3,'2__0_0',1619439957,'xúÕëMN√0FØÇ|Ç$•¸∏`’M∫∑‹xöZu<Q<I)®wgí»¡XÅªÃÛ‰y<üñÖ|µ2ﬂhYWê+)ZkƒfdS’œU¡’£¥\Z†S8≥åYûEx	Õ#\r§	\"^3µ‰∏ÊvóG<ﬂêm‡˝˘Øµ4±\\Ãˇ5`¨N–ùN_∞ßËfp¥∆ÄèÄ]|yG£?≤{)¿õî<Hq\0Uwÿ∑â=g<˜Ó∞Ï˜≠Æ!$É\'∫¥∑ƒé]Y°?ÿ:up#Ö+Î+◊õQÚ~Œ;≤AK–!R2vÉΩ\'’&Î,®–-|5MÔ∞∂^5hñWº±ΩÆN¸\05ØIy~èr0Ä[f∏éÕüÉœ>üˇv∑R<aÛ?‚Êi≥ÊΩ˝>ÍÌ◊)ÁúÚı\rãb:-'),(4,'3__0_0',1619439958,'xúÕëMN√0ÖØÇ|Ç¸P~‹∞Í&Ÿ[n<\rVOOıÓL\Z9+bÁ˜y¸<3OÀBæZôoµ,¯d)EoçÿŒÏ¢∆Eï¨Ó•†rÇA·¬2fy·SHhi MÒÜ©%«öKXT‡†°´⁄vÇ˛Ç˘Ø\'µñ±ΩX^v`¨N–çNüp§ËŒ‡—\Z>ˆ‚Ô\"ˆèÏV\n&%wR@µé}‚û≥<◊÷Xç˚^∑ÉG:ı˜ƒu’†?ÿ6ı‡B\nV÷7n4≥…˚=o…,¡ÄHI€éûTü,¥H†B∑ÚÚ“Ω√÷z’°Yß*xc{›y\0µ¨IyûG9ò¿≠=úÁ‚œ—g¢œ;˙k)∞˚qs∑ŸÛﬁ}ıÓÎîÛ?N˘¸\07:œ'),(5,'1__0_-99',1619446687,'xúMêMr√ ÖÔ¬	¸”¶≠|ÅÆ≤Iˆ1äÀ#èn3ô‹Ω≤]ª¨@è\'È(··†hT<\"‘†gU3≥•JkUJıäÎ	GMˇä≤ÿ‡wÃhπ—»Üq√ØB{©#ºÄ˙§~πäo0ìﬁüƒR≠Í≠3:ÄÚÊNâ7G_ŒZ/i92ª~o˚\nÉÕ…;®+Ín§4Ã∂2m±úbá?,‚3ù“e0∆Ãƒ“çÔnqà…˘‘R∏∫N5«˘ªh8ÆDª–˙dÁˇ«ø@\\‘—1éDú%⁄S\n¨≥ÃÀ*Éö¸ŒÎehOù∫\'ª/SIP”ﬁdlΩ¶£Él°=NË˜ûœ_X[õ/');
+/*!40000 ALTER TABLE `cache_rootline` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cache_rootline_tags`
+--
+
+DROP TABLE IF EXISTS `cache_rootline_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache_rootline_tags` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `tag` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `cache_id` (`identifier`(191)),
+  KEY `cache_tag` (`tag`(191))
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache_rootline_tags`
+--
+
+LOCK TABLES `cache_rootline_tags` WRITE;
+/*!40000 ALTER TABLE `cache_rootline_tags` DISABLE KEYS */;
+INSERT INTO `cache_rootline_tags` VALUES (1,'1__0_0','pageId_1'),(4,'2__0_0','pageId_2'),(5,'2__0_0','pageId_1'),(6,'3__0_0','pageId_3'),(7,'3__0_0','pageId_1'),(8,'1__0_-99','pageId_1');
+/*!40000 ALTER TABLE `cache_rootline_tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cache_treelist`
+--
+
+DROP TABLE IF EXISTS `cache_treelist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cache_treelist` (
+  `md5hash` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `pid` int NOT NULL DEFAULT '0',
+  `treelist` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `tstamp` int NOT NULL DEFAULT '0',
+  `expires` int unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`md5hash`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache_treelist`
+--
+
+LOCK TABLES `cache_treelist` WRITE;
+/*!40000 ALTER TABLE `cache_treelist` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cache_treelist` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fe_groups`
+--
+
+DROP TABLE IF EXISTS `fe_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fe_groups` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int unsigned NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `tx_extbase_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `title` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `lockToDomain` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `subgroup` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `TSconfig` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`uid`),
+  KEY `parent` (`pid`,`deleted`,`hidden`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fe_groups`
+--
+
+LOCK TABLES `fe_groups` WRITE;
+/*!40000 ALTER TABLE `fe_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fe_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fe_sessions`
+--
+
+DROP TABLE IF EXISTS `fe_sessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fe_sessions` (
+  `ses_id` varchar(190) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `ses_iplock` varchar(39) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `ses_userid` int unsigned NOT NULL DEFAULT '0',
+  `ses_tstamp` int unsigned NOT NULL DEFAULT '0',
+  `ses_data` mediumblob,
+  `ses_permanent` smallint unsigned NOT NULL DEFAULT '0',
+  `ses_anonymous` smallint unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ses_id`),
+  KEY `ses_tstamp` (`ses_tstamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fe_sessions`
+--
+
+LOCK TABLES `fe_sessions` WRITE;
+/*!40000 ALTER TABLE `fe_sessions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fe_sessions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fe_users`
+--
+
+DROP TABLE IF EXISTS `fe_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fe_users` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int unsigned NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `disable` smallint unsigned NOT NULL DEFAULT '0',
+  `starttime` int unsigned NOT NULL DEFAULT '0',
+  `endtime` int unsigned NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `tx_extbase_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `usergroup` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `name` varchar(160) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `first_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `middle_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `last_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `telephone` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `fax` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `lockToDomain` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `uc` blob,
+  `title` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `zip` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `city` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `country` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `www` varchar(80) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `company` varchar(80) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `image` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `TSconfig` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `lastlogin` int unsigned NOT NULL DEFAULT '0',
+  `is_online` int unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `parent` (`pid`,`username`(100)),
+  KEY `username` (`username`(100)),
+  KEY `is_online` (`is_online`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fe_users`
+--
+
+LOCK TABLES `fe_users` WRITE;
+/*!40000 ALTER TABLE `fe_users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fe_users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pages`
+--
+
+DROP TABLE IF EXISTS `pages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pages` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `starttime` int unsigned NOT NULL DEFAULT '0',
+  `endtime` int unsigned NOT NULL DEFAULT '0',
+  `fe_group` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `sorting` int NOT NULL DEFAULT '0',
+  `rowDescription` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `editlock` smallint unsigned NOT NULL DEFAULT '0',
+  `sys_language_uid` int NOT NULL DEFAULT '0',
+  `l10n_parent` int unsigned NOT NULL DEFAULT '0',
+  `l10n_source` int unsigned NOT NULL DEFAULT '0',
+  `l10n_state` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `t3_origuid` int unsigned NOT NULL DEFAULT '0',
+  `l10n_diffsource` mediumblob,
+  `t3ver_oid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_wsid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_state` smallint NOT NULL DEFAULT '0',
+  `t3ver_stage` int NOT NULL DEFAULT '0',
+  `t3ver_count` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_tstamp` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_move_id` int unsigned NOT NULL DEFAULT '0',
+  `perms_userid` int unsigned NOT NULL DEFAULT '0',
+  `perms_groupid` int unsigned NOT NULL DEFAULT '0',
+  `perms_user` smallint unsigned NOT NULL DEFAULT '0',
+  `perms_group` smallint unsigned NOT NULL DEFAULT '0',
+  `perms_everybody` smallint unsigned NOT NULL DEFAULT '0',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `slug` varchar(2048) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `doktype` int unsigned NOT NULL DEFAULT '0',
+  `TSconfig` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `is_siteroot` smallint NOT NULL DEFAULT '0',
+  `php_tree_stop` smallint NOT NULL DEFAULT '0',
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `shortcut` int unsigned NOT NULL DEFAULT '0',
+  `shortcut_mode` int unsigned NOT NULL DEFAULT '0',
+  `subtitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `layout` int unsigned NOT NULL DEFAULT '0',
+  `target` varchar(80) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `media` int unsigned NOT NULL DEFAULT '0',
+  `lastUpdated` int unsigned NOT NULL DEFAULT '0',
+  `keywords` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `cache_timeout` int unsigned NOT NULL DEFAULT '0',
+  `cache_tags` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `newUntil` int unsigned NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `no_search` smallint unsigned NOT NULL DEFAULT '0',
+  `SYS_LASTCHANGED` int unsigned NOT NULL DEFAULT '0',
+  `abstract` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `module` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `extendToSubpages` smallint unsigned NOT NULL DEFAULT '0',
+  `author` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `author_email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `nav_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `nav_hide` smallint NOT NULL DEFAULT '0',
+  `content_from_pid` int unsigned NOT NULL DEFAULT '0',
+  `mount_pid` int unsigned NOT NULL DEFAULT '0',
+  `mount_pid_ol` smallint NOT NULL DEFAULT '0',
+  `l18n_cfg` smallint NOT NULL DEFAULT '0',
+  `fe_login_mode` smallint NOT NULL DEFAULT '0',
+  `backend_layout` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `backend_layout_next_level` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `tsconfig_includes` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `legacy_overlay_uid` int unsigned NOT NULL DEFAULT '0',
+  `seo_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `no_index` smallint NOT NULL DEFAULT '0',
+  `no_follow` smallint NOT NULL DEFAULT '0',
+  `og_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `og_description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `og_image` int unsigned NOT NULL DEFAULT '0',
+  `twitter_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `twitter_description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `twitter_image` int unsigned NOT NULL DEFAULT '0',
+  `twitter_card` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `canonical_link` varchar(2048) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `sitemap_priority` decimal(2,1) NOT NULL DEFAULT '0.5',
+  `sitemap_changefreq` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `categories` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `determineSiteRoot` (`is_siteroot`),
+  KEY `language_identifier` (`l10n_parent`,`sys_language_uid`),
+  KEY `legacy_overlay` (`legacy_overlay_uid`),
+  KEY `slug` (`slug`(127)),
+  KEY `parent` (`pid`,`deleted`,`hidden`),
+  KEY `translation_source` (`l10n_source`),
+  KEY `t3ver_oid` (`t3ver_oid`,`t3ver_wsid`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pages`
+--
+
+LOCK TABLES `pages` WRITE;
+/*!40000 ALTER TABLE `pages` DISABLE KEYS */;
+INSERT INTO `pages` VALUES (1,0,1616338513,1616338513,1,0,0,0,0,'0',0,NULL,0,0,0,0,NULL,0,NULL,0,0,0,0,0,0,0,1,1,31,31,1,'Home','/',1,NULL,1,0,'',0,0,'',0,'',0,0,NULL,0,'',0,NULL,0,1616339412,NULL,'',0,'','','',0,0,0,0,0,0,'','',NULL,0,'',0,0,'',NULL,0,'',NULL,0,'','',0.5,'',0),(2,1,1616342090,1616342082,1,0,0,0,0,'',256,'',0,0,0,0,NULL,0,'a:1:{s:6:\"hidden\";N;}',0,0,0,0,0,0,0,1,0,31,27,0,'Show timezone','/show-timezone',1,'',0,0,'',0,0,'',0,'',0,0,'',0,'',0,'',0,1616342122,'','',0,'','','',0,0,0,0,0,0,'','','',0,'',0,0,'','',0,'','',0,'summary','',0.5,'',0),(3,1,1616342394,1616342328,1,0,0,0,0,'',512,'',0,0,0,0,NULL,0,'a:50:{s:7:\"doktype\";N;s:5:\"title\";N;s:4:\"slug\";N;s:9:\"nav_title\";N;s:8:\"subtitle\";N;s:9:\"seo_title\";N;s:11:\"description\";N;s:8:\"no_index\";N;s:9:\"no_follow\";N;s:14:\"canonical_link\";N;s:18:\"sitemap_changefreq\";N;s:16:\"sitemap_priority\";N;s:8:\"og_title\";N;s:14:\"og_description\";N;s:8:\"og_image\";N;s:13:\"twitter_title\";N;s:19:\"twitter_description\";N;s:13:\"twitter_image\";N;s:12:\"twitter_card\";N;s:8:\"abstract\";N;s:8:\"keywords\";N;s:6:\"author\";N;s:12:\"author_email\";N;s:11:\"lastUpdated\";N;s:6:\"layout\";N;s:8:\"newUntil\";N;s:14:\"backend_layout\";N;s:25:\"backend_layout_next_level\";N;s:16:\"content_from_pid\";N;s:6:\"target\";N;s:13:\"cache_timeout\";N;s:10:\"cache_tags\";N;s:11:\"is_siteroot\";N;s:9:\"no_search\";N;s:13:\"php_tree_stop\";N;s:6:\"module\";N;s:5:\"media\";N;s:17:\"tsconfig_includes\";N;s:8:\"TSconfig\";N;s:8:\"l18n_cfg\";N;s:6:\"hidden\";N;s:8:\"nav_hide\";N;s:9:\"starttime\";N;s:7:\"endtime\";N;s:16:\"extendToSubpages\";N;s:8:\"fe_group\";N;s:13:\"fe_login_mode\";N;s:8:\"editlock\";N;s:10:\"categories\";N;s:14:\"rowDescription\";N;}',0,0,0,0,0,0,0,1,0,31,27,0,'Select Timezone','/select-timezone',1,'',0,0,'',0,0,'',0,'',0,0,'',0,'',0,'',0,1616844197,'','',0,'','','',0,0,0,0,0,0,'','','',0,'',0,0,'','',0,'','',0,'summary','',0.5,'',0),(4,1,1616848078,1616847258,1,1,0,0,0,'',768,'',0,0,0,0,NULL,2,'a:50:{s:7:\"doktype\";N;s:5:\"title\";N;s:4:\"slug\";N;s:9:\"nav_title\";N;s:8:\"subtitle\";N;s:9:\"seo_title\";N;s:11:\"description\";N;s:8:\"no_index\";N;s:9:\"no_follow\";N;s:14:\"canonical_link\";N;s:18:\"sitemap_changefreq\";N;s:16:\"sitemap_priority\";N;s:8:\"og_title\";N;s:14:\"og_description\";N;s:8:\"og_image\";N;s:13:\"twitter_title\";N;s:19:\"twitter_description\";N;s:13:\"twitter_image\";N;s:12:\"twitter_card\";N;s:8:\"abstract\";N;s:8:\"keywords\";N;s:6:\"author\";N;s:12:\"author_email\";N;s:11:\"lastUpdated\";N;s:6:\"layout\";N;s:8:\"newUntil\";N;s:14:\"backend_layout\";N;s:25:\"backend_layout_next_level\";N;s:16:\"content_from_pid\";N;s:6:\"target\";N;s:13:\"cache_timeout\";N;s:10:\"cache_tags\";N;s:11:\"is_siteroot\";N;s:9:\"no_search\";N;s:13:\"php_tree_stop\";N;s:6:\"module\";N;s:5:\"media\";N;s:17:\"tsconfig_includes\";N;s:8:\"TSconfig\";N;s:8:\"l18n_cfg\";N;s:6:\"hidden\";N;s:8:\"nav_hide\";N;s:9:\"starttime\";N;s:7:\"endtime\";N;s:16:\"extendToSubpages\";N;s:8:\"fe_group\";N;s:13:\"fe_login_mode\";N;s:8:\"editlock\";N;s:10:\"categories\";N;s:14:\"rowDescription\";N;}',0,0,0,0,0,0,0,1,0,31,27,0,'Timezone index','/timezone-index',1,'',0,0,'',0,0,'',0,'',0,0,'',0,'',0,'',0,1616847314,'','',0,'','','',0,0,0,0,0,0,'','','',0,'',0,0,'','',0,'','',0,'summary','',0.5,'',0);
+/*!40000 ALTER TABLE `pages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_be_shortcuts`
+--
+
+DROP TABLE IF EXISTS `sys_be_shortcuts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_be_shortcuts` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `userid` int unsigned NOT NULL DEFAULT '0',
+  `module_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `url` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `sorting` int NOT NULL DEFAULT '0',
+  `sc_group` smallint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `event` (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_be_shortcuts`
+--
+
+LOCK TABLES `sys_be_shortcuts` WRITE;
+/*!40000 ALTER TABLE `sys_be_shortcuts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_be_shortcuts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_category`
+--
+
+DROP TABLE IF EXISTS `sys_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_category` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `starttime` int unsigned NOT NULL DEFAULT '0',
+  `endtime` int unsigned NOT NULL DEFAULT '0',
+  `sorting` int NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `sys_language_uid` int NOT NULL DEFAULT '0',
+  `l10n_parent` int unsigned NOT NULL DEFAULT '0',
+  `l10n_state` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `t3_origuid` int unsigned NOT NULL DEFAULT '0',
+  `l10n_diffsource` mediumblob,
+  `t3ver_oid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_wsid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_state` smallint NOT NULL DEFAULT '0',
+  `t3ver_stage` int NOT NULL DEFAULT '0',
+  `t3ver_count` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_tstamp` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_move_id` int unsigned NOT NULL DEFAULT '0',
+  `title` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `parent` int NOT NULL DEFAULT '0',
+  `items` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `category_parent` (`parent`),
+  KEY `category_list` (`pid`,`deleted`,`sys_language_uid`),
+  KEY `parent` (`pid`,`deleted`,`hidden`),
+  KEY `t3ver_oid` (`t3ver_oid`,`t3ver_wsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_category`
+--
+
+LOCK TABLES `sys_category` WRITE;
+/*!40000 ALTER TABLE `sys_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_category_record_mm`
+--
+
+DROP TABLE IF EXISTS `sys_category_record_mm`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_category_record_mm` (
+  `uid_local` int NOT NULL DEFAULT '0',
+  `uid_foreign` int NOT NULL DEFAULT '0',
+  `tablenames` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `fieldname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `sorting` int NOT NULL DEFAULT '0',
+  `sorting_foreign` int NOT NULL DEFAULT '0',
+  KEY `uid_local_foreign` (`uid_local`,`uid_foreign`),
+  KEY `uid_foreign_tablefield` (`uid_foreign`,`tablenames`(40),`fieldname`(3),`sorting_foreign`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_category_record_mm`
+--
+
+LOCK TABLES `sys_category_record_mm` WRITE;
+/*!40000 ALTER TABLE `sys_category_record_mm` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_category_record_mm` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_collection`
+--
+
+DROP TABLE IF EXISTS `sys_collection`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_collection` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `starttime` int unsigned NOT NULL DEFAULT '0',
+  `endtime` int unsigned NOT NULL DEFAULT '0',
+  `fe_group` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `sys_language_uid` int NOT NULL DEFAULT '0',
+  `l10n_parent` int unsigned NOT NULL DEFAULT '0',
+  `l10n_state` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `t3_origuid` int unsigned NOT NULL DEFAULT '0',
+  `l10n_diffsource` mediumblob,
+  `t3ver_oid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_wsid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_state` smallint NOT NULL DEFAULT '0',
+  `t3ver_stage` int NOT NULL DEFAULT '0',
+  `t3ver_count` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_tstamp` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_move_id` int unsigned NOT NULL DEFAULT '0',
+  `title` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `type` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'static',
+  `table_name` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `items` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `parent` (`pid`,`deleted`,`hidden`),
+  KEY `t3ver_oid` (`t3ver_oid`,`t3ver_wsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_collection`
+--
+
+LOCK TABLES `sys_collection` WRITE;
+/*!40000 ALTER TABLE `sys_collection` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_collection` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_collection_entries`
+--
+
+DROP TABLE IF EXISTS `sys_collection_entries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_collection_entries` (
+  `uid` int NOT NULL AUTO_INCREMENT,
+  `uid_local` int NOT NULL DEFAULT '0',
+  `uid_foreign` int NOT NULL DEFAULT '0',
+  `tablenames` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `sorting` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `uid_local` (`uid_local`),
+  KEY `uid_foreign` (`uid_foreign`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_collection_entries`
+--
+
+LOCK TABLES `sys_collection_entries` WRITE;
+/*!40000 ALTER TABLE `sys_collection_entries` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_collection_entries` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_file`
+--
+
+DROP TABLE IF EXISTS `sys_file`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_file` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int unsigned NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `last_indexed` int NOT NULL DEFAULT '0',
+  `missing` smallint NOT NULL DEFAULT '0',
+  `storage` int NOT NULL DEFAULT '0',
+  `type` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `metadata` int NOT NULL DEFAULT '0',
+  `identifier` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `identifier_hash` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `folder_hash` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `extension` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `mime_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `name` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `sha1` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `size` bigint unsigned NOT NULL DEFAULT '0',
+  `creation_date` int NOT NULL DEFAULT '0',
+  `modification_date` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `sel01` (`storage`,`identifier_hash`),
+  KEY `folder` (`storage`,`folder_hash`),
+  KEY `tstamp` (`tstamp`),
+  KEY `lastindex` (`last_indexed`),
+  KEY `sha1` (`sha1`),
+  KEY `parent` (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_file`
+--
+
+LOCK TABLES `sys_file` WRITE;
+/*!40000 ALTER TABLE `sys_file` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_file` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_file_collection`
+--
+
+DROP TABLE IF EXISTS `sys_file_collection`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_file_collection` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `starttime` int unsigned NOT NULL DEFAULT '0',
+  `endtime` int unsigned NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `sys_language_uid` int NOT NULL DEFAULT '0',
+  `l10n_parent` int unsigned NOT NULL DEFAULT '0',
+  `l10n_state` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `t3_origuid` int unsigned NOT NULL DEFAULT '0',
+  `l10n_diffsource` mediumblob,
+  `t3ver_oid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_wsid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_state` smallint NOT NULL DEFAULT '0',
+  `t3ver_stage` int NOT NULL DEFAULT '0',
+  `t3ver_count` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_tstamp` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_move_id` int unsigned NOT NULL DEFAULT '0',
+  `title` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `type` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'static',
+  `files` int NOT NULL DEFAULT '0',
+  `storage` int NOT NULL DEFAULT '0',
+  `folder` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `recursive` smallint NOT NULL DEFAULT '0',
+  `category` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `parent` (`pid`,`deleted`,`hidden`),
+  KEY `t3ver_oid` (`t3ver_oid`,`t3ver_wsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_file_collection`
+--
+
+LOCK TABLES `sys_file_collection` WRITE;
+/*!40000 ALTER TABLE `sys_file_collection` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_file_collection` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_file_metadata`
+--
+
+DROP TABLE IF EXISTS `sys_file_metadata`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_file_metadata` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `sys_language_uid` int NOT NULL DEFAULT '0',
+  `l10n_parent` int unsigned NOT NULL DEFAULT '0',
+  `l10n_state` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `t3_origuid` int unsigned NOT NULL DEFAULT '0',
+  `l10n_diffsource` mediumblob,
+  `t3ver_oid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_wsid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_state` smallint NOT NULL DEFAULT '0',
+  `t3ver_stage` int NOT NULL DEFAULT '0',
+  `t3ver_count` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_tstamp` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_move_id` int unsigned NOT NULL DEFAULT '0',
+  `file` int NOT NULL DEFAULT '0',
+  `title` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `width` int NOT NULL DEFAULT '0',
+  `height` int NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `alternative` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `categories` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `file` (`file`),
+  KEY `fal_filelist` (`l10n_parent`,`sys_language_uid`),
+  KEY `parent` (`pid`),
+  KEY `t3ver_oid` (`t3ver_oid`,`t3ver_wsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_file_metadata`
+--
+
+LOCK TABLES `sys_file_metadata` WRITE;
+/*!40000 ALTER TABLE `sys_file_metadata` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_file_metadata` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_file_processedfile`
+--
+
+DROP TABLE IF EXISTS `sys_file_processedfile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_file_processedfile` (
+  `uid` int NOT NULL AUTO_INCREMENT,
+  `tstamp` int NOT NULL DEFAULT '0',
+  `crdate` int NOT NULL DEFAULT '0',
+  `storage` int NOT NULL DEFAULT '0',
+  `original` int NOT NULL DEFAULT '0',
+  `identifier` varchar(512) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `name` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `processing_url` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `configuration` blob,
+  `configurationsha1` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `originalfilesha1` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `task_type` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `checksum` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `width` int DEFAULT '0',
+  `height` int DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `combined_1` (`original`,`task_type`(100),`configurationsha1`),
+  KEY `identifier` (`storage`,`identifier`(180))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_file_processedfile`
+--
+
+LOCK TABLES `sys_file_processedfile` WRITE;
+/*!40000 ALTER TABLE `sys_file_processedfile` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_file_processedfile` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_file_reference`
+--
+
+DROP TABLE IF EXISTS `sys_file_reference`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_file_reference` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `sys_language_uid` int NOT NULL DEFAULT '0',
+  `l10n_parent` int unsigned NOT NULL DEFAULT '0',
+  `l10n_state` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `l10n_diffsource` mediumblob,
+  `t3ver_oid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_wsid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_state` smallint NOT NULL DEFAULT '0',
+  `t3ver_stage` int NOT NULL DEFAULT '0',
+  `t3ver_count` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_tstamp` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_move_id` int unsigned NOT NULL DEFAULT '0',
+  `uid_local` int NOT NULL DEFAULT '0',
+  `uid_foreign` int NOT NULL DEFAULT '0',
+  `tablenames` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `fieldname` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `sorting_foreign` int NOT NULL DEFAULT '0',
+  `table_local` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `title` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `alternative` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `link` varchar(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `crop` varchar(4000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `autoplay` smallint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `tablenames_fieldname` (`tablenames`(32),`fieldname`(12)),
+  KEY `deleted` (`deleted`),
+  KEY `uid_local` (`uid_local`),
+  KEY `uid_foreign` (`uid_foreign`),
+  KEY `combined_1` (`l10n_parent`,`t3ver_oid`,`t3ver_wsid`,`t3ver_state`,`deleted`),
+  KEY `parent` (`pid`,`deleted`,`hidden`),
+  KEY `t3ver_oid` (`t3ver_oid`,`t3ver_wsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_file_reference`
+--
+
+LOCK TABLES `sys_file_reference` WRITE;
+/*!40000 ALTER TABLE `sys_file_reference` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_file_reference` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_file_storage`
+--
+
+DROP TABLE IF EXISTS `sys_file_storage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_file_storage` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int unsigned NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `driver` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `configuration` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `is_default` smallint NOT NULL DEFAULT '0',
+  `is_browsable` smallint NOT NULL DEFAULT '0',
+  `is_public` smallint NOT NULL DEFAULT '0',
+  `is_writable` smallint NOT NULL DEFAULT '0',
+  `is_online` smallint NOT NULL DEFAULT '1',
+  `auto_extract_metadata` smallint NOT NULL DEFAULT '1',
+  `processingfolder` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`uid`),
+  KEY `parent` (`pid`,`deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_file_storage`
+--
+
+LOCK TABLES `sys_file_storage` WRITE;
+/*!40000 ALTER TABLE `sys_file_storage` DISABLE KEYS */;
+INSERT INTO `sys_file_storage` VALUES (1,0,1616338547,1616338547,0,0,'This is the local fileadmin/ directory. This storage mount has been created automatically by TYPO3.','fileadmin/ (auto-created)','Local','<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>\n<T3FlexForms>\n    <data>\n        <sheet index=\"sDEF\">\n            <language index=\"lDEF\">\n                <field index=\"basePath\">\n                    <value index=\"vDEF\">fileadmin/</value>\n                </field>\n                <field index=\"pathType\">\n                    <value index=\"vDEF\">relative</value>\n                </field>\n                <field index=\"caseSensitive\">\n                    <value index=\"vDEF\">1</value>\n                </field>\n            </language>\n        </sheet>\n    </data>\n</T3FlexForms>',1,1,1,1,1,1,NULL);
+/*!40000 ALTER TABLE `sys_file_storage` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_filemounts`
+--
+
+DROP TABLE IF EXISTS `sys_filemounts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_filemounts` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int unsigned NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `sorting` int NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `base` int unsigned NOT NULL DEFAULT '0',
+  `read_only` smallint unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `parent` (`pid`,`deleted`,`hidden`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_filemounts`
+--
+
+LOCK TABLES `sys_filemounts` WRITE;
+/*!40000 ALTER TABLE `sys_filemounts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_filemounts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_history`
+--
+
+DROP TABLE IF EXISTS `sys_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_history` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `actiontype` smallint NOT NULL DEFAULT '0',
+  `usertype` varchar(2) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'BE',
+  `userid` int unsigned DEFAULT NULL,
+  `originaluserid` int unsigned DEFAULT NULL,
+  `recuid` int NOT NULL DEFAULT '0',
+  `tablename` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `history_data` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `workspace` int DEFAULT '0',
+  `correlation_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`uid`),
+  KEY `recordident_1` (`tablename`(100),`recuid`),
+  KEY `recordident_2` (`tablename`(100),`tstamp`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_history`
+--
+
+LOCK TABLES `sys_history` WRITE;
+/*!40000 ALTER TABLE `sys_history` DISABLE KEYS */;
+INSERT INTO `sys_history` VALUES (1,1616338543,1,'BE',1,0,1,'tt_content','{\"uid\":1,\"rowDescription\":\"\",\"pid\":1,\"tstamp\":1616338543,\"crdate\":1616338543,\"cruser_id\":1,\"deleted\":0,\"hidden\":0,\"starttime\":0,\"endtime\":0,\"fe_group\":\"\",\"sorting\":256,\"editlock\":0,\"sys_language_uid\":0,\"l18n_parent\":0,\"l10n_source\":0,\"l10n_state\":null,\"t3_origuid\":0,\"l18n_diffsource\":\"\",\"t3ver_oid\":0,\"t3ver_wsid\":0,\"t3ver_state\":0,\"t3ver_stage\":0,\"t3ver_count\":0,\"t3ver_tstamp\":0,\"t3ver_move_id\":0,\"CType\":\"header\",\"header\":\"Acceptance test first header\",\"header_position\":\"\",\"bodytext\":null,\"bullets_type\":0,\"uploads_description\":0,\"uploads_type\":0,\"assets\":0,\"image\":0,\"imagewidth\":0,\"imageorient\":0,\"imagecols\":2,\"imageborder\":0,\"media\":0,\"layout\":0,\"frame_class\":\"default\",\"cols\":0,\"space_before_class\":\"\",\"space_after_class\":\"\",\"records\":null,\"pages\":null,\"colPos\":0,\"subheader\":\"\",\"header_link\":\"\",\"image_zoom\":0,\"header_layout\":\"0\",\"list_type\":\"\",\"sectionIndex\":1,\"linkToTop\":0,\"file_collections\":null,\"filelink_size\":0,\"filelink_sorting\":\"\",\"filelink_sorting_direction\":\"\",\"target\":\"\",\"date\":0,\"recursive\":0,\"imageheight\":0,\"pi_flexform\":null,\"accessibility_title\":\"\",\"accessibility_bypass\":0,\"accessibility_bypass_text\":\"\",\"selected_categories\":null,\"category_field\":\"\",\"table_class\":\"\",\"table_caption\":null,\"table_delimiter\":124,\"table_enclosure\":0,\"table_header_position\":0,\"table_tfoot\":0,\"categories\":0}',0,'0400$30beca1b9f83480ab930652728492404:7fa2c035f26826fe83eeecaaeddc4d40'),(2,1616338635,2,'BE',1,0,1,'be_users','{\"oldRecord\":{\"password\":\"$argon2i$v=19$m=65536,t=16,p=1$S251bkU3U0dtQ1JidnRMLg$fM79zoQRiW7fTbSjXA5t4m7k\\/8nPeX2f8bHdw7mZegE\"},\"newRecord\":{\"password\":\"$2y$12$YaRgnj4Oc1lVVn2MrzJQXOE\\/6bWpXCyp4Ivx97qNdBporJhG4vK3W\"}}',0,'0400$439a61ef34733cf5a59f6d1e184b58ee:084907bc914ff27cf2301aec50eb66b2'),(3,1616339170,2,'BE',1,0,1,'sys_template','{\"oldRecord\":{\"config\":\"page = PAGE\\npage.10 = TEXT\\npage.10.value (\\n   <div style=\\\"width: 800px; margin: 15% auto;\\\">\\n      <div style=\\\"width: 300px;\\\">\\n        <svg xmlns=\\\"http:\\/\\/www.w3.org\\/2000\\/svg\\\" viewBox=\\\"0 0 150 42\\\"><path d=\\\"M60.2 14.4v27h-3.8v-27h-6.7v-3.3h17.1v3.3h-6.6zm20.2 12.9v14h-3.9v-14l-7.7-16.2h4.1l5.7 12.2 5.7-12.2h3.9l-7.8 16.2zm19.5 2.6h-3.6v11.4h-3.8V11.1s3.7-.3 7.3-.3c6.6 0 8.5 4.1 8.5 9.4 0 6.5-2.3 9.7-8.4 9.7m.4-16c-2.4 0-4.1.3-4.1.3v12.6h4.1c2.4 0 4.1-1.6 4.1-6.3 0-4.4-1-6.6-4.1-6.6m21.5 27.7c-7.1 0-9-5.2-9-15.8 0-10.2 1.9-15.1 9-15.1s9 4.9 9 15.1c.1 10.6-1.8 15.8-9 15.8m0-27.7c-3.9 0-5.2 2.6-5.2 12.1 0 9.3 1.3 12.4 5.2 12.4 3.9 0 5.2-3.1 5.2-12.4 0-9.4-1.3-12.1-5.2-12.1m19.9 27.7c-2.1 0-5.3-.6-5.7-.7v-3.1c1 .2 3.7.7 5.6.7 2.2 0 3.6-1.9 3.6-5.2 0-3.9-.6-6-3.7-6H138V24h3.1c3.5 0 3.7-3.6 3.7-5.3 0-3.4-1.1-4.8-3.2-4.8-1.9 0-4.1.5-5.3.7v-3.2c.5-.1 3-.7 5.2-.7 4.4 0 7 1.9 7 8.3 0 2.9-1 5.5-3.3 6.3 2.6.2 3.8 3.1 3.8 7.3 0 6.6-2.5 9-7.3 9\\\"\\/><path fill=\\\"#FF8700\\\" d=\\\"M31.7 28.8c-.6.2-1.1.2-1.7.2-5.2 0-12.9-18.2-12.9-24.3 0-2.2.5-3 1.3-3.6C12 1.9 4.3 4.2 1.9 7.2 1.3 8 1 9.1 1 10.6c0 9.5 10.1 31 17.3 31 3.3 0 8.8-5.4 13.4-12.8M28.4.5c6.6 0 13.2 1.1 13.2 4.8 0 7.6-4.8 16.7-7.2 16.7-4.4 0-9.9-12.1-9.9-18.2C24.5 1 25.6.5 28.4.5\\\"\\/><\\/svg>\\n      <\\/div>\\n      <h4 style=\\\"font-family: sans-serif;\\\">Welcome to a default website made with <a href=\\\"https:\\/\\/typo3.org\\\">TYPO3<\\/a><\\/h4>\\n   <\\/div>\\n)\\npage.100 = CONTENT\\npage.100 {\\n    table = tt_content\\n    select {\\n        orderBy = sorting\\n        where = {#colPos}=0\\n    }\\n}\\n\",\"description\":\"This is an Empty Site Package TypoScript template.\\n\\nFor each website you need a TypoScript template on the main page of your website (on the top level). For better maintenance all TypoScript should be extracted into external files via @import \'EXT:site_myproject\\/Configuration\\/TypoScript\\/setup.typoscript\'\"},\"newRecord\":{\"config\":\"page = PAGE\\r\\npage.100 = CONTENT\\r\\npage.100 {\\r\\n    table = tt_content\\r\\n    select {\\r\\n        orderBy = sorting\\r\\n        where = {#colPos}=0\\r\\n    }\\r\\n}\\r\\n\",\"description\":\"This is an Empty Site Package TypoScript template.\\r\\n\\r\\nFor each website you need a TypoScript template on the main page of your website (on the top level). For better maintenance all TypoScript should be extracted into external files via @import \'EXT:site_myproject\\/Configuration\\/TypoScript\\/setup.typoscript\'\"}}',0,'0400$0755f14fa8b106538e92df571dd873f2:35af6288617af54964e77af08c30949a'),(4,1616339191,2,'BE',1,0,1,'sys_template','{\"oldRecord\":{\"include_static_file\":\"EXT:fluid_styled_content\\/Configuration\\/TypoScript\\/,EXT:fluid_styled_content\\/Configuration\\/TypoScript\\/Styling\\/\"},\"newRecord\":{\"include_static_file\":\"EXT:fluid_styled_content\\/Configuration\\/TypoScript\\/,EXT:fluid_styled_content\\/Configuration\\/TypoScript\\/Styling\\/,EXT:timezones\\/Configuration\\/TypoScript\"}}',0,'0400$5f51f2a7c8dfd99839ac315408546fe7:35af6288617af54964e77af08c30949a'),(5,1616339210,1,'BE',1,0,2,'tt_content','{\"uid\":2,\"rowDescription\":\"\",\"pid\":1,\"tstamp\":1616339210,\"crdate\":1616339210,\"cruser_id\":1,\"deleted\":0,\"hidden\":0,\"starttime\":0,\"endtime\":0,\"fe_group\":\"\",\"sorting\":512,\"editlock\":0,\"sys_language_uid\":0,\"l18n_parent\":0,\"l10n_source\":0,\"l10n_state\":null,\"t3_origuid\":0,\"l18n_diffsource\":\"\",\"t3ver_oid\":0,\"t3ver_wsid\":0,\"t3ver_state\":0,\"t3ver_stage\":0,\"t3ver_count\":0,\"t3ver_tstamp\":0,\"t3ver_move_id\":0,\"CType\":\"list\",\"header\":\"\",\"header_position\":\"\",\"bodytext\":null,\"bullets_type\":0,\"uploads_description\":0,\"uploads_type\":0,\"assets\":0,\"image\":0,\"imagewidth\":0,\"imageorient\":0,\"imagecols\":2,\"imageborder\":0,\"media\":0,\"layout\":0,\"frame_class\":\"default\",\"cols\":0,\"space_before_class\":\"\",\"space_after_class\":\"\",\"records\":null,\"pages\":null,\"colPos\":0,\"subheader\":\"\",\"header_link\":\"\",\"image_zoom\":0,\"header_layout\":\"0\",\"list_type\":\"\",\"sectionIndex\":1,\"linkToTop\":0,\"file_collections\":null,\"filelink_size\":0,\"filelink_sorting\":\"\",\"filelink_sorting_direction\":\"\",\"target\":\"\",\"date\":0,\"recursive\":0,\"imageheight\":0,\"pi_flexform\":null,\"accessibility_title\":\"\",\"accessibility_bypass\":0,\"accessibility_bypass_text\":\"\",\"selected_categories\":null,\"category_field\":\"\",\"table_class\":\"\",\"table_caption\":null,\"table_delimiter\":124,\"table_enclosure\":0,\"table_header_position\":0,\"table_tfoot\":0,\"categories\":0}',0,'0400$61f6786e6f1164aac3aa9b0736ed3543:01dbc21fdb1263685b9147b3b1596ea8'),(6,1616339215,2,'BE',1,0,2,'tt_content','{\"oldRecord\":{\"list_type\":\"\",\"l18n_diffsource\":\"\"},\"newRecord\":{\"list_type\":\"timezones_pi1\",\"l18n_diffsource\":\"a:25:{s:5:\\\"CType\\\";N;s:6:\\\"colPos\\\";N;s:6:\\\"header\\\";N;s:13:\\\"header_layout\\\";N;s:15:\\\"header_position\\\";N;s:4:\\\"date\\\";N;s:11:\\\"header_link\\\";N;s:9:\\\"subheader\\\";N;s:9:\\\"list_type\\\";N;s:5:\\\"pages\\\";N;s:9:\\\"recursive\\\";N;s:6:\\\"layout\\\";N;s:11:\\\"frame_class\\\";N;s:18:\\\"space_before_class\\\";N;s:17:\\\"space_after_class\\\";N;s:12:\\\"sectionIndex\\\";N;s:9:\\\"linkToTop\\\";N;s:16:\\\"sys_language_uid\\\";N;s:6:\\\"hidden\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:8:\\\"fe_group\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\"}}',0,'0400$a44aebc72919ca096fd93f559ef4a711:01dbc21fdb1263685b9147b3b1596ea8'),(7,1616339223,2,'BE',1,0,2,'tt_content','{\"oldRecord\":{\"pi_flexform\":null,\"l18n_diffsource\":\"a:25:{s:5:\\\"CType\\\";N;s:6:\\\"colPos\\\";N;s:6:\\\"header\\\";N;s:13:\\\"header_layout\\\";N;s:15:\\\"header_position\\\";N;s:4:\\\"date\\\";N;s:11:\\\"header_link\\\";N;s:9:\\\"subheader\\\";N;s:9:\\\"list_type\\\";N;s:5:\\\"pages\\\";N;s:9:\\\"recursive\\\";N;s:6:\\\"layout\\\";N;s:11:\\\"frame_class\\\";N;s:18:\\\"space_before_class\\\";N;s:17:\\\"space_after_class\\\";N;s:12:\\\"sectionIndex\\\";N;s:9:\\\"linkToTop\\\";N;s:16:\\\"sys_language_uid\\\";N;s:6:\\\"hidden\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:8:\\\"fe_group\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\"},\"newRecord\":{\"pi_flexform\":\"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\" standalone=\\\"yes\\\" ?>\\n<T3FlexForms>\\n    <data>\\n        <sheet index=\\\"sDEF\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"switchableControllerActions\\\">\\n                    <value index=\\\"vDEF\\\">Timezones-&gt;index;Timezones-&gt;show;Timezones-&gt;select;Timezones-&gt;tzset<\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n        <sheet index=\\\"sPaths\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"view.templateRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.partialRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.layoutRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n    <\\/data>\\n<\\/T3FlexForms>\",\"l18n_diffsource\":\"a:23:{s:5:\\\"CType\\\";N;s:6:\\\"colPos\\\";N;s:6:\\\"header\\\";N;s:13:\\\"header_layout\\\";N;s:15:\\\"header_position\\\";N;s:4:\\\"date\\\";N;s:11:\\\"header_link\\\";N;s:9:\\\"subheader\\\";N;s:9:\\\"list_type\\\";N;s:11:\\\"pi_flexform\\\";N;s:11:\\\"frame_class\\\";N;s:18:\\\"space_before_class\\\";N;s:17:\\\"space_after_class\\\";N;s:12:\\\"sectionIndex\\\";N;s:9:\\\"linkToTop\\\";N;s:16:\\\"sys_language_uid\\\";N;s:6:\\\"hidden\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:8:\\\"fe_group\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\"}}',0,'0400$e653f1bcae04e73945d724697f101e24:01dbc21fdb1263685b9147b3b1596ea8'),(8,1616339412,2,'BE',1,0,2,'tt_content','{\"oldRecord\":{\"header\":\"\"},\"newRecord\":{\"header\":\"TimezonesIndex\"}}',0,'0400$7974085922b927e45e997b2beb1a7116:01dbc21fdb1263685b9147b3b1596ea8'),(9,1616341965,1,'BE',1,0,3,'tt_content','{\"uid\":3,\"rowDescription\":\"\",\"pid\":1,\"tstamp\":1616341965,\"crdate\":1616341965,\"cruser_id\":1,\"deleted\":0,\"hidden\":0,\"starttime\":0,\"endtime\":0,\"fe_group\":\"\",\"sorting\":768,\"editlock\":0,\"sys_language_uid\":0,\"l18n_parent\":0,\"l10n_source\":0,\"l10n_state\":null,\"t3_origuid\":0,\"l18n_diffsource\":\"\",\"t3ver_oid\":0,\"t3ver_wsid\":0,\"t3ver_state\":0,\"t3ver_stage\":0,\"t3ver_count\":0,\"t3ver_tstamp\":0,\"t3ver_move_id\":0,\"CType\":\"list\",\"header\":\"\",\"header_position\":\"\",\"bodytext\":null,\"bullets_type\":0,\"uploads_description\":0,\"uploads_type\":0,\"assets\":0,\"image\":0,\"imagewidth\":0,\"imageorient\":0,\"imagecols\":2,\"imageborder\":0,\"media\":0,\"layout\":0,\"frame_class\":\"default\",\"cols\":0,\"space_before_class\":\"\",\"space_after_class\":\"\",\"records\":null,\"pages\":\"\",\"colPos\":0,\"subheader\":\"\",\"header_link\":\"\",\"image_zoom\":0,\"header_layout\":\"0\",\"list_type\":\"timezones_pi1\",\"sectionIndex\":1,\"linkToTop\":0,\"file_collections\":null,\"filelink_size\":0,\"filelink_sorting\":\"\",\"filelink_sorting_direction\":\"\",\"target\":\"\",\"date\":0,\"recursive\":0,\"imageheight\":0,\"pi_flexform\":null,\"accessibility_title\":\"\",\"accessibility_bypass\":0,\"accessibility_bypass_text\":\"\",\"selected_categories\":null,\"category_field\":\"\",\"table_class\":\"\",\"table_caption\":null,\"table_delimiter\":124,\"table_enclosure\":0,\"table_header_position\":0,\"table_tfoot\":0,\"categories\":0}',0,'0400$fff731c9663931df7693424da29a1a36:b92300cfb5d1d3645c9cb212a7f56c1f'),(10,1616342027,4,'BE',1,0,3,'tt_content',NULL,0,'0400$289cf90bd1682b42a3868383f21d71a5:b92300cfb5d1d3645c9cb212a7f56c1f'),(11,1616342082,1,'BE',1,0,2,'pages','{\"uid\":2,\"pid\":1,\"tstamp\":1616342082,\"crdate\":1616342082,\"cruser_id\":1,\"deleted\":0,\"hidden\":1,\"starttime\":0,\"endtime\":0,\"fe_group\":\"\",\"sorting\":256,\"rowDescription\":\"\",\"editlock\":0,\"sys_language_uid\":0,\"l10n_parent\":0,\"l10n_source\":0,\"l10n_state\":null,\"t3_origuid\":0,\"l10n_diffsource\":\"\",\"t3ver_oid\":0,\"t3ver_wsid\":0,\"t3ver_state\":0,\"t3ver_stage\":0,\"t3ver_count\":0,\"t3ver_tstamp\":0,\"t3ver_move_id\":0,\"perms_userid\":1,\"perms_groupid\":0,\"perms_user\":31,\"perms_group\":27,\"perms_everybody\":0,\"title\":\"Show timezone\",\"slug\":\"\\/show-timezone\",\"doktype\":1,\"TSconfig\":\"\",\"is_siteroot\":0,\"php_tree_stop\":0,\"url\":\"\",\"shortcut\":0,\"shortcut_mode\":0,\"subtitle\":\"\",\"layout\":0,\"target\":\"\",\"media\":0,\"lastUpdated\":0,\"keywords\":\"\",\"cache_timeout\":0,\"cache_tags\":\"\",\"newUntil\":0,\"description\":\"\",\"no_search\":0,\"SYS_LASTCHANGED\":0,\"abstract\":\"\",\"module\":\"\",\"extendToSubpages\":0,\"author\":\"\",\"author_email\":\"\",\"nav_title\":\"\",\"nav_hide\":0,\"content_from_pid\":0,\"mount_pid\":0,\"mount_pid_ol\":0,\"l18n_cfg\":0,\"fe_login_mode\":0,\"backend_layout\":\"\",\"backend_layout_next_level\":\"\",\"tsconfig_includes\":\"\",\"legacy_overlay_uid\":0,\"seo_title\":\"\",\"no_index\":0,\"no_follow\":0,\"og_title\":\"\",\"og_description\":\"\",\"og_image\":0,\"twitter_title\":\"\",\"twitter_description\":\"\",\"twitter_image\":0,\"twitter_card\":\"summary\",\"canonical_link\":\"\",\"sitemap_priority\":\"0.5\",\"sitemap_changefreq\":\"\",\"categories\":0}',0,'0400$3d8ca6c4ab5b10404a933444bc809c7a:f11830df10b4b0bca2db34810c2241b3'),(12,1616342090,2,'BE',1,0,2,'pages','{\"oldRecord\":{\"hidden\":1,\"l10n_diffsource\":\"\"},\"newRecord\":{\"hidden\":\"0\",\"l10n_diffsource\":\"a:1:{s:6:\\\"hidden\\\";N;}\"}}',0,'0400$efe2e2394c88511ce78405a079f5ed13:f11830df10b4b0bca2db34810c2241b3'),(13,1616342112,1,'BE',1,0,4,'tt_content','{\"uid\":4,\"rowDescription\":\"\",\"pid\":2,\"tstamp\":1616342112,\"crdate\":1616342112,\"cruser_id\":1,\"deleted\":0,\"hidden\":0,\"starttime\":0,\"endtime\":0,\"fe_group\":\"\",\"sorting\":256,\"editlock\":0,\"sys_language_uid\":0,\"l18n_parent\":0,\"l10n_source\":0,\"l10n_state\":null,\"t3_origuid\":0,\"l18n_diffsource\":\"\",\"t3ver_oid\":0,\"t3ver_wsid\":0,\"t3ver_state\":0,\"t3ver_stage\":0,\"t3ver_count\":0,\"t3ver_tstamp\":0,\"t3ver_move_id\":0,\"CType\":\"list\",\"header\":\"\",\"header_position\":\"\",\"bodytext\":\"\",\"bullets_type\":0,\"uploads_description\":0,\"uploads_type\":0,\"assets\":0,\"image\":0,\"imagewidth\":0,\"imageorient\":0,\"imagecols\":2,\"imageborder\":0,\"media\":0,\"layout\":0,\"frame_class\":\"default\",\"cols\":0,\"space_before_class\":\"\",\"space_after_class\":\"\",\"records\":null,\"pages\":null,\"colPos\":0,\"subheader\":\"\",\"header_link\":\"\",\"image_zoom\":0,\"header_layout\":\"0\",\"list_type\":\"\",\"sectionIndex\":1,\"linkToTop\":0,\"file_collections\":null,\"filelink_size\":0,\"filelink_sorting\":\"\",\"filelink_sorting_direction\":\"\",\"target\":\"\",\"date\":0,\"recursive\":0,\"imageheight\":0,\"pi_flexform\":null,\"accessibility_title\":\"\",\"accessibility_bypass\":0,\"accessibility_bypass_text\":\"\",\"selected_categories\":null,\"category_field\":\"\",\"table_class\":\"\",\"table_caption\":null,\"table_delimiter\":124,\"table_enclosure\":0,\"table_header_position\":0,\"table_tfoot\":0,\"categories\":0}',0,'0400$49715c509962d13d8a7721a0e8b2c6c3:4d391f5ef79b8d5d10dffa8a07ca167d'),(14,1616342118,2,'BE',1,0,4,'tt_content','{\"oldRecord\":{\"list_type\":\"\",\"l18n_diffsource\":\"\"},\"newRecord\":{\"list_type\":\"timezones_pi1\",\"l18n_diffsource\":\"a:25:{s:5:\\\"CType\\\";N;s:6:\\\"colPos\\\";N;s:6:\\\"header\\\";N;s:13:\\\"header_layout\\\";N;s:15:\\\"header_position\\\";N;s:4:\\\"date\\\";N;s:11:\\\"header_link\\\";N;s:9:\\\"subheader\\\";N;s:9:\\\"list_type\\\";N;s:5:\\\"pages\\\";N;s:9:\\\"recursive\\\";N;s:6:\\\"layout\\\";N;s:11:\\\"frame_class\\\";N;s:18:\\\"space_before_class\\\";N;s:17:\\\"space_after_class\\\";N;s:12:\\\"sectionIndex\\\";N;s:9:\\\"linkToTop\\\";N;s:16:\\\"sys_language_uid\\\";N;s:6:\\\"hidden\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:8:\\\"fe_group\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\"}}',0,'0400$983d3d5ffd68e8de5ec3e37135c9d4c6:4d391f5ef79b8d5d10dffa8a07ca167d'),(15,1616342122,2,'BE',1,0,4,'tt_content','{\"oldRecord\":{\"pi_flexform\":null,\"l18n_diffsource\":\"a:25:{s:5:\\\"CType\\\";N;s:6:\\\"colPos\\\";N;s:6:\\\"header\\\";N;s:13:\\\"header_layout\\\";N;s:15:\\\"header_position\\\";N;s:4:\\\"date\\\";N;s:11:\\\"header_link\\\";N;s:9:\\\"subheader\\\";N;s:9:\\\"list_type\\\";N;s:5:\\\"pages\\\";N;s:9:\\\"recursive\\\";N;s:6:\\\"layout\\\";N;s:11:\\\"frame_class\\\";N;s:18:\\\"space_before_class\\\";N;s:17:\\\"space_after_class\\\";N;s:12:\\\"sectionIndex\\\";N;s:9:\\\"linkToTop\\\";N;s:16:\\\"sys_language_uid\\\";N;s:6:\\\"hidden\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:8:\\\"fe_group\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\"},\"newRecord\":{\"pi_flexform\":\"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\" standalone=\\\"yes\\\" ?>\\n<T3FlexForms>\\n    <data>\\n        <sheet index=\\\"sDEF\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"switchableControllerActions\\\">\\n                    <value index=\\\"vDEF\\\">Timezones-&gt;show;Timezones-&gt;index;Timezones-&gt;select;Timezones-&gt;tzset<\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n        <sheet index=\\\"sPaths\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"view.templateRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.partialRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.layoutRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n    <\\/data>\\n<\\/T3FlexForms>\",\"l18n_diffsource\":\"a:23:{s:5:\\\"CType\\\";N;s:6:\\\"colPos\\\";N;s:6:\\\"header\\\";N;s:13:\\\"header_layout\\\";N;s:15:\\\"header_position\\\";N;s:4:\\\"date\\\";N;s:11:\\\"header_link\\\";N;s:9:\\\"subheader\\\";N;s:9:\\\"list_type\\\";N;s:11:\\\"pi_flexform\\\";N;s:11:\\\"frame_class\\\";N;s:18:\\\"space_before_class\\\";N;s:17:\\\"space_after_class\\\";N;s:12:\\\"sectionIndex\\\";N;s:9:\\\"linkToTop\\\";N;s:16:\\\"sys_language_uid\\\";N;s:6:\\\"hidden\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:8:\\\"fe_group\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\"}}',0,'0400$d9f5b0680d02b81ee41d07abb94db340:4d391f5ef79b8d5d10dffa8a07ca167d'),(16,1616342328,1,'BE',1,0,3,'pages','{\"uid\":3,\"pid\":1,\"tstamp\":1616342328,\"crdate\":1616342328,\"cruser_id\":1,\"deleted\":0,\"hidden\":0,\"starttime\":0,\"endtime\":0,\"fe_group\":\"\",\"sorting\":512,\"rowDescription\":\"\",\"editlock\":0,\"sys_language_uid\":0,\"l10n_parent\":0,\"l10n_source\":0,\"l10n_state\":null,\"t3_origuid\":0,\"l10n_diffsource\":\"\",\"t3ver_oid\":0,\"t3ver_wsid\":0,\"t3ver_state\":0,\"t3ver_stage\":0,\"t3ver_count\":0,\"t3ver_tstamp\":0,\"t3ver_move_id\":0,\"perms_userid\":1,\"perms_groupid\":0,\"perms_user\":31,\"perms_group\":27,\"perms_everybody\":0,\"title\":\"Set Timezone\",\"slug\":\"\\/set-timezone\",\"doktype\":1,\"TSconfig\":\"\",\"is_siteroot\":0,\"php_tree_stop\":0,\"url\":\"\",\"shortcut\":0,\"shortcut_mode\":0,\"subtitle\":\"\",\"layout\":0,\"target\":\"\",\"media\":0,\"lastUpdated\":0,\"keywords\":\"\",\"cache_timeout\":0,\"cache_tags\":\"\",\"newUntil\":0,\"description\":\"\",\"no_search\":0,\"SYS_LASTCHANGED\":0,\"abstract\":\"\",\"module\":\"\",\"extendToSubpages\":0,\"author\":\"\",\"author_email\":\"\",\"nav_title\":\"\",\"nav_hide\":0,\"content_from_pid\":0,\"mount_pid\":0,\"mount_pid_ol\":0,\"l18n_cfg\":0,\"fe_login_mode\":0,\"backend_layout\":\"\",\"backend_layout_next_level\":\"\",\"tsconfig_includes\":\"\",\"legacy_overlay_uid\":0,\"seo_title\":\"\",\"no_index\":0,\"no_follow\":0,\"og_title\":\"\",\"og_description\":\"\",\"og_image\":0,\"twitter_title\":\"\",\"twitter_description\":\"\",\"twitter_image\":0,\"twitter_card\":\"summary\",\"canonical_link\":\"\",\"sitemap_priority\":\"0.5\",\"sitemap_changefreq\":\"\",\"categories\":0}',0,'0400$68c6b96bfaf2de2e271d8850af7a35bd:fe15eeb7d49e64e2cea91ab53fcf0db1'),(17,1616342353,1,'BE',1,0,5,'tt_content','{\"uid\":5,\"rowDescription\":\"\",\"pid\":3,\"tstamp\":1616342353,\"crdate\":1616342353,\"cruser_id\":1,\"deleted\":0,\"hidden\":0,\"starttime\":0,\"endtime\":0,\"fe_group\":\"\",\"sorting\":256,\"editlock\":0,\"sys_language_uid\":0,\"l18n_parent\":0,\"l10n_source\":0,\"l10n_state\":null,\"t3_origuid\":0,\"l18n_diffsource\":\"\",\"t3ver_oid\":0,\"t3ver_wsid\":0,\"t3ver_state\":0,\"t3ver_stage\":0,\"t3ver_count\":0,\"t3ver_tstamp\":0,\"t3ver_move_id\":0,\"CType\":\"list\",\"header\":\"\",\"header_position\":\"\",\"bodytext\":\"\",\"bullets_type\":0,\"uploads_description\":0,\"uploads_type\":0,\"assets\":0,\"image\":0,\"imagewidth\":0,\"imageorient\":0,\"imagecols\":2,\"imageborder\":0,\"media\":0,\"layout\":0,\"frame_class\":\"default\",\"cols\":0,\"space_before_class\":\"\",\"space_after_class\":\"\",\"records\":null,\"pages\":null,\"colPos\":0,\"subheader\":\"\",\"header_link\":\"\",\"image_zoom\":0,\"header_layout\":\"0\",\"list_type\":\"\",\"sectionIndex\":1,\"linkToTop\":0,\"file_collections\":null,\"filelink_size\":0,\"filelink_sorting\":\"\",\"filelink_sorting_direction\":\"\",\"target\":\"\",\"date\":0,\"recursive\":0,\"imageheight\":0,\"pi_flexform\":null,\"accessibility_title\":\"\",\"accessibility_bypass\":0,\"accessibility_bypass_text\":\"\",\"selected_categories\":null,\"category_field\":\"\",\"table_class\":\"\",\"table_caption\":null,\"table_delimiter\":124,\"table_enclosure\":0,\"table_header_position\":0,\"table_tfoot\":0,\"categories\":0}',0,'0400$1c5a153d888a9cc0855202d2b67934c4:c7626fc9bcba6f70beb6ebc085a400db'),(18,1616342358,2,'BE',1,0,5,'tt_content','{\"oldRecord\":{\"list_type\":\"\",\"l18n_diffsource\":\"\"},\"newRecord\":{\"list_type\":\"timezones_pi1\",\"l18n_diffsource\":\"a:25:{s:5:\\\"CType\\\";N;s:6:\\\"colPos\\\";N;s:6:\\\"header\\\";N;s:13:\\\"header_layout\\\";N;s:15:\\\"header_position\\\";N;s:4:\\\"date\\\";N;s:11:\\\"header_link\\\";N;s:9:\\\"subheader\\\";N;s:9:\\\"list_type\\\";N;s:5:\\\"pages\\\";N;s:9:\\\"recursive\\\";N;s:6:\\\"layout\\\";N;s:11:\\\"frame_class\\\";N;s:18:\\\"space_before_class\\\";N;s:17:\\\"space_after_class\\\";N;s:12:\\\"sectionIndex\\\";N;s:9:\\\"linkToTop\\\";N;s:16:\\\"sys_language_uid\\\";N;s:6:\\\"hidden\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:8:\\\"fe_group\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\"}}',0,'0400$89ec877f88b2a808ad716b0fdcd340f5:c7626fc9bcba6f70beb6ebc085a400db'),(19,1616342363,2,'BE',1,0,5,'tt_content','{\"oldRecord\":{\"pi_flexform\":null,\"l18n_diffsource\":\"a:25:{s:5:\\\"CType\\\";N;s:6:\\\"colPos\\\";N;s:6:\\\"header\\\";N;s:13:\\\"header_layout\\\";N;s:15:\\\"header_position\\\";N;s:4:\\\"date\\\";N;s:11:\\\"header_link\\\";N;s:9:\\\"subheader\\\";N;s:9:\\\"list_type\\\";N;s:5:\\\"pages\\\";N;s:9:\\\"recursive\\\";N;s:6:\\\"layout\\\";N;s:11:\\\"frame_class\\\";N;s:18:\\\"space_before_class\\\";N;s:17:\\\"space_after_class\\\";N;s:12:\\\"sectionIndex\\\";N;s:9:\\\"linkToTop\\\";N;s:16:\\\"sys_language_uid\\\";N;s:6:\\\"hidden\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:8:\\\"fe_group\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\"},\"newRecord\":{\"pi_flexform\":\"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\" standalone=\\\"yes\\\" ?>\\n<T3FlexForms>\\n    <data>\\n        <sheet index=\\\"sDEF\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"switchableControllerActions\\\">\\n                    <value index=\\\"vDEF\\\">Timezones-&gt;select;Timezones-&gt;show;Timezones-&gt;index;Timezones-&gt;tzset<\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n        <sheet index=\\\"sPaths\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"view.templateRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.partialRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.layoutRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n    <\\/data>\\n<\\/T3FlexForms>\",\"l18n_diffsource\":\"a:23:{s:5:\\\"CType\\\";N;s:6:\\\"colPos\\\";N;s:6:\\\"header\\\";N;s:13:\\\"header_layout\\\";N;s:15:\\\"header_position\\\";N;s:4:\\\"date\\\";N;s:11:\\\"header_link\\\";N;s:9:\\\"subheader\\\";N;s:9:\\\"list_type\\\";N;s:11:\\\"pi_flexform\\\";N;s:11:\\\"frame_class\\\";N;s:18:\\\"space_before_class\\\";N;s:17:\\\"space_after_class\\\";N;s:12:\\\"sectionIndex\\\";N;s:9:\\\"linkToTop\\\";N;s:16:\\\"sys_language_uid\\\";N;s:6:\\\"hidden\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:8:\\\"fe_group\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\"}}',0,'0400$fdbb00655dfb0c58ebe6d8f1919ee5a3:c7626fc9bcba6f70beb6ebc085a400db'),(20,1616342376,2,'BE',1,0,3,'pages','{\"oldRecord\":{\"title\":\"Set Timezone\",\"l10n_diffsource\":\"\"},\"newRecord\":{\"title\":\"Select Timezone\",\"l10n_diffsource\":\"a:50:{s:7:\\\"doktype\\\";N;s:5:\\\"title\\\";N;s:4:\\\"slug\\\";N;s:9:\\\"nav_title\\\";N;s:8:\\\"subtitle\\\";N;s:9:\\\"seo_title\\\";N;s:11:\\\"description\\\";N;s:8:\\\"no_index\\\";N;s:9:\\\"no_follow\\\";N;s:14:\\\"canonical_link\\\";N;s:18:\\\"sitemap_changefreq\\\";N;s:16:\\\"sitemap_priority\\\";N;s:8:\\\"og_title\\\";N;s:14:\\\"og_description\\\";N;s:8:\\\"og_image\\\";N;s:13:\\\"twitter_title\\\";N;s:19:\\\"twitter_description\\\";N;s:13:\\\"twitter_image\\\";N;s:12:\\\"twitter_card\\\";N;s:8:\\\"abstract\\\";N;s:8:\\\"keywords\\\";N;s:6:\\\"author\\\";N;s:12:\\\"author_email\\\";N;s:11:\\\"lastUpdated\\\";N;s:6:\\\"layout\\\";N;s:8:\\\"newUntil\\\";N;s:14:\\\"backend_layout\\\";N;s:25:\\\"backend_layout_next_level\\\";N;s:16:\\\"content_from_pid\\\";N;s:6:\\\"target\\\";N;s:13:\\\"cache_timeout\\\";N;s:10:\\\"cache_tags\\\";N;s:11:\\\"is_siteroot\\\";N;s:9:\\\"no_search\\\";N;s:13:\\\"php_tree_stop\\\";N;s:6:\\\"module\\\";N;s:5:\\\"media\\\";N;s:17:\\\"tsconfig_includes\\\";N;s:8:\\\"TSconfig\\\";N;s:8:\\\"l18n_cfg\\\";N;s:6:\\\"hidden\\\";N;s:8:\\\"nav_hide\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:16:\\\"extendToSubpages\\\";N;s:8:\\\"fe_group\\\";N;s:13:\\\"fe_login_mode\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\"}}',0,'0400$00866189a087cd1151b88abb5a202b97:fe15eeb7d49e64e2cea91ab53fcf0db1'),(21,1616342394,2,'BE',1,0,3,'pages','{\"oldRecord\":{\"slug\":\"\\/set-timezone\"},\"newRecord\":{\"slug\":\"\\/select-timezone\"}}',0,'0400$9e1be6a24cc1a36183e7b004cd4f2f14:fe15eeb7d49e64e2cea91ab53fcf0db1'),(22,1616844179,1,'BE',1,0,6,'tt_content','{\"uid\":6,\"rowDescription\":\"\",\"pid\":3,\"tstamp\":1616844179,\"crdate\":1616844179,\"cruser_id\":1,\"deleted\":0,\"hidden\":0,\"starttime\":0,\"endtime\":0,\"fe_group\":\"\",\"sorting\":512,\"editlock\":0,\"sys_language_uid\":0,\"l18n_parent\":0,\"l10n_source\":0,\"l10n_state\":null,\"t3_origuid\":0,\"l18n_diffsource\":\"\",\"t3ver_oid\":0,\"t3ver_wsid\":0,\"t3ver_state\":0,\"t3ver_stage\":0,\"t3ver_count\":0,\"t3ver_tstamp\":0,\"t3ver_move_id\":0,\"CType\":\"list\",\"header\":\"\",\"header_position\":\"\",\"bodytext\":null,\"bullets_type\":0,\"uploads_description\":0,\"uploads_type\":0,\"assets\":0,\"image\":0,\"imagewidth\":0,\"imageorient\":0,\"imagecols\":2,\"imageborder\":0,\"media\":0,\"layout\":0,\"frame_class\":\"default\",\"cols\":0,\"space_before_class\":\"\",\"space_after_class\":\"\",\"records\":null,\"pages\":\"\",\"colPos\":0,\"subheader\":\"\",\"header_link\":\"\",\"image_zoom\":0,\"header_layout\":\"0\",\"list_type\":\"timezones_pi1\",\"sectionIndex\":1,\"linkToTop\":0,\"file_collections\":null,\"filelink_size\":0,\"filelink_sorting\":\"\",\"filelink_sorting_direction\":\"\",\"target\":\"\",\"date\":0,\"recursive\":0,\"imageheight\":0,\"pi_flexform\":null,\"accessibility_title\":\"\",\"accessibility_bypass\":0,\"accessibility_bypass_text\":\"\",\"selected_categories\":null,\"category_field\":\"\",\"table_class\":\"\",\"table_caption\":null,\"table_delimiter\":124,\"table_enclosure\":0,\"table_header_position\":0,\"table_tfoot\":0,\"categories\":0}',0,'0400$d12717d71b72d80cbf778ed88bc9d6af:c0db6803ab1ec5f70c36e2a72187867b'),(23,1616844197,2,'BE',1,0,6,'tt_content','{\"oldRecord\":{\"pi_flexform\":null,\"l18n_diffsource\":\"\"},\"newRecord\":{\"pi_flexform\":\"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\" standalone=\\\"yes\\\" ?>\\n<T3FlexForms>\\n    <data>\\n        <sheet index=\\\"sDEF\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"switchableControllerActions\\\">\\n                    <value index=\\\"vDEF\\\">Timezones-&gt;show;Timezones-&gt;index;Timezones-&gt;select;Timezones-&gt;tzset<\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n        <sheet index=\\\"sPaths\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"view.templateRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.partialRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.layoutRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n    <\\/data>\\n<\\/T3FlexForms>\",\"l18n_diffsource\":\"a:23:{s:5:\\\"CType\\\";N;s:6:\\\"colPos\\\";N;s:6:\\\"header\\\";N;s:13:\\\"header_layout\\\";N;s:15:\\\"header_position\\\";N;s:4:\\\"date\\\";N;s:11:\\\"header_link\\\";N;s:9:\\\"subheader\\\";N;s:9:\\\"list_type\\\";N;s:11:\\\"pi_flexform\\\";N;s:11:\\\"frame_class\\\";N;s:18:\\\"space_before_class\\\";N;s:17:\\\"space_after_class\\\";N;s:12:\\\"sectionIndex\\\";N;s:9:\\\"linkToTop\\\";N;s:16:\\\"sys_language_uid\\\";N;s:6:\\\"hidden\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:8:\\\"fe_group\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\"}}',0,'0400$6c74967f86afc6383818f101f45a296e:c0db6803ab1ec5f70c36e2a72187867b'),(24,1616847258,1,'BE',1,0,4,'pages','{\"uid\":4,\"pid\":1,\"tstamp\":1616847258,\"crdate\":1616847258,\"cruser_id\":1,\"deleted\":0,\"hidden\":1,\"starttime\":0,\"endtime\":0,\"fe_group\":\"\",\"sorting\":768,\"rowDescription\":\"\",\"editlock\":0,\"sys_language_uid\":0,\"l10n_parent\":0,\"l10n_source\":0,\"l10n_state\":null,\"t3_origuid\":2,\"l10n_diffsource\":\"a:1:{s:6:\\\"hidden\\\";N;}\",\"t3ver_oid\":0,\"t3ver_wsid\":0,\"t3ver_state\":0,\"t3ver_stage\":0,\"t3ver_count\":0,\"t3ver_tstamp\":0,\"t3ver_move_id\":0,\"perms_userid\":1,\"perms_groupid\":0,\"perms_user\":31,\"perms_group\":27,\"perms_everybody\":0,\"title\":\"Show timezone (copy 1)\",\"slug\":\"\\/show-timezone-1\",\"doktype\":1,\"TSconfig\":\"\",\"is_siteroot\":0,\"php_tree_stop\":0,\"url\":\"\",\"shortcut\":0,\"shortcut_mode\":0,\"subtitle\":\"\",\"layout\":0,\"target\":\"\",\"media\":0,\"lastUpdated\":0,\"keywords\":\"\",\"cache_timeout\":0,\"cache_tags\":\"\",\"newUntil\":0,\"description\":\"\",\"no_search\":0,\"SYS_LASTCHANGED\":0,\"abstract\":\"\",\"module\":\"\",\"extendToSubpages\":0,\"author\":\"\",\"author_email\":\"\",\"nav_title\":\"\",\"nav_hide\":0,\"content_from_pid\":0,\"mount_pid\":0,\"mount_pid_ol\":0,\"l18n_cfg\":0,\"fe_login_mode\":0,\"backend_layout\":\"\",\"backend_layout_next_level\":\"\",\"tsconfig_includes\":\"\",\"legacy_overlay_uid\":0,\"seo_title\":\"\",\"no_index\":0,\"no_follow\":0,\"og_title\":\"\",\"og_description\":\"\",\"og_image\":0,\"twitter_title\":\"\",\"twitter_description\":\"\",\"twitter_image\":0,\"twitter_card\":\"summary\",\"canonical_link\":\"\",\"sitemap_priority\":\"0.5\",\"sitemap_changefreq\":\"\",\"categories\":0}',0,'0400$999026fb7248cf1f96873a07fcf60564:412add0b3eb6ec8f1cb6710aea92e21e'),(25,1616847258,1,'BE',1,0,7,'tt_content','{\"uid\":7,\"rowDescription\":\"\",\"pid\":4,\"tstamp\":1616847258,\"crdate\":1616847258,\"cruser_id\":1,\"deleted\":0,\"hidden\":0,\"starttime\":0,\"endtime\":0,\"fe_group\":\"\",\"sorting\":256,\"editlock\":0,\"sys_language_uid\":0,\"l18n_parent\":0,\"l10n_source\":0,\"l10n_state\":null,\"t3_origuid\":4,\"l18n_diffsource\":\"a:23:{s:5:\\\"CType\\\";N;s:6:\\\"colPos\\\";N;s:6:\\\"header\\\";N;s:13:\\\"header_layout\\\";N;s:15:\\\"header_position\\\";N;s:4:\\\"date\\\";N;s:11:\\\"header_link\\\";N;s:9:\\\"subheader\\\";N;s:9:\\\"list_type\\\";N;s:11:\\\"pi_flexform\\\";N;s:11:\\\"frame_class\\\";N;s:18:\\\"space_before_class\\\";N;s:17:\\\"space_after_class\\\";N;s:12:\\\"sectionIndex\\\";N;s:9:\\\"linkToTop\\\";N;s:16:\\\"sys_language_uid\\\";N;s:6:\\\"hidden\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:8:\\\"fe_group\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\",\"t3ver_oid\":0,\"t3ver_wsid\":0,\"t3ver_state\":0,\"t3ver_stage\":0,\"t3ver_count\":0,\"t3ver_tstamp\":0,\"t3ver_move_id\":0,\"CType\":\"list\",\"header\":\"\",\"header_position\":\"\",\"bodytext\":\"\",\"bullets_type\":0,\"uploads_description\":0,\"uploads_type\":0,\"assets\":0,\"image\":0,\"imagewidth\":0,\"imageorient\":0,\"imagecols\":2,\"imageborder\":0,\"media\":0,\"layout\":0,\"frame_class\":\"default\",\"cols\":0,\"space_before_class\":\"\",\"space_after_class\":\"\",\"records\":\"\",\"pages\":\"\",\"colPos\":0,\"subheader\":\"\",\"header_link\":\"\",\"image_zoom\":0,\"header_layout\":\"0\",\"list_type\":\"timezones_pi1\",\"sectionIndex\":1,\"linkToTop\":0,\"file_collections\":\"\",\"filelink_size\":0,\"filelink_sorting\":\"\",\"filelink_sorting_direction\":\"\",\"target\":\"\",\"date\":0,\"recursive\":0,\"imageheight\":0,\"pi_flexform\":\"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\" standalone=\\\"yes\\\" ?>\\n<T3FlexForms>\\n    <data>\\n        <sheet index=\\\"sDEF\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"switchableControllerActions\\\">\\n                    <value index=\\\"vDEF\\\">Timezones-&gt;show;Timezones-&gt;index;Timezones-&gt;select;Timezones-&gt;tzset<\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n        <sheet index=\\\"sPaths\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"view.templateRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.partialRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.layoutRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n    <\\/data>\\n<\\/T3FlexForms>\",\"accessibility_title\":\"\",\"accessibility_bypass\":0,\"accessibility_bypass_text\":\"\",\"selected_categories\":\"\",\"category_field\":\"\",\"table_class\":\"\",\"table_caption\":null,\"table_delimiter\":124,\"table_enclosure\":0,\"table_header_position\":0,\"table_tfoot\":0,\"categories\":0}',0,'0400$6440a9e19e1f637ade7e13ffa59509db:ea41b626baac59a1fe0716bc344af5d9'),(26,1616847274,2,'BE',1,0,4,'pages','{\"oldRecord\":{\"title\":\"Show timezone (copy 1)\",\"l10n_diffsource\":\"a:1:{s:6:\\\"hidden\\\";N;}\"},\"newRecord\":{\"title\":\"Index timezone\",\"l10n_diffsource\":\"a:50:{s:7:\\\"doktype\\\";N;s:5:\\\"title\\\";N;s:4:\\\"slug\\\";N;s:9:\\\"nav_title\\\";N;s:8:\\\"subtitle\\\";N;s:9:\\\"seo_title\\\";N;s:11:\\\"description\\\";N;s:8:\\\"no_index\\\";N;s:9:\\\"no_follow\\\";N;s:14:\\\"canonical_link\\\";N;s:18:\\\"sitemap_changefreq\\\";N;s:16:\\\"sitemap_priority\\\";N;s:8:\\\"og_title\\\";N;s:14:\\\"og_description\\\";N;s:8:\\\"og_image\\\";N;s:13:\\\"twitter_title\\\";N;s:19:\\\"twitter_description\\\";N;s:13:\\\"twitter_image\\\";N;s:12:\\\"twitter_card\\\";N;s:8:\\\"abstract\\\";N;s:8:\\\"keywords\\\";N;s:6:\\\"author\\\";N;s:12:\\\"author_email\\\";N;s:11:\\\"lastUpdated\\\";N;s:6:\\\"layout\\\";N;s:8:\\\"newUntil\\\";N;s:14:\\\"backend_layout\\\";N;s:25:\\\"backend_layout_next_level\\\";N;s:16:\\\"content_from_pid\\\";N;s:6:\\\"target\\\";N;s:13:\\\"cache_timeout\\\";N;s:10:\\\"cache_tags\\\";N;s:11:\\\"is_siteroot\\\";N;s:9:\\\"no_search\\\";N;s:13:\\\"php_tree_stop\\\";N;s:6:\\\"module\\\";N;s:5:\\\"media\\\";N;s:17:\\\"tsconfig_includes\\\";N;s:8:\\\"TSconfig\\\";N;s:8:\\\"l18n_cfg\\\";N;s:6:\\\"hidden\\\";N;s:8:\\\"nav_hide\\\";N;s:9:\\\"starttime\\\";N;s:7:\\\"endtime\\\";N;s:16:\\\"extendToSubpages\\\";N;s:8:\\\"fe_group\\\";N;s:13:\\\"fe_login_mode\\\";N;s:8:\\\"editlock\\\";N;s:10:\\\"categories\\\";N;s:14:\\\"rowDescription\\\";N;}\"}}',0,'0400$d72ba601c066528725a4367eed24d827:412add0b3eb6ec8f1cb6710aea92e21e'),(27,1616847280,2,'BE',1,0,4,'pages','{\"oldRecord\":{\"slug\":\"\\/show-timezone-1\"},\"newRecord\":{\"slug\":\"\\/index-timezone\"}}',0,'0400$2796f08e11c3f37fc4268bcf795fa080:412add0b3eb6ec8f1cb6710aea92e21e'),(28,1616847295,2,'BE',1,0,4,'pages','{\"oldRecord\":{\"title\":\"Index timezone\",\"slug\":\"\\/index-timezone\"},\"newRecord\":{\"title\":\"Timezone index\",\"slug\":\"\\/timezone-index\"}}',0,'0400$7e298011170374b347e1ea407c5952bf:412add0b3eb6ec8f1cb6710aea92e21e'),(29,1616847303,2,'BE',1,0,4,'pages','{\"oldRecord\":{\"hidden\":1},\"newRecord\":{\"hidden\":\"0\"}}',0,'0400$152945a9e292d45cfa5cc8127acebab6:412add0b3eb6ec8f1cb6710aea92e21e'),(30,1616847314,2,'BE',1,0,7,'tt_content','{\"oldRecord\":{\"pi_flexform\":\"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\" standalone=\\\"yes\\\" ?>\\n<T3FlexForms>\\n    <data>\\n        <sheet index=\\\"sDEF\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"switchableControllerActions\\\">\\n                    <value index=\\\"vDEF\\\">Timezones-&gt;show;Timezones-&gt;index;Timezones-&gt;select;Timezones-&gt;tzset<\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n        <sheet index=\\\"sPaths\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"view.templateRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.partialRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.layoutRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n    <\\/data>\\n<\\/T3FlexForms>\"},\"newRecord\":{\"pi_flexform\":\"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\" standalone=\\\"yes\\\" ?>\\n<T3FlexForms>\\n    <data>\\n        <sheet index=\\\"sDEF\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"switchableControllerActions\\\">\\n                    <value index=\\\"vDEF\\\">Timezones-&gt;index;Timezones-&gt;show;Timezones-&gt;select;Timezones-&gt;tzset<\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n        <sheet index=\\\"sPaths\\\">\\n            <language index=\\\"lDEF\\\">\\n                <field index=\\\"view.templateRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.partialRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n                <field index=\\\"view.layoutRootPath\\\">\\n                    <value index=\\\"vDEF\\\"><\\/value>\\n                <\\/field>\\n            <\\/language>\\n        <\\/sheet>\\n    <\\/data>\\n<\\/T3FlexForms>\"}}',0,'0400$cf84c6686543e25f72eef6641d61a204:ea41b626baac59a1fe0716bc344af5d9'),(31,1616848078,4,'BE',1,0,7,'tt_content',NULL,0,'0400$6fa68dcd63086405e85296d65069b5bd:ea41b626baac59a1fe0716bc344af5d9'),(32,1616848078,4,'BE',1,0,4,'pages',NULL,0,'0400$6fa68dcd63086405e85296d65069b5bd:412add0b3eb6ec8f1cb6710aea92e21e');
+/*!40000 ALTER TABLE `sys_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_language`
+--
+
+DROP TABLE IF EXISTS `sys_language`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_language` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int unsigned NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `sorting` int NOT NULL DEFAULT '0',
+  `title` varchar(80) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `flag` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `language_isocode` varchar(2) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`uid`),
+  KEY `parent` (`pid`,`hidden`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_language`
+--
+
+LOCK TABLES `sys_language` WRITE;
+/*!40000 ALTER TABLE `sys_language` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_language` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_lockedrecords`
+--
+
+DROP TABLE IF EXISTS `sys_lockedrecords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_lockedrecords` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `userid` int unsigned NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `record_table` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `record_uid` int NOT NULL DEFAULT '0',
+  `record_pid` int NOT NULL DEFAULT '0',
+  `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `feuserid` int unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `event` (`userid`,`tstamp`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_lockedrecords`
+--
+
+LOCK TABLES `sys_lockedrecords` WRITE;
+/*!40000 ALTER TABLE `sys_lockedrecords` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_lockedrecords` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_log`
+--
+
+DROP TABLE IF EXISTS `sys_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_log` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int unsigned NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `userid` int unsigned NOT NULL DEFAULT '0',
+  `action` smallint unsigned NOT NULL DEFAULT '0',
+  `recuid` int unsigned NOT NULL DEFAULT '0',
+  `tablename` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `recpid` int NOT NULL DEFAULT '0',
+  `error` smallint unsigned NOT NULL DEFAULT '0',
+  `details` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `type` smallint unsigned NOT NULL DEFAULT '0',
+  `details_nr` smallint NOT NULL DEFAULT '0',
+  `IP` varchar(39) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `log_data` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `event_pid` int NOT NULL DEFAULT '-1',
+  `workspace` int NOT NULL DEFAULT '0',
+  `NEWid` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `request_id` varchar(13) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `time_micro` double NOT NULL DEFAULT '0',
+  `component` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `level` smallint unsigned NOT NULL DEFAULT '0',
+  `message` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `data` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`uid`),
+  KEY `event` (`userid`,`event_pid`),
+  KEY `recuidIdx` (`recuid`),
+  KEY `user_auth` (`type`,`action`,`tstamp`),
+  KEY `request` (`request_id`),
+  KEY `combined_1` (`tstamp`,`type`,`userid`),
+  KEY `errorcount` (`tstamp`,`error`),
+  KEY `parent` (`pid`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_log`
+--
+
+LOCK TABLES `sys_log` WRITE;
+/*!40000 ALTER TABLE `sys_log` DISABLE KEYS */;
+INSERT INTO `sys_log` VALUES (1,0,1616338522,1,1,0,'',0,0,'User %s logged in from ###IP###',255,1,'172.18.0.6','a:1:{i:0;s:5:\"admin\";}',-1,-99,'','',0,'',0,NULL,NULL),(2,0,1616338543,1,1,1,'tt_content',0,0,'Record \'%s\' (%s) was inserted on page \'%s\' (%s)',1,10,'172.18.0.6','a:4:{i:0;s:28:\"Acceptance test first header\";i:1;s:12:\"tt_content:1\";i:2;s:4:\"Home\";i:3;i:1;}',1,0,'NEW60575e62837bd178056519','',0,'',0,NULL,NULL),(3,0,1616338635,1,1,0,'',0,0,'Personal settings changed',254,1,'172.18.0.6','a:0:{}',-1,0,'','',0,'',0,NULL,NULL),(4,0,1616338635,1,2,1,'be_users',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:5:\"admin\";i:1;s:10:\"be_users:1\";s:7:\"history\";s:1:\"2\";}',0,0,'','',0,'',0,NULL,NULL),(5,0,1616338717,1,1,0,'',0,0,'User %s has cleared the cache (cacheCmd=%s)',3,0,'172.18.0.6','a:2:{i:0;s:5:\"admin\";i:1;s:3:\"all\";}',-1,0,'','',0,'',0,NULL,NULL),(6,0,1616338804,1,2,0,'',0,0,'User %s logged out from TYPO3 Backend',255,1,'172.18.0.6','a:1:{i:0;s:5:\"admin\";}',-1,0,'','',0,'',0,NULL,NULL),(7,0,1616338809,1,1,0,'',0,0,'User %s logged in from ###IP###',255,1,'172.18.0.6','a:1:{i:0;s:5:\"admin\";}',-1,-99,'','',0,'',0,NULL,NULL),(8,0,1616338818,1,2,0,'',0,0,'User %s logged out from TYPO3 Backend',255,1,'172.18.0.6','a:1:{i:0;s:5:\"admin\";}',-1,0,'','',0,'',0,NULL,NULL),(9,0,1616338905,1,1,0,'',0,0,'User %s logged in from ###IP###',255,1,'172.18.0.6','a:1:{i:0;s:5:\"admin\";}',-1,-99,'','',0,'',0,NULL,NULL),(10,0,1616339109,1,1,0,'',0,0,'User %s logged in from ###IP###',255,1,'172.18.0.6','a:1:{i:0;s:5:\"admin\";}',-1,-99,'','',0,'',0,NULL,NULL),(11,0,1616339170,1,2,1,'sys_template',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:25:\"Main TypoScript Rendering\";i:1;s:14:\"sys_template:1\";s:7:\"history\";s:1:\"3\";}',1,0,'','',0,'',0,NULL,NULL),(12,0,1616339191,1,2,1,'sys_template',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:25:\"Main TypoScript Rendering\";i:1;s:14:\"sys_template:1\";s:7:\"history\";s:1:\"4\";}',1,0,'','',0,'',0,NULL,NULL),(13,0,1616339210,1,1,2,'tt_content',0,0,'Record \'%s\' (%s) was inserted on page \'%s\' (%s)',1,10,'172.18.0.6','a:4:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:2\";i:2;s:4:\"Home\";i:3;i:1;}',1,0,'NEW6057610452fc5635579502','',0,'',0,NULL,NULL),(14,0,1616339215,1,2,2,'tt_content',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:2\";s:7:\"history\";s:1:\"6\";}',1,0,'','',0,'',0,NULL,NULL),(15,0,1616339223,1,2,2,'tt_content',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:2\";s:7:\"history\";s:1:\"7\";}',1,0,'','',0,'',0,NULL,NULL),(16,0,1616339412,1,2,2,'tt_content',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:14:\"TimezonesIndex\";i:1;s:12:\"tt_content:2\";s:7:\"history\";s:1:\"8\";}',1,0,'','',0,'',0,NULL,NULL),(17,0,1616341965,1,1,3,'tt_content',0,0,'Record \'%s\' (%s) was inserted on page \'%s\' (%s)',1,10,'172.18.0.6','a:4:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:3\";i:2;s:4:\"Home\";i:3;i:1;}',1,0,'NEW60576bc805b81398725747','',0,'',0,NULL,NULL),(18,0,1616342027,1,3,3,'tt_content',0,0,'Record \'%s\' (%s) was deleted from page \'%s\' (%s)',1,0,'172.18.0.6','a:4:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:3\";i:2;s:4:\"Home\";i:3;i:1;}',1,0,'','',0,'',0,NULL,NULL),(19,0,1616342082,1,1,2,'pages',0,0,'Record \'%s\' (%s) was inserted on page \'%s\' (%s)',1,10,'172.18.0.6','a:4:{i:0;s:13:\"Show timezone\";i:1;s:7:\"pages:2\";i:2;s:4:\"Home\";i:3;i:1;}',1,0,'NEW60576c2b17f59197769677','',0,'',0,NULL,NULL),(20,0,1616342090,1,2,2,'pages',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:13:\"Show timezone\";i:1;s:7:\"pages:2\";s:7:\"history\";s:2:\"12\";}',2,0,'','',0,'',0,NULL,NULL),(21,0,1616342112,1,1,4,'tt_content',0,0,'Record \'%s\' (%s) was inserted on page \'%s\' (%s)',1,10,'172.18.0.6','a:4:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:4\";i:2;s:13:\"Show timezone\";i:3;i:2;}',2,0,'NEW60576c5b33289787642364','',0,'',0,NULL,NULL),(22,0,1616342118,1,2,4,'tt_content',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:4\";s:7:\"history\";s:2:\"14\";}',2,0,'','',0,'',0,NULL,NULL),(23,0,1616342122,1,2,4,'tt_content',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:4\";s:7:\"history\";s:2:\"15\";}',2,0,'','',0,'',0,NULL,NULL),(24,0,1616342328,1,1,3,'pages',0,0,'Record \'%s\' (%s) was inserted on page \'%s\' (%s)',1,10,'172.18.0.6','a:4:{i:0;s:12:\"Set Timezone\";i:1;s:7:\"pages:3\";i:2;s:4:\"Home\";i:3;i:1;}',1,0,'NEW60576d27c9334920623108','',0,'',0,NULL,NULL),(25,0,1616342353,1,1,5,'tt_content',0,0,'Record \'%s\' (%s) was inserted on page \'%s\' (%s)',1,10,'172.18.0.6','a:4:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:5\";i:2;s:12:\"Set Timezone\";i:3;i:3;}',3,0,'NEW60576d4cb7207598517361','',0,'',0,NULL,NULL),(26,0,1616342358,1,2,5,'tt_content',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:5\";s:7:\"history\";s:2:\"18\";}',3,0,'','',0,'',0,NULL,NULL),(27,0,1616342363,1,2,5,'tt_content',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:5\";s:7:\"history\";s:2:\"19\";}',3,0,'','',0,'',0,NULL,NULL),(28,0,1616342376,1,2,3,'pages',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:15:\"Select Timezone\";i:1;s:7:\"pages:3\";s:7:\"history\";s:2:\"20\";}',3,0,'','',0,'',0,NULL,NULL),(29,0,1616342394,1,2,3,'pages',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:15:\"Select Timezone\";i:1;s:7:\"pages:3\";s:7:\"history\";s:2:\"21\";}',3,0,'','',0,'',0,NULL,NULL),(30,0,1616842255,1,1,0,'',0,0,'User %s logged in from ###IP###',255,1,'172.18.0.6','a:1:{i:0;s:5:\"admin\";}',-1,-99,'','',0,'',0,NULL,NULL),(31,0,1616844179,1,1,6,'tt_content',0,0,'Record \'%s\' (%s) was inserted on page \'%s\' (%s)',1,10,'172.18.0.6','a:4:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:6\";i:2;s:15:\"Select Timezone\";i:3;i:3;}',3,0,'NEW605f158e3d4a9083749869','',0,'',0,NULL,NULL),(32,0,1616844197,1,2,6,'tt_content',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:6\";s:7:\"history\";s:2:\"23\";}',3,0,'','',0,'',0,NULL,NULL),(33,0,1616847258,1,1,4,'pages',0,0,'Record \'%s\' (%s) was inserted on page \'%s\' (%s)',1,10,'172.18.0.6','a:4:{i:0;s:22:\"Show timezone (copy 1)\";i:1;s:7:\"pages:4\";i:2;s:4:\"Home\";i:3;i:1;}',1,0,'NEW605f219b01cb7187927628','',0,'',0,NULL,NULL),(34,0,1616847258,1,1,7,'tt_content',0,0,'Record \'%s\' (%s) was inserted on page \'%s\' (%s)',1,10,'172.18.0.6','a:4:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:7\";i:2;s:22:\"Show timezone (copy 1)\";i:3;i:4;}',4,0,'NEW605f219b2785d716587180','',0,'',0,NULL,NULL),(35,0,1616847274,1,2,4,'pages',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:14:\"Index timezone\";i:1;s:7:\"pages:4\";s:7:\"history\";s:2:\"26\";}',4,0,'','',0,'',0,NULL,NULL),(36,0,1616847280,1,2,4,'pages',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:14:\"Index timezone\";i:1;s:7:\"pages:4\";s:7:\"history\";s:2:\"27\";}',4,0,'','',0,'',0,NULL,NULL),(37,0,1616847295,1,2,4,'pages',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:14:\"Timezone index\";i:1;s:7:\"pages:4\";s:7:\"history\";s:2:\"28\";}',4,0,'','',0,'',0,NULL,NULL),(38,0,1616847303,1,2,4,'pages',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:14:\"Timezone index\";i:1;s:7:\"pages:4\";s:7:\"history\";s:2:\"29\";}',4,0,'','',0,'',0,NULL,NULL),(39,0,1616847314,1,2,7,'tt_content',0,0,'Record \'%s\' (%s) was updated. (Online).',1,10,'172.18.0.6','a:3:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:7\";s:7:\"history\";s:2:\"30\";}',4,0,'','',0,'',0,NULL,NULL),(40,0,1616847942,1,1,0,'',0,0,'User %s has cleared the cache (cacheCmd=%s)',3,0,'172.18.0.6','a:2:{i:0;s:5:\"admin\";i:1;s:3:\"all\";}',-1,0,'','',0,'',0,NULL,NULL),(41,0,1616848078,1,3,7,'tt_content',0,0,'Record \'%s\' (%s) was deleted from page \'%s\' (%s)',1,0,'172.18.0.6','a:4:{i:0;s:10:\"[No title]\";i:1;s:12:\"tt_content:7\";i:2;s:14:\"Timezone index\";i:3;i:4;}',4,0,'','',0,'',0,NULL,NULL),(42,0,1616848078,1,3,4,'pages',0,0,'Record \'%s\' (%s) was deleted from page \'%s\' (%s)',1,0,'172.18.0.6','a:4:{i:0;s:14:\"Timezone index\";i:1;s:7:\"pages:4\";i:2;s:4:\"Home\";i:3;i:1;}',4,0,'','',0,'',0,NULL,NULL),(43,0,1616854692,1,1,0,'',0,0,'User %s logged in from ###IP###',255,1,'172.18.0.6','a:1:{i:0;s:5:\"admin\";}',-1,-99,'','',0,'',0,NULL,NULL),(44,0,0,0,0,0,'',0,0,NULL,0,0,'',NULL,-1,0,'','6f96bde7a4660',1616854698.5252,'TYPO3.CMS.Core.Resource.ResourceStorage',3,'Failed initializing storage [1] \"fileadmin/ (auto-created)\", error: Base path \"/var/www/html/.build/web/fileadmin/\" does not exist or is no directory.','');
+/*!40000 ALTER TABLE `sys_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_news`
+--
+
+DROP TABLE IF EXISTS `sys_news`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_news` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int unsigned NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `starttime` int unsigned NOT NULL DEFAULT '0',
+  `endtime` int unsigned NOT NULL DEFAULT '0',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `content` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`uid`),
+  KEY `parent` (`pid`,`deleted`,`hidden`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_news`
+--
+
+LOCK TABLES `sys_news` WRITE;
+/*!40000 ALTER TABLE `sys_news` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_news` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_refindex`
+--
+
+DROP TABLE IF EXISTS `sys_refindex`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_refindex` (
+  `hash` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `tablename` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `recuid` int NOT NULL DEFAULT '0',
+  `field` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `flexpointer` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `softref_key` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `softref_id` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `sorting` int NOT NULL DEFAULT '0',
+  `deleted` smallint NOT NULL DEFAULT '0',
+  `workspace` int NOT NULL DEFAULT '0',
+  `ref_table` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `ref_uid` int NOT NULL DEFAULT '0',
+  `ref_string` varchar(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`hash`),
+  KEY `lookup_rec` (`tablename`(100),`recuid`),
+  KEY `lookup_uid` (`ref_table`(100),`ref_uid`),
+  KEY `lookup_string` (`ref_string`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_refindex`
+--
+
+LOCK TABLES `sys_refindex` WRITE;
+/*!40000 ALTER TABLE `sys_refindex` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_refindex` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_registry`
+--
+
+DROP TABLE IF EXISTS `sys_registry`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_registry` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `entry_namespace` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `entry_key` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `entry_value` mediumblob,
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `entry_identifier` (`entry_namespace`,`entry_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_registry`
+--
+
+LOCK TABLES `sys_registry` WRITE;
+/*!40000 ALTER TABLE `sys_registry` DISABLE KEYS */;
+INSERT INTO `sys_registry` VALUES (1,'installUpdate','TYPO3\\CMS\\Install\\Updates\\Typo3DbExtractionUpdate','i:1;'),(2,'installUpdate','TYPO3\\CMS\\Install\\Updates\\FuncExtractionUpdate','i:1;'),(3,'installUpdate','TYPO3\\CMS\\Install\\Updates\\MigrateUrlTypesInPagesUpdate','i:1;'),(4,'installUpdate','TYPO3\\CMS\\Install\\Updates\\RedirectExtractionUpdate','i:1;'),(5,'installUpdate','TYPO3\\CMS\\Install\\Updates\\BackendUserStartModuleUpdate','i:1;'),(6,'installUpdate','TYPO3\\CMS\\Install\\Updates\\MigratePagesLanguageOverlayUpdate','i:1;'),(7,'installUpdate','TYPO3\\CMS\\Install\\Updates\\MigratePagesLanguageOverlayBeGroupsAccessRights','i:1;'),(8,'installUpdate','TYPO3\\CMS\\Install\\Updates\\BackendLayoutIconUpdateWizard','i:1;'),(9,'installUpdate','TYPO3\\CMS\\Install\\Updates\\RedirectsExtensionUpdate','i:1;'),(10,'installUpdate','TYPO3\\CMS\\Install\\Updates\\AdminPanelInstall','i:1;'),(11,'installUpdate','TYPO3\\CMS\\Install\\Updates\\PopulatePageSlugs','i:1;'),(12,'installUpdate','TYPO3\\CMS\\Install\\Updates\\Argon2iPasswordHashes','i:1;'),(13,'installUpdate','TYPO3\\CMS\\Install\\Updates\\BackendUserConfigurationUpdate','i:1;'),(14,'installUpdate','TYPO3\\CMS\\Install\\Updates\\RsaauthExtractionUpdate','i:1;'),(15,'installUpdate','TYPO3\\CMS\\Install\\Updates\\FeeditExtractionUpdate','i:1;'),(16,'installUpdate','TYPO3\\CMS\\Install\\Updates\\TaskcenterExtractionUpdate','i:1;'),(17,'installUpdate','TYPO3\\CMS\\Install\\Updates\\SysActionExtractionUpdate','i:1;'),(18,'installUpdateRows','rowUpdatersDone','a:1:{i:0;s:69:\"TYPO3\\CMS\\Install\\Updates\\RowUpdater\\WorkspaceVersionRecordsMigration\";}'),(21,'core','formProtectionSessionToken:1','s:64:\"da5c1c87e92fb8d6818dfc28ed00096196a5584c8a3071fda6edf1a98d815c91\";');
+/*!40000 ALTER TABLE `sys_registry` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_template`
+--
+
+DROP TABLE IF EXISTS `sys_template`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_template` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `starttime` int unsigned NOT NULL DEFAULT '0',
+  `endtime` int unsigned NOT NULL DEFAULT '0',
+  `sorting` int NOT NULL DEFAULT '0',
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `t3_origuid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_oid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_wsid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_state` smallint NOT NULL DEFAULT '0',
+  `t3ver_stage` int NOT NULL DEFAULT '0',
+  `t3ver_count` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_tstamp` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_move_id` int unsigned NOT NULL DEFAULT '0',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `sitetitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `root` smallint unsigned NOT NULL DEFAULT '0',
+  `clear` smallint unsigned NOT NULL DEFAULT '0',
+  `include_static_file` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `constants` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `config` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `basedOn` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `includeStaticAfterBasedOn` smallint unsigned NOT NULL DEFAULT '0',
+  `static_file_mode` smallint unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `roottemplate` (`deleted`,`hidden`,`root`),
+  KEY `parent` (`pid`,`deleted`,`hidden`),
+  KEY `t3ver_oid` (`t3ver_oid`,`t3ver_wsid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_template`
+--
+
+LOCK TABLES `sys_template` WRITE;
+/*!40000 ALTER TABLE `sys_template` DISABLE KEYS */;
+INSERT INTO `sys_template` VALUES (1,1,1616339191,1616338513,1,0,0,0,0,0,'This is an Empty Site Package TypoScript template.\r\n\r\nFor each website you need a TypoScript template on the main page of your website (on the top level). For better maintenance all TypoScript should be extracted into external files via @import \'EXT:site_myproject/Configuration/TypoScript/setup.typoscript\'',0,0,0,0,0,0,0,0,'Main TypoScript Rendering','New TYPO3 site',1,1,'EXT:fluid_styled_content/Configuration/TypoScript/,EXT:fluid_styled_content/Configuration/TypoScript/Styling/,EXT:timezones/Configuration/TypoScript','','page = PAGE\r\npage.100 = CONTENT\r\npage.100 {\r\n    table = tt_content\r\n    select {\r\n        orderBy = sorting\r\n        where = {#colPos}=0\r\n    }\r\n}\r\n',NULL,0,0);
+/*!40000 ALTER TABLE `sys_template` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tt_content`
+--
+
+DROP TABLE IF EXISTS `tt_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tt_content` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `rowDescription` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `pid` int NOT NULL DEFAULT '0',
+  `tstamp` int unsigned NOT NULL DEFAULT '0',
+  `crdate` int unsigned NOT NULL DEFAULT '0',
+  `cruser_id` int unsigned NOT NULL DEFAULT '0',
+  `deleted` smallint unsigned NOT NULL DEFAULT '0',
+  `hidden` smallint unsigned NOT NULL DEFAULT '0',
+  `starttime` int unsigned NOT NULL DEFAULT '0',
+  `endtime` int unsigned NOT NULL DEFAULT '0',
+  `fe_group` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `sorting` int NOT NULL DEFAULT '0',
+  `editlock` smallint unsigned NOT NULL DEFAULT '0',
+  `sys_language_uid` int NOT NULL DEFAULT '0',
+  `l18n_parent` int unsigned NOT NULL DEFAULT '0',
+  `l10n_source` int unsigned NOT NULL DEFAULT '0',
+  `l10n_state` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `t3_origuid` int unsigned NOT NULL DEFAULT '0',
+  `l18n_diffsource` mediumblob,
+  `t3ver_oid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_wsid` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_state` smallint NOT NULL DEFAULT '0',
+  `t3ver_stage` int NOT NULL DEFAULT '0',
+  `t3ver_count` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_tstamp` int unsigned NOT NULL DEFAULT '0',
+  `t3ver_move_id` int unsigned NOT NULL DEFAULT '0',
+  `CType` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `header` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `header_position` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `bodytext` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `bullets_type` smallint unsigned NOT NULL DEFAULT '0',
+  `uploads_description` smallint unsigned NOT NULL DEFAULT '0',
+  `uploads_type` smallint unsigned NOT NULL DEFAULT '0',
+  `assets` int unsigned NOT NULL DEFAULT '0',
+  `image` int unsigned NOT NULL DEFAULT '0',
+  `imagewidth` int unsigned NOT NULL DEFAULT '0',
+  `imageorient` smallint unsigned NOT NULL DEFAULT '0',
+  `imagecols` smallint unsigned NOT NULL DEFAULT '0',
+  `imageborder` smallint unsigned NOT NULL DEFAULT '0',
+  `media` int unsigned NOT NULL DEFAULT '0',
+  `layout` int unsigned NOT NULL DEFAULT '0',
+  `frame_class` varchar(60) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'default',
+  `cols` int unsigned NOT NULL DEFAULT '0',
+  `space_before_class` varchar(60) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `space_after_class` varchar(60) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `records` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `pages` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `colPos` int unsigned NOT NULL DEFAULT '0',
+  `subheader` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `header_link` varchar(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `image_zoom` smallint unsigned NOT NULL DEFAULT '0',
+  `header_layout` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `list_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `sectionIndex` smallint unsigned NOT NULL DEFAULT '0',
+  `linkToTop` smallint unsigned NOT NULL DEFAULT '0',
+  `file_collections` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `filelink_size` smallint unsigned NOT NULL DEFAULT '0',
+  `filelink_sorting` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `filelink_sorting_direction` varchar(4) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `target` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `date` int unsigned NOT NULL DEFAULT '0',
+  `recursive` smallint unsigned NOT NULL DEFAULT '0',
+  `imageheight` int unsigned NOT NULL DEFAULT '0',
+  `pi_flexform` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `accessibility_title` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `accessibility_bypass` smallint unsigned NOT NULL DEFAULT '0',
+  `accessibility_bypass_text` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `selected_categories` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `category_field` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `table_class` varchar(60) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `table_caption` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `table_delimiter` smallint unsigned NOT NULL DEFAULT '0',
+  `table_enclosure` smallint unsigned NOT NULL DEFAULT '0',
+  `table_header_position` smallint unsigned NOT NULL DEFAULT '0',
+  `table_tfoot` smallint unsigned NOT NULL DEFAULT '0',
+  `categories` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `parent` (`pid`,`sorting`),
+  KEY `t3ver_oid` (`t3ver_oid`,`t3ver_wsid`),
+  KEY `language` (`l18n_parent`,`sys_language_uid`),
+  KEY `translation_source` (`l10n_source`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tt_content`
+--
+
+LOCK TABLES `tt_content` WRITE;
+/*!40000 ALTER TABLE `tt_content` DISABLE KEYS */;
+INSERT INTO `tt_content` VALUES (1,'',1,1616338543,1616338543,1,0,0,0,0,'',256,0,0,0,0,NULL,0,'',0,0,0,0,0,0,0,'header','Acceptance test first header','',NULL,0,0,0,0,0,0,0,2,0,0,0,'default',0,'','',NULL,NULL,0,'','',0,'0','',1,0,NULL,0,'','','',0,0,0,NULL,'',0,'',NULL,'','',NULL,124,0,0,0,0),(2,'',1,1616339412,1616339210,1,0,0,0,0,'',512,0,0,0,0,NULL,0,'a:23:{s:5:\"CType\";N;s:6:\"colPos\";N;s:6:\"header\";N;s:13:\"header_layout\";N;s:15:\"header_position\";N;s:4:\"date\";N;s:11:\"header_link\";N;s:9:\"subheader\";N;s:9:\"list_type\";N;s:11:\"pi_flexform\";N;s:11:\"frame_class\";N;s:18:\"space_before_class\";N;s:17:\"space_after_class\";N;s:12:\"sectionIndex\";N;s:9:\"linkToTop\";N;s:16:\"sys_language_uid\";N;s:6:\"hidden\";N;s:9:\"starttime\";N;s:7:\"endtime\";N;s:8:\"fe_group\";N;s:8:\"editlock\";N;s:10:\"categories\";N;s:14:\"rowDescription\";N;}',0,0,0,0,0,0,0,'list','TimezonesIndex','',NULL,0,0,0,0,0,0,0,2,0,0,0,'default',0,'','',NULL,NULL,0,'','',0,'0','timezones_pi1',1,0,NULL,0,'','','',0,0,0,'<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>\n<T3FlexForms>\n    <data>\n        <sheet index=\"sDEF\">\n            <language index=\"lDEF\">\n                <field index=\"switchableControllerActions\">\n                    <value index=\"vDEF\">Timezones-&gt;index;Timezones-&gt;show;Timezones-&gt;select;Timezones-&gt;tzset</value>\n                </field>\n            </language>\n        </sheet>\n        <sheet index=\"sPaths\">\n            <language index=\"lDEF\">\n                <field index=\"view.templateRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n                <field index=\"view.partialRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n                <field index=\"view.layoutRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n            </language>\n        </sheet>\n    </data>\n</T3FlexForms>','',0,'',NULL,'','',NULL,124,0,0,0,0),(3,'',1,1616342027,1616341965,1,1,0,0,0,'',768,0,0,0,0,NULL,0,'',0,0,0,0,0,0,0,'list','','',NULL,0,0,0,0,0,0,0,2,0,0,0,'default',0,'','',NULL,'',0,'','',0,'0','timezones_pi1',1,0,NULL,0,'','','',0,0,0,NULL,'',0,'',NULL,'','',NULL,124,0,0,0,0),(4,'',2,1616342122,1616342112,1,0,0,0,0,'',256,0,0,0,0,NULL,0,'a:23:{s:5:\"CType\";N;s:6:\"colPos\";N;s:6:\"header\";N;s:13:\"header_layout\";N;s:15:\"header_position\";N;s:4:\"date\";N;s:11:\"header_link\";N;s:9:\"subheader\";N;s:9:\"list_type\";N;s:11:\"pi_flexform\";N;s:11:\"frame_class\";N;s:18:\"space_before_class\";N;s:17:\"space_after_class\";N;s:12:\"sectionIndex\";N;s:9:\"linkToTop\";N;s:16:\"sys_language_uid\";N;s:6:\"hidden\";N;s:9:\"starttime\";N;s:7:\"endtime\";N;s:8:\"fe_group\";N;s:8:\"editlock\";N;s:10:\"categories\";N;s:14:\"rowDescription\";N;}',0,0,0,0,0,0,0,'list','','','',0,0,0,0,0,0,0,2,0,0,0,'default',0,'','',NULL,NULL,0,'','',0,'0','timezones_pi1',1,0,NULL,0,'','','',0,0,0,'<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>\n<T3FlexForms>\n    <data>\n        <sheet index=\"sDEF\">\n            <language index=\"lDEF\">\n                <field index=\"switchableControllerActions\">\n                    <value index=\"vDEF\">Timezones-&gt;show;Timezones-&gt;index;Timezones-&gt;select;Timezones-&gt;tzset</value>\n                </field>\n            </language>\n        </sheet>\n        <sheet index=\"sPaths\">\n            <language index=\"lDEF\">\n                <field index=\"view.templateRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n                <field index=\"view.partialRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n                <field index=\"view.layoutRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n            </language>\n        </sheet>\n    </data>\n</T3FlexForms>','',0,'',NULL,'','',NULL,124,0,0,0,0),(5,'',3,1616342363,1616342353,1,0,0,0,0,'',256,0,0,0,0,NULL,0,'a:23:{s:5:\"CType\";N;s:6:\"colPos\";N;s:6:\"header\";N;s:13:\"header_layout\";N;s:15:\"header_position\";N;s:4:\"date\";N;s:11:\"header_link\";N;s:9:\"subheader\";N;s:9:\"list_type\";N;s:11:\"pi_flexform\";N;s:11:\"frame_class\";N;s:18:\"space_before_class\";N;s:17:\"space_after_class\";N;s:12:\"sectionIndex\";N;s:9:\"linkToTop\";N;s:16:\"sys_language_uid\";N;s:6:\"hidden\";N;s:9:\"starttime\";N;s:7:\"endtime\";N;s:8:\"fe_group\";N;s:8:\"editlock\";N;s:10:\"categories\";N;s:14:\"rowDescription\";N;}',0,0,0,0,0,0,0,'list','','','',0,0,0,0,0,0,0,2,0,0,0,'default',0,'','',NULL,NULL,0,'','',0,'0','timezones_pi1',1,0,NULL,0,'','','',0,0,0,'<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>\n<T3FlexForms>\n    <data>\n        <sheet index=\"sDEF\">\n            <language index=\"lDEF\">\n                <field index=\"switchableControllerActions\">\n                    <value index=\"vDEF\">Timezones-&gt;select;Timezones-&gt;show;Timezones-&gt;index;Timezones-&gt;tzset</value>\n                </field>\n            </language>\n        </sheet>\n        <sheet index=\"sPaths\">\n            <language index=\"lDEF\">\n                <field index=\"view.templateRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n                <field index=\"view.partialRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n                <field index=\"view.layoutRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n            </language>\n        </sheet>\n    </data>\n</T3FlexForms>','',0,'',NULL,'','',NULL,124,0,0,0,0),(6,'',3,1616844197,1616844179,1,0,0,0,0,'',512,0,0,0,0,NULL,0,'a:23:{s:5:\"CType\";N;s:6:\"colPos\";N;s:6:\"header\";N;s:13:\"header_layout\";N;s:15:\"header_position\";N;s:4:\"date\";N;s:11:\"header_link\";N;s:9:\"subheader\";N;s:9:\"list_type\";N;s:11:\"pi_flexform\";N;s:11:\"frame_class\";N;s:18:\"space_before_class\";N;s:17:\"space_after_class\";N;s:12:\"sectionIndex\";N;s:9:\"linkToTop\";N;s:16:\"sys_language_uid\";N;s:6:\"hidden\";N;s:9:\"starttime\";N;s:7:\"endtime\";N;s:8:\"fe_group\";N;s:8:\"editlock\";N;s:10:\"categories\";N;s:14:\"rowDescription\";N;}',0,0,0,0,0,0,0,'list','','',NULL,0,0,0,0,0,0,0,2,0,0,0,'default',0,'','',NULL,'',0,'','',0,'0','timezones_pi1',1,0,NULL,0,'','','',0,0,0,'<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>\n<T3FlexForms>\n    <data>\n        <sheet index=\"sDEF\">\n            <language index=\"lDEF\">\n                <field index=\"switchableControllerActions\">\n                    <value index=\"vDEF\">Timezones-&gt;show;Timezones-&gt;index;Timezones-&gt;select;Timezones-&gt;tzset</value>\n                </field>\n            </language>\n        </sheet>\n        <sheet index=\"sPaths\">\n            <language index=\"lDEF\">\n                <field index=\"view.templateRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n                <field index=\"view.partialRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n                <field index=\"view.layoutRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n            </language>\n        </sheet>\n    </data>\n</T3FlexForms>','',0,'',NULL,'','',NULL,124,0,0,0,0),(7,'',4,1616848078,1616847258,1,1,0,0,0,'',256,0,0,0,0,NULL,4,'a:23:{s:5:\"CType\";N;s:6:\"colPos\";N;s:6:\"header\";N;s:13:\"header_layout\";N;s:15:\"header_position\";N;s:4:\"date\";N;s:11:\"header_link\";N;s:9:\"subheader\";N;s:9:\"list_type\";N;s:11:\"pi_flexform\";N;s:11:\"frame_class\";N;s:18:\"space_before_class\";N;s:17:\"space_after_class\";N;s:12:\"sectionIndex\";N;s:9:\"linkToTop\";N;s:16:\"sys_language_uid\";N;s:6:\"hidden\";N;s:9:\"starttime\";N;s:7:\"endtime\";N;s:8:\"fe_group\";N;s:8:\"editlock\";N;s:10:\"categories\";N;s:14:\"rowDescription\";N;}',0,0,0,0,0,0,0,'list','','','',0,0,0,0,0,0,0,2,0,0,0,'default',0,'','','','',0,'','',0,'0','timezones_pi1',1,0,'',0,'','','',0,0,0,'<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>\n<T3FlexForms>\n    <data>\n        <sheet index=\"sDEF\">\n            <language index=\"lDEF\">\n                <field index=\"switchableControllerActions\">\n                    <value index=\"vDEF\">Timezones-&gt;index;Timezones-&gt;show;Timezones-&gt;select;Timezones-&gt;tzset</value>\n                </field>\n            </language>\n        </sheet>\n        <sheet index=\"sPaths\">\n            <language index=\"lDEF\">\n                <field index=\"view.templateRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n                <field index=\"view.partialRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n                <field index=\"view.layoutRootPath\">\n                    <value index=\"vDEF\"></value>\n                </field>\n            </language>\n        </sheet>\n    </data>\n</T3FlexForms>','',0,'','','','',NULL,124,0,0,0,0);
+/*!40000 ALTER TABLE `tt_content` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tx_extensionmanager_domain_model_extension`
+--
+
+DROP TABLE IF EXISTS `tx_extensionmanager_domain_model_extension`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tx_extensionmanager_domain_model_extension` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int unsigned NOT NULL DEFAULT '0',
+  `extension_key` varchar(60) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `repository` int unsigned NOT NULL DEFAULT '1',
+  `version` varchar(15) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `alldownloadcounter` int unsigned NOT NULL DEFAULT '0',
+  `downloadcounter` int unsigned NOT NULL DEFAULT '0',
+  `title` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `description` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `state` int NOT NULL DEFAULT '0',
+  `review_state` int NOT NULL DEFAULT '0',
+  `category` int NOT NULL DEFAULT '0',
+  `last_updated` int unsigned NOT NULL DEFAULT '0',
+  `serialized_dependencies` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `author_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `author_email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `ownerusername` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `md5hash` varchar(35) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `update_comment` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `authorcompany` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `integer_version` int NOT NULL DEFAULT '0',
+  `current_version` int NOT NULL DEFAULT '0',
+  `lastreviewedversion` int NOT NULL DEFAULT '0',
+  `documentation_link` varchar(2048) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `versionextrepo` (`extension_key`,`version`,`repository`),
+  KEY `index_extrepo` (`extension_key`,`repository`),
+  KEY `index_versionrepo` (`integer_version`,`repository`,`extension_key`),
+  KEY `index_currentversions` (`current_version`,`review_state`),
+  KEY `parent` (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tx_extensionmanager_domain_model_extension`
+--
+
+LOCK TABLES `tx_extensionmanager_domain_model_extension` WRITE;
+/*!40000 ALTER TABLE `tx_extensionmanager_domain_model_extension` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tx_extensionmanager_domain_model_extension` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tx_extensionmanager_domain_model_repository`
+--
+
+DROP TABLE IF EXISTS `tx_extensionmanager_domain_model_repository`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tx_extensionmanager_domain_model_repository` (
+  `uid` int unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `description` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `wsdl_url` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `mirror_list_url` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `last_update` int unsigned NOT NULL DEFAULT '0',
+  `extension_count` int NOT NULL DEFAULT '0',
+  `pid` int unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
+  KEY `parent` (`pid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tx_extensionmanager_domain_model_repository`
+--
+
+LOCK TABLES `tx_extensionmanager_domain_model_repository` WRITE;
+/*!40000 ALTER TABLE `tx_extensionmanager_domain_model_repository` DISABLE KEYS */;
+INSERT INTO `tx_extensionmanager_domain_model_repository` VALUES (1,'TYPO3.org Main Repository','Main repository on typo3.org. This repository has some mirrors configured which are available with the mirror url.','https://typo3.org/wsdl/tx_ter_wsdl.php','https://repositories.typo3.org/mirrors.xml.gz',1346191200,0,0);
+/*!40000 ALTER TABLE `tx_extensionmanager_domain_model_repository` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-03-27 15:22:24
