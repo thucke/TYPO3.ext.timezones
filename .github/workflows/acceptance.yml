@@ -1,6 +1,7 @@
-name: CI
+name: Acceptance
 
-on: [ push, pull_request ]
+on:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -18,13 +19,6 @@ jobs:
         include:
           - typo3: ^10.4
             php: '7.4'
-            coverage: true
-          - typo3: ^10.4
-            php: '7.3'
-          - typo3: ^9.5
-            php: '7.4'
-          - typo3: ^9.5
-            php: '7.3'
 
     steps:
       - name: Checkout Code
@@ -50,28 +44,31 @@ jobs:
       - name: Install dependencies with typo3/cms-core:${{ matrix.typo3 }}
         run: |
           composer require typo3/cms-core:${{ matrix.typo3 }} --no-progress
-          git checkout composer.json
+          composer update
 
       - name: Info
         run: composer info
 
-      - name: CGL
-        run: composer thucke:cgl
-
-      - name: PHPStan Classes
-        run: composer thucke:phpstan:classes
-
-      - name: Lint PHP
-        run: composer thucke:test:php:lint
-
-      - name: Unit Tests without coverage
-        run: composer thucke:test:php:unit
-
-      - name: Functional Tests without coverage
-        run: composer thucke:test:php:functional
+      - name: Initialize TYPO3 environment
+        run: |
+          cp -R Tests/Acceptance/_data/typo3conf .build/web/
+          cp -R Tests/Acceptance/_data/config .build/
+          .build/bin/typo3cms install:generatepackagestates
         env:
           typo3DatabaseHost: 127.0.0.1
-          typo3DatabaseName: t3func
+          typo3DatabaseName: t3acceptance
           typo3DatabasePassword: root
           typo3DatabaseUsername: root
           TYPO3_CONEXT: Development
+
+      - name: Run PHP webserver
+        run: |
+          export APP_IP=`ip addr show eth0 | grep -Po 'inet \K[\d.]+'`
+          sed -i -e "s/LOCAL_DOMAIN/$APP_IP:8888/" Tests/Acceptance/_envs/github-actions.yml
+          php -S 0.0.0.0:8888 -t .Build/public/ &> php.log.txt &
+          sleep 2;
+
+      - name: Test PHP webserver and initialize TYPO3 cache
+        run: |
+          export APP_IP=`ip addr show eth0 | grep -Po 'inet \K[\d.]+'`
+          curl "$APP_IP:8888"

@@ -27,5 +27,6 @@
 	<php>
 		<ini name="display_errors" value="1" />
 		<env name="TYPO3_CONTEXT" value="Development" />
+		<env name="typo3DatabaseName" value="t3func" />
 	</php>
 </phpunit>

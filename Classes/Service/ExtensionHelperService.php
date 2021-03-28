@@ -10,8 +10,6 @@ declare(strict_types = 1);
 
 namespace Thucke\Timezones\Service;
 
-use TYPO3\CMS\Core\Log\Logger;
-
 /**
  * Factory for model objects.
  *
@@ -22,14 +20,27 @@ use TYPO3\CMS\Core\Log\Logger;
 class ExtensionHelperService extends \Thucke\Timezones\Service\AbstractExtensionService
 {
     /**
+     * @var LoggingService
+     */
+    protected $loggingService;
+
+    /**
+     * @param \Thucke\Timezones\Service\LoggingService $loggingService
+     */
+    public function injectLoggingService(LoggingService $loggingService): void
+    {
+        $this->loggingService = $loggingService;
+    }
+
+    /**
      * Get a logger instance
      * The configuration of the logger is modified by extension typoscript config.
      *
      * @param string $name the class name which this logger is for
      *
-     * @return Logger
+     * @return \Psr\Log\LoggerInterface
      */
-    public function getLogger($name)
+    public function getLogger(string $name): \Psr\Log\LoggerInterface
     {
         return $this->loggingService->getLogger($name);
     }

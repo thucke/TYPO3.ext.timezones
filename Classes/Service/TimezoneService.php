@@ -14,10 +14,8 @@ use DateTime;
 use DateTimeZone;
 use Exception;
 use IntlDateFormatter;
-use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogLevel;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -58,9 +56,16 @@ class TimezoneService extends AbstractExtensionService
     protected $locale;
 
     /**
-     * @var Logger
+     * @var ExtensionHelperService
      */
-    protected $logger;
+    protected $extensionHelperService;
+    /**
+     * @param ExtensionHelperService $extensionHelperService
+     */
+    public function injectExtensionHelperService(ExtensionHelperService $extensionHelperService): void
+    {
+        $this->extensionHelperService = $extensionHelperService;
+    }
 
     /**
      * Constructor.
@@ -69,9 +74,7 @@ class TimezoneService extends AbstractExtensionService
      */
     public function initializeObject(): void
     {
-        $this->logger = GeneralUtility::makeInstance(ObjectManager::class)
-            ->get(ExtensionHelperService::class)
-            ->getLogger(__CLASS__);
+        //$this->logger = $this->extensionHelperService->getLogger(__CLASS__);
         $this->logger->log(LogLevel::DEBUG, 'Entry point');
         $this->locale = LocalizationUtility::translate('locale', 'Timezones');
         $this->setCurrentTimezone(date_default_timezone_get());

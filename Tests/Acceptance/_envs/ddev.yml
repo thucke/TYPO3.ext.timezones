@@ -1,0 +1,12 @@
+modules:
+    config:
+        WebDriver:
+            url: http://timezones.ddev.site/
+            host: ddev-timezones-chrome
+        Db:
+            dsn: "mysql:host=db"
+            user: "db"
+            password: "db"
+            dbname: "db"
+            populate: false # run populator before all tests
+            cleanup: false # run populator before each test
