@@ -74,4 +74,8 @@ jobs:
           curl "$APP_IP:8888"
 
       - name: Acceptance Tests
-        run: composer thucke:test:php:acceptance
+        run: |
+          export $acctestenv=github-actions
+          composer thucke:test:php:acceptance
+        env:
+          acctestenv: github-actions

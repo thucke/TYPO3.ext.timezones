@@ -8,5 +8,6 @@ services:
       - typo3DatabasePassword=root
       - typo3DatabaseUsername=root
       - PHP_IDE_CONFIG=serverName=${DDEV_SITENAME}.ddev.site
+      - acctestenv=ddev
     ports:
         - "9922:22"
