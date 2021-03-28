@@ -72,3 +72,6 @@ jobs:
         run: |
           export APP_IP=`ip addr show eth0 | grep -Po 'inet \K[\d.]+'`
           curl "$APP_IP:8888"
+
+      - name: Acceptance Tests
+        run: composer thucke:test:php:acceptance
