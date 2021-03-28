@@ -28,7 +28,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     protected $cookieLifetime;
 
     /**
-     * @var \TYPO3\CMS\Core\Log\Logger
+     * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
 
