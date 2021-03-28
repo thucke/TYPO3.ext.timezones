@@ -44,7 +44,7 @@ jobs:
       - name: Install dependencies with typo3/cms-core:${{ matrix.typo3 }}
         run: |
           composer require typo3/cms-core:${{ matrix.typo3 }} --no-progress
-          git checkout composer.json
+          composer update
 
       - name: Info
         run: composer info
