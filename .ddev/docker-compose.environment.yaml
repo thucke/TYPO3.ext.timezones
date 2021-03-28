@@ -5,6 +5,8 @@ services:
     environment:
       - TYPO3_CONTEXT=Development
       - typo3DatabaseHost=db
-      - typo3DatabaseName=t3func
       - typo3DatabasePassword=root
       - typo3DatabaseUsername=root
+      - PHP_IDE_CONFIG=serverName=${DDEV_SITENAME}.ddev.site
+    ports:
+        - "9922:22"

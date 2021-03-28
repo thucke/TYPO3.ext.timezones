@@ -133,6 +133,7 @@ class CookieService extends AbstractExtensionService
      */
     public function getCookie(string $cookieName): ?string
     {
+        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($_COOKIE[$cookieName],get_class($this).' getCookie');
         return isset($_COOKIE[$cookieName]) ? stripslashes($_COOKIE[$cookieName]) : null;
     }
 
