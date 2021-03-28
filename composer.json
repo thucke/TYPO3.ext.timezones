@@ -120,9 +120,9 @@
         "psr/http-message": "^1.0"
     },
     "require-dev": {
-        "typo3/cms-base-distribution" : "*",
+        "typo3/cms-base-distribution" : ">=9.5 <11",
         "friendsofphp/php-cs-fixer": "^2.18",
-        "helhum/typo3-console": "^6.1",
+        "helhum/typo3-console": "*",
         "typo3/coding-standards": "^0.3.0",
         "typo3/testing-framework": "^4.15 || ^5.0 || ^6.4",
         "typo3/tailor": "^1.3",
