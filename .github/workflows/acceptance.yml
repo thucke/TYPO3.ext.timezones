@@ -1,4 +1,4 @@
-name: CI
+name: Acceptance
 
 on:
   workflow_dispatch:
