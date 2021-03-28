@@ -65,7 +65,7 @@ jobs:
         run: |
           export APP_IP=`ip addr show eth0 | grep -Po 'inet \K[\d.]+'`
           sed -i -e "s/LOCAL_DOMAIN/$APP_IP:8888/" Tests/Acceptance/_envs/github-actions.yml
-          php -S 0.0.0.0:8888 -t .Build/public/ &> php.log.txt &
+          php -S 0.0.0.0:8888 -t .build/web/ &> php.log.txt &
           sleep 2;
 
       - name: Test PHP webserver and initialize TYPO3 cache
