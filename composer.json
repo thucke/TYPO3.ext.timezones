@@ -67,7 +67,6 @@
             "phpunit -c Tests/Build/FunctionalTests.xml"
         ],
         "thucke:test:php:acceptance": [
-            "@putenv typo3DatabaseName=t3acceptance",
             "@composer validate",
             "@composer install --no-progress",
             "cp -R Tests/Acceptance/_data/typo3conf .build/web/",

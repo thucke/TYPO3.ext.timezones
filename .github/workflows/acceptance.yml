@@ -102,3 +102,10 @@ jobs:
         with:
           name: php-log
           path: php.log.txt
+
+      - name: Upload LocalConfiguration
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: LocalConfiguration
+          path: .build/web/typo3conf/LocalConfiguration.php
