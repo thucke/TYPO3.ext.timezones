@@ -83,3 +83,8 @@ jobs:
           composer thucke:test:php:acceptance
         env:
           CODECEPTION_ENV: github-actions
+          typo3DatabaseHost: 127.0.0.1
+          typo3DatabaseName: t3acceptance
+          typo3DatabasePassword: root
+          typo3DatabaseUsername: root
+          TYPO3_CONEXT: Development
