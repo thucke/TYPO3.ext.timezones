@@ -73,7 +73,7 @@
             "cp -R Tests/Acceptance/_data/typo3conf .build/web/",
             "cp -R Tests/Acceptance/_data/config .build/",
             "typo3cms install:generatepackagestates",
-            "codecept run acceptance --env=${acctestenv} -d -c Tests/Build/AcceptanceTests.yml --html"
+            "codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html"
         ],
         "thucke:test:php:unit:cover": [
             "Composer\\Config::disableProcessTimeout",
