@@ -72,8 +72,11 @@ jobs:
           export APP_IP=`ip addr show eth0 | grep -Po 'inet \K[\d.]+'`
           curl "$APP_IP:8888"
 
-      - name: Run chromedriver
-        run:  nohup $CHROMEWEBDRIVER/chromedriver --url-base=/wd/hub /dev/null 2>&1 &
+      - name: Start Selenium standalone
+        run: |
+          echo $SELENIUM_JAR_PATH
+          java -Djava.awt.headless=true -jar $SELENIUM_JAR_PATH &
+          sleep 3;
 
       - name: Acceptance Tests
         run: |
