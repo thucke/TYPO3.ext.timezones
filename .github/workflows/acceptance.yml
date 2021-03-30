@@ -88,6 +88,7 @@ jobs:
           typo3DatabasePassword: root
           typo3DatabaseUsername: root
           TYPO3_CONEXT: Development
+          matrix_typo3: ${{ matrix.typo3 }}
 
       - name: Upload Codeception output
         if: ${{ always() }}
