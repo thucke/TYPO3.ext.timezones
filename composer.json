@@ -74,6 +74,12 @@
             "typo3cms install:generatepackagestates",
             "codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html"
         ],
+        "thucke:typo3:export": [
+            "typo3cms configuration:show DB",
+            "typo3cms cache:flush",
+            "typo3cms database:export -c Default >Tests/Acceptance/_data/ddev.sql",
+            "echo 'Finished'"
+        ],
         "thucke:test:php:unit:cover": [
             "Composer\\Config::disableProcessTimeout",
             "mkdir -p var/log/junit/ && phpunit -c Build/UnitTests.xml --log-junit var/log/junit/phpunit.xml --coverage-clover var/log/junit/coverage-unit.xml"
