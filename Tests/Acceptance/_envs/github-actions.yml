@@ -11,4 +11,4 @@ modules:
             populate: true # run populator before all tests
             cleanup: false # run populator before each test
             populator: 'mysql -u $user -p$password -h $host mysql < $dump'
-            dump: 'Tests/Acceptance/_data/ddev.sql'
+            dump: 'Tests/Acceptance/_data/t3acceptance.sql'
