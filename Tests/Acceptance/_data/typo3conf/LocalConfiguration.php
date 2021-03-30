@@ -6,7 +6,7 @@ return [
         'installToolPassword' => '',
         'loginSecurityLevel' => 'normal',
         'passwordHashing' => [
-            'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\BcryptPasswordHash',
+            'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\Argon2iPasswordHash',
             'options' => [],
         ],
     ],
@@ -15,11 +15,6 @@ return [
             'Default' => [
                 'charset' => 'utf8',
                 'driver' => 'mysqli',
-                'dbname' => 't3acceptance',
-                'host' => '127.0.0.1',
-                'password' => 'root',
-                'port' => '3306',
-                'user' => 'root',
             ],
         ],
     ],
@@ -41,7 +36,7 @@ return [
         'debug' => true,
         'disableNoCacheParameter' => false,
         'passwordHashing' => [
-            'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\BcryptPasswordHash',
+            'className' => 'TYPO3\\CMS\\Core\\Crypto\\PasswordHashing\\Argon2iPasswordHash',
             'options' => [],
         ],
     ],
@@ -111,7 +106,7 @@ return [
         ],
         'devIPmask' => '*',
         'displayErrors' => 1,
-        'encryptionKey' => '689408b31e5f46131be4542209ddcc6cf0892bdbdd0a92853862c4af8202739ebe6ad5d7889b711eb935a45e62581f14',
+        'encryptionKey' => '8f9c7e53d8e5ca6268145801098f10fdd1bded009d97e0869602d1c4048cee335134514af354e474bb3c1d439ec1b2ab',
         'exceptionalErrors' => 12290,
         'features' => [
             'felogin.extbase' => true,
@@ -122,7 +117,7 @@ return [
         ],
         'sitename' => 'New TYPO3 site',
         'systemMaintainers' => [
-            2,
+            1,
         ],
         'trustedHostsPattern' => '.*.*',
     ],
