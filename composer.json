@@ -69,6 +69,7 @@
         "thucke:test:php:acceptance": [
             "@composer validate",
             "@composer install --no-progress",
+            "@putenv IS_T3ACCEPTANCE_RUN=true",
             "cp -R Tests/Acceptance/_data/typo3conf .build/web/",
             "cp -R Tests/Acceptance/_data/config .build/",
             "typo3cms install:generatepackagestates",
