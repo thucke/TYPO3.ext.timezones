@@ -36,10 +36,10 @@
         }
     },
     "config": {
-        "bin-dir": ".build/bin",
+        "bin-dir": ".Build/bin",
         "discard-changes": true,
         "optimize-autoloader": true,
-        "vendor-dir": ".build/vendor"
+        "vendor-dir": ".Build/vendor"
     },
     "extra": {
         "branch-alias": {
@@ -47,8 +47,8 @@
         },
         "typo3/cms": {
             "extension-key": "timezones",
-            "web-dir": ".build/web",
-            "app-dir": ".build"
+            "web-dir": ".Build/public",
+            "app-dir": ".Build"
         },
         "phpstan": {
             "includes": [
@@ -70,8 +70,13 @@
             "@composer validate",
             "@composer install --no-progress",
             "@putenv IS_T3ACCEPTANCE_RUN=true",
+<<<<<<< HEAD
             "cp -R Tests/Acceptance/_data/typo3conf .build/web/",
             "cp -R Tests/Acceptance/_data/config .build/",
+=======
+            "cp -R Tests/Acceptance/_data/typo3conf .Build/public/",
+            "cp -R Tests/Acceptance/_data/config .Build/",
+>>>>>>> 54271a5 (Enhance_tests)
             "typo3cms install:generatepackagestates",
             "codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html"
         ],
@@ -79,6 +84,19 @@
             "typo3cms configuration:show DB",
             "typo3cms cache:flush",
             "typo3cms database:export -c Default >Tests/Acceptance/_data/ddev.sql",
+            "typo3cms configuration:show DB",
+            "echo 'Finished'"
+        ],
+        "thucke:typo3:recreateddevdb:10.4": [
+            "cat Tests/Acceptance/_data/dbcreate_db.sql Tests/Acceptance/_data/t3acceptance_^10.4.sql | mysql -uroot -proot -hdb mysql",
+            "typo3cms cache:flush",
+            "typo3cms configuration:show DB",
+            "echo 'Finished'"
+        ],
+        "thucke:typo3:recreateddevdb:9.5": [
+            "cat Tests/Acceptance/_data/dbcreate_db.sql Tests/Acceptance/_data/t3acceptance_^9.5.sql | mysql -u$user -p$password -h$host mysql",
+            "typo3cms cache:flush",
+            "typo3cms configuration:show DB",
             "echo 'Finished'"
         ],
         "thucke:test:php:unit:cover": [
@@ -87,7 +105,7 @@
         ],
         "thucke:test:php:functional:cover": [
             "Composer\\Config::disableProcessTimeout",
-            "mkdir -p var/log/junit/ && .build/bin/phpunit -c Build/FunctionalTests.xml --log-junit var/log/junit/phpunit.xml --coverage-clover var/log/junit/coverage-functional.xml"
+            "mkdir -p var/log/junit/ && .Build/bin/phpunit -c Build/FunctionalTests.xml --log-junit var/log/junit/phpunit.xml --coverage-clover var/log/junit/coverage-functional.xml"
         ],
         "thucke:test": [
             "@thucke:test:php:lint",
@@ -103,9 +121,9 @@
             "phpstan analyze Tests"
         ],
         "post-autoload-dump": [
-            "mkdir -p .build/web/typo3conf/ext/",
-            "[ -L .build/web/typo3conf/ext/timezones ] || ln -snvf ../../../../. .build/web/typo3conf/ext/timezones",
-            "[ -f .build/web/.htaccess ] || cp .ddev/homeadditions/.htaccess .build/web",
+            "mkdir -p .Build/public/typo3conf/ext/",
+            "[ -L .Build/public/typo3conf/ext/timezones ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/timezones",
+            "[ -f .Build/public/.htaccess ] || cp .ddev/homeadditions/.htaccess .Build/public",
             "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
         ]
     },

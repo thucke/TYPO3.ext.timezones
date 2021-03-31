@@ -25,7 +25,7 @@ params:
     - env
 paths:
     tests: ../Acceptance
-    output: ../Acceptance/_output
+    output: ../../.Build/var/acceptance
     data: ../Acceptance/_data
     support: ../Acceptance/Support
     envs: ../Acceptance/_envs

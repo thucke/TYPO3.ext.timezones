@@ -50,21 +50,17 @@ jobs:
 
       - name: Initialize TYPO3 environment
         run: |
-          cp -R Tests/Acceptance/_data/typo3conf .build/web/
-          cp -R Tests/Acceptance/_data/config .build/
-          .build/bin/typo3cms install:generatepackagestates
+          cp -R Tests/Acceptance/_data/typo3conf .Build/public/
+          cp -R Tests/Acceptance/_data/config .Build/
+          .Build/bin/typo3cms install:generatepackagestates
         env:
-          typo3DatabaseHost: 127.0.0.1
-          typo3DatabaseName: t3acceptance
-          typo3DatabasePassword: root
-          typo3DatabaseUsername: root
           TYPO3_CONEXT: Development
 
       - name: Run PHP webserver
         run: |
           export APP_IP=`ip addr show eth0 | grep -Po 'inet \K[\d.]+'`
           sed -i -e "s/LOCAL_DOMAIN/$APP_IP:8888/" Tests/Acceptance/_envs/github-actions.yml
-          php -S 0.0.0.0:8888 -t .build/web/ &> php.log.txt &
+          php -S 0.0.0.0:8888 -t .Build/public/ &> php.log.txt &
           sleep 2;
 
       - name: Test PHP webserver and initialize TYPO3 cache
@@ -83,10 +79,6 @@ jobs:
           composer thucke:test:php:acceptance
         env:
           CODECEPTION_ENV: github-actions
-          typo3DatabaseHost: 127.0.0.1
-          typo3DatabaseName: t3acceptance
-          typo3DatabasePassword: root
-          typo3DatabaseUsername: root
           TYPO3_CONEXT: Development
           matrix_typo3: ${{ matrix.typo3 }}
 
@@ -95,7 +87,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: codeception-results
-          path: Tests/Acceptance/_output/
+          path: .Build/var/acceptance
 
       - name: Upload PHP log
         if: ${{ failure() }}
@@ -103,10 +95,3 @@ jobs:
         with:
           name: php-log
           path: php.log.txt
-
-      - name: Upload LocalConfiguration
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: LocalConfiguration
-          path: .build/web/typo3conf/LocalConfiguration.php

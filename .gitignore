@@ -35,8 +35,8 @@ logs/
 composer.lock
 
 # Build stuff
-.build/
-.build.sik
+.Build/
+.Build.sik
 .ddev/**/*.example
 .ddev/**/*.txt
 .ddev/commands/
@@ -46,4 +46,3 @@ var/
 
 # Cache
 *.cache
-
