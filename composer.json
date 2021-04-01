@@ -70,13 +70,8 @@
             "@composer validate",
             "@composer install --no-progress",
             "@putenv IS_T3ACCEPTANCE_RUN=true",
-<<<<<<< HEAD
-            "cp -R Tests/Acceptance/_data/typo3conf .build/web/",
-            "cp -R Tests/Acceptance/_data/config .build/",
-=======
             "cp -R Tests/Acceptance/_data/typo3conf .Build/public/",
             "cp -R Tests/Acceptance/_data/config .Build/",
->>>>>>> 54271a5 (Enhance_tests)
             "typo3cms install:generatepackagestates",
             "codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html"
         ],
