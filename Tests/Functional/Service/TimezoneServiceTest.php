@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 /*
  * This file is part of the package thucke/timezones.
@@ -7,20 +7,7 @@
  * LICENSE file that was distributed with this source code.
  */
 
-namespace Thucke\Timezones\Tests\Unit\Service;
-
-/*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
- */
+namespace Thucke\Timezones\Tests\Functional\Service;
 
 use Thucke\Timezones\Service\LoggingService;
 use TYPO3\CMS\Core\Core\Bootstrap;
@@ -72,7 +59,7 @@ class TimezoneServiceTest extends FunctionalTestCase
         );
         Bootstrap::initializeLanguageObject();
 
-        $loggingService = $objectManager->get(LoggingService::class, $objectManager, $configurationManager);
+        $loggingService = $objectManager->get(LoggingService::class);
         $this->subject = new \Thucke\Timezones\Service\TimezoneService($objectManager, $loggingService);
         $this->subject->initializeObject();
         $this->subject->setCurrentTimezone('Europe/Berlin');

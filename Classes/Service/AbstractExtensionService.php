@@ -11,6 +11,7 @@ declare(strict_types = 1);
 namespace Thucke\Timezones\Service;
 
 use TYPO3\CMS\Core\Log\Logger;
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
@@ -32,7 +33,7 @@ class AbstractExtensionService implements SingletonInterface
      */
     protected $loggingService;
     /**
-     * @var Logger
+     * @var LoggerInterface
      */
     protected $logger;
 
