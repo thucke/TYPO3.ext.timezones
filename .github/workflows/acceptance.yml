@@ -1,4 +1,4 @@
-name: Only acceptance tests
+name: Acceptance tests (manually)
 
 on:
   workflow_dispatch:
