@@ -8,7 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  unitAndFunctionaTests:
+  unitAndFunctionalTests:
+    name: Unit and functional tests
 
     # needed because of missing auth_plugin_caching_sha2_password in PHP 7.3
     # Ubuntu 20.04 contains Mysql 8.0 that requires this as default_authentication_plugin

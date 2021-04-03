@@ -12,6 +12,8 @@ additional_fqdns: []
 mariadb_version: "10.4"
 mysql_version: ""
 provider: default
+use_dns_when_possible: true
+composer_version: "2"
 hooks:
   post-start:
   - exec: echo '*/1 * * * * root TYPO3_CONTEXT=Development /usr/bin/php /var/www/html/public/typo3/sysext/core/bin/typo3scheduler:run'
@@ -19,9 +21,7 @@ hooks:
   - exec: sudo chmod 0600 /etc/cron.d/typo3 && sudo service cron start
   - exec: sudo cp ~/.ssh/sshd_config /etc/ssh && sudo service ssh start
 webimage_extra_packages: [cron, ssh]
-use_dns_when_possible: true
 timezone: Europe/Berlin
-composer_version: "2"
 
 
 # This config.yaml was created with ddev version v1.16.7
