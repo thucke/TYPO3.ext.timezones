@@ -50,7 +50,7 @@ jobs:
           cp -R Tests/Acceptance/_data/config .Build/
           .Build/bin/typo3cms install:generatepackagestates
         env:
-          TYPO3_CONEXT: Development
+          TYPO3_CONTEXT: Development
 
       - name: Run PHP webserver
         run: |
@@ -77,7 +77,7 @@ jobs:
           CODECEPTION_ENV: github-actions
           matrix_typo3: ${{ matrix.typo3 }}
           IS_T3ACCEPTANCE_RUN: true
-          TYPO3_CONEXT: Development
+          TYPO3_CONTEXT: Development
           typo3DatabaseHost: 127.0.0.1
           typo3DatabasePassword: root
           typo3DatabaseUsername: root
