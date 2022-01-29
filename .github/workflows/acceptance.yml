@@ -67,7 +67,7 @@ jobs:
       - name: Start Selenium standalone
         run: |
           echo $SELENIUM_JAR_PATH
-          java -Djava.awt.headless=true -jar $SELENIUM_JAR_PATH &
+          java -Djava.awt.headless=true -jar $SELENIUM_JAR_PATH standalone&
           sleep 3;
 
       - name: Acceptance Tests
