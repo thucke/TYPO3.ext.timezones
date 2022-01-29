@@ -6,9 +6,7 @@ suites:
         modules:
             enabled:
                 - Asserts
-                - WebDriver:
-                    browser: chrome
-                    window_size: false
+                - WebDriver
                 - Db
                 - \Thucke\Timezones\Tests\Acceptance\Support\Helper\Acceptance
             config:
