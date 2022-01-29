@@ -15,6 +15,10 @@ return [
             'Default' => [
                 'charset' => 'utf8',
                 'driver' => 'mysqli',
+                'tableoptions' => [
+                    'charset' => 'utf8mb4',
+                    'collate' => 'utf8mb4_unicode_ci',
+                ],
                 /**  default configuration to fit github actions requirements
                     will be overridden in DDEV via AdditionalConfiguration.php */
                 'dbname' => 't3acceptance',
@@ -22,7 +26,6 @@ return [
                 'password' => 'root',
                 'port' => '3306',
                 'user' => 'root',
-
             ],
         ],
     ],

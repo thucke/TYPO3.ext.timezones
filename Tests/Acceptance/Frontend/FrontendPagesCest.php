@@ -66,6 +66,6 @@ class FrontendPagesCest
         #check change of timezone also on other page and confirm cookie functionality
         $I->amOnPage('/');
         $I->assertSame('America%2FLos_Angeles', $I->grabCookie('tx_timezones_pi1'));
-        $I->see('Pacific Daylight Time');
+        $I->see('Pacific');
     }
 }

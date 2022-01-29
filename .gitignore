@@ -35,7 +35,6 @@ logs/
 composer.lock
 
 # Build stuff
-.Build/
 .Build.sik
 .ddev/**/*.example
 .ddev/**/*.txt

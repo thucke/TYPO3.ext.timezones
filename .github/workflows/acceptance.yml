@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        typo3: [ ^9.5, ^10.4 ]
+        typo3: [ ^10.4 ]
         php: [ '7.3', '7.4' ]
     steps:
       - name: Checkout Code
@@ -50,7 +50,7 @@ jobs:
           cp -R Tests/Acceptance/_data/config .Build/
           .Build/bin/typo3cms install:generatepackagestates
         env:
-          TYPO3_CONEXT: Development
+          TYPO3_CONTEXT: Development
 
       - name: Run PHP webserver
         run: |
@@ -67,7 +67,7 @@ jobs:
       - name: Start Selenium standalone
         run: |
           echo $SELENIUM_JAR_PATH
-          java -Djava.awt.headless=true -jar $SELENIUM_JAR_PATH &
+          java -Djava.awt.headless=true -jar $SELENIUM_JAR_PATH standalone&
           sleep 3;
 
       - name: Acceptance Tests
@@ -75,8 +75,13 @@ jobs:
           composer thucke:test:php:acceptance
         env:
           CODECEPTION_ENV: github-actions
-          TYPO3_CONEXT: Development
           matrix_typo3: ${{ matrix.typo3 }}
+          IS_T3ACCEPTANCE_RUN: true
+          TYPO3_CONTEXT: Development
+          typo3DatabaseHost: 127.0.0.1
+          typo3DatabasePassword: root
+          typo3DatabaseUsername: root
+          typo3DatabaseName: t3acceptance
 
       - name: Upload Codeception output
         if: ${{ always() }}

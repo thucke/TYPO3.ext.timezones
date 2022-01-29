@@ -39,7 +39,12 @@
         "bin-dir": ".Build/bin",
         "discard-changes": true,
         "optimize-autoloader": true,
-        "vendor-dir": ".Build/vendor"
+        "vendor-dir": ".Build/vendor",
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true,
+            "phpstan/extension-installer": true
+        }
     },
     "extra": {
         "branch-alias": {
@@ -67,8 +72,6 @@
             "phpunit -c Tests/Build/FunctionalTests.xml"
         ],
         "thucke:test:php:acceptance": [
-            "@composer validate",
-            "@composer install --no-progress",
             "@putenv IS_T3ACCEPTANCE_RUN=true",
             "cp -R Tests/Acceptance/_data/typo3conf .Build/public/",
             "cp -R Tests/Acceptance/_data/config .Build/",
@@ -83,24 +86,24 @@
             "echo 'Finished'"
         ],
         "thucke:typo3:recreateddevdb:10.4": [
-            "cat Tests/Acceptance/_data/dbcreate_db.sql Tests/Acceptance/_data/t3acceptance_^10.4.sql | mysql -uroot -proot -hdb mysql",
+            "cat Tests/Acceptance/_data/dbcreate_${typo3DatabaseName}.sql Tests/Acceptance/_data/t3acceptance_^10.4.sql | mysql -u${typo3DatabaseUsername} -p${typo3DatabasePassword} -h${typo3DatabaseHost} mysql",
             "typo3cms cache:flush",
             "typo3cms configuration:show DB",
             "echo 'Finished'"
         ],
         "thucke:typo3:recreateddevdb:9.5": [
-            "cat Tests/Acceptance/_data/dbcreate_db.sql Tests/Acceptance/_data/t3acceptance_^9.5.sql | mysql -u$user -p$password -h$host mysql",
+            "cat Tests/Acceptance/_data/dbcreate_${typo3DatabaseName}.sql Tests/Acceptance/_data/t3acceptance_^9.5.sql | mysql -u${typo3DatabaseUsername} -p${typo3DatabasePassword} -h${typo3DatabaseHost} mysql",
             "typo3cms cache:flush",
             "typo3cms configuration:show DB",
             "echo 'Finished'"
         ],
         "thucke:test:php:unit:cover": [
             "Composer\\Config::disableProcessTimeout",
-            "mkdir -p var/log/junit/ && phpunit -c Build/UnitTests.xml --log-junit var/log/junit/phpunit.xml --coverage-clover var/log/junit/coverage-unit.xml"
+            "mkdir -p var/log/junit/ && phpunit -c Tests/Build/UnitTests.xml --log-junit var/log/junit/phpunit.xml --coverage-clover var/log/junit/coverage-unit.xml"
         ],
         "thucke:test:php:functional:cover": [
             "Composer\\Config::disableProcessTimeout",
-            "mkdir -p var/log/junit/ && .Build/bin/phpunit -c Build/FunctionalTests.xml --log-junit var/log/junit/phpunit.xml --coverage-clover var/log/junit/coverage-functional.xml"
+            "mkdir -p var/log/junit/ && .Build/bin/phpunit -c Tests/Build/FunctionalTests.xml --log-junit var/log/junit/phpunit.xml --coverage-clover var/log/junit/coverage-functional.xml"
         ],
         "thucke:test": [
             "@thucke:test:php:lint",
@@ -144,8 +147,8 @@
         "helhum/typo3-console": "*",
         "typo3/coding-standards": "^0.3.0",
         "typo3/testing-framework": "^4.15 || ^5.0 || ^6.4",
-        "typo3/tailor": "^1.3",
-        "overtrue/phplint": "^2.3",
+        "typo3/tailor": "^1.4",
+        "overtrue/phplint": "^2.4",
         "jangregor/phpstan-prophecy": "^0.8.0",
         "phpstan/extension-installer": "^1.1",
         "saschaegerer/phpstan-typo3": "^0.13.1",
@@ -154,7 +157,7 @@
         "phpspec/prophecy-phpunit": "*",
         "codeception/codeception": "^4.1",
         "codeception/module-asserts": "^1.3",
-        "codeception/module-webdriver": "^1.2",
+        "codeception/module-webdriver": "^1.4",
         "codeception/module-db": "^1.1",
         "codeception/module-phpbrowser": "^1.0"
     },
