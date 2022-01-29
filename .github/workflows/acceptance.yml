@@ -55,14 +55,14 @@ jobs:
       - name: Run PHP webserver
         run: |
           export APP_IP=`ip addr show eth0 | grep -Po 'inet \K[\d.]+'`
-          sed -i -e "s/LOCAL_DOMAIN/$APP_IP:4444/" Tests/Acceptance/_envs/github-actions.yml
-          php -S 0.0.0.0:4444 -t .Build/public/ &> php.log.txt &
+          sed -i -e "s/LOCAL_DOMAIN/$APP_IP:8888/" Tests/Acceptance/_envs/github-actions.yml
+          php -S 0.0.0.0:8888 -t .Build/public/ &> php.log.txt &
           sleep 2;
 
       - name: Test PHP webserver and initialize TYPO3 cache
         run: |
           export APP_IP=`ip addr show eth0 | grep -Po 'inet \K[\d.]+'`
-          curl "$APP_IP:4444"
+          curl "$APP_IP:8888"
 
       - name: Start Selenium standalone
         run: |
