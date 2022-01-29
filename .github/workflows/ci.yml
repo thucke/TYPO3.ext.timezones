@@ -10,7 +10,6 @@ on:
 jobs:
   unitAndFunctionalTests:
     name: Unit and functional tests
-
     # needed because of missing auth_plugin_caching_sha2_password in PHP 7.3
     # Ubuntu 20.04 contains Mysql 8.0 that requires this as default_authentication_plugin
     # another option would be to put [mysqld] default_authentication_plugin=mysql_native_password into ~./.mysql.cnf
