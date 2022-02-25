@@ -180,6 +180,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function tzsetAction($timezone = null): void
     {
         $this->logger->log(LogLevel::DEBUG, 'Entry tzsetAction', ['Timezone' => $timezone]);
+        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($signalSlotMessage,'signalSlotMessage');
 
         $this->timezoneService->setCurrentTimezone($timezone);
         $timezone = $this->timezoneService->getCurrentTimezone()->getName();

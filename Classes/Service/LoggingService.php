@@ -10,6 +10,7 @@ declare(strict_types = 1);
 
 namespace Thucke\Timezones\Service;
 
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\Log\Writer\DatabaseWriter;
 use TYPO3\CMS\Core\Log\Writer\FileWriter;
@@ -61,7 +62,7 @@ class LoggingService implements SingletonInterface
      *
      * @return \Psr\Log\LoggerInterface
      */
-    public function getLogger(string $name): \Psr\Log\LoggerInterface
+    public function getLogger(string $name): LoggerInterface
     {
         $writerConfiguration = $GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']['Timezones']['writerConfiguration'];
         $settings = $this->configurationManager->getConfiguration(

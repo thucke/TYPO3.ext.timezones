@@ -16,7 +16,7 @@ plugin.tx_timezones {
 			3 = select
 			4 = tzset
 		}
-	}	
+	}
 	view {
 		templateRootPath >
 		templateRootPaths {
@@ -44,7 +44,7 @@ plugin.tx_timezones {
 #########################################################################
 # Define library part which should be included on every page			#
 # Generates a link that shows the current selected timezone				#
-#  
+#
 #########################################################################
 lib.timezone < plugin.tx_timezones
 lib.timezone {

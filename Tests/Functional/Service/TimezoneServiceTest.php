@@ -9,6 +9,8 @@
 
 namespace Thucke\Timezones\Tests\Functional\Service;
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use Thucke\Timezones\Service\TimezoneService;
 use Thucke\Timezones\Service\LoggingService;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -42,7 +44,7 @@ class TimezoneServiceTest extends FunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $extAbsPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('timezones');
+        $extAbsPath = ExtensionManagementUtility::extPath('timezones');
 
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $configurationManager = $this->createPartialMock(ConfigurationManager::class, ['getConfiguration']);
@@ -59,8 +61,8 @@ class TimezoneServiceTest extends FunctionalTestCase
         );
         Bootstrap::initializeLanguageObject();
 
-        $loggingService = $objectManager->get(LoggingService::class);
-        $this->subject = new \Thucke\Timezones\Service\TimezoneService($objectManager, $loggingService);
+        $loggingService = GeneralUtility::makeInstance(LoggingService::class);
+        $this->subject = new TimezoneService($objectManager, $loggingService);
         $this->subject->initializeObject();
         $this->subject->setCurrentTimezone('Europe/Berlin');
     }

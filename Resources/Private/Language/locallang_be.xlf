@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:timezones/Resources/Private/Language/locallang_be.xlf" product-name="timezones">
+		<header/>
+		<body>
+			<trans-unit id="flexforms_general.mode.Show" xml:space="preserve">
+				<source>Timezone: Full Information</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.mode.Index" xml:space="preserve">
+				<source>Timezone: Short Information</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.mode.Select" xml:space="preserve">
+				<source>Timezone: Select timezone</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.mode.Pi1" xml:space="preserve">
+				<source>Timezones (deprecated)</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
