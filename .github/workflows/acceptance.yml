@@ -53,7 +53,11 @@ jobs:
       - name: Install TYPO3 core
         env:
           TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
-        run: composer require typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
+        run: |
+          composer require typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST}
+          cp -R Tests/Acceptance/_data/typo3conf .Build/public/
+          cp -R Tests/Acceptance/_data/config .Build/
+
 
       - name: Install testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
         if: ${{ matrix.env.TESTING_FRAMEWORK }}
@@ -61,8 +65,6 @@ jobs:
           TESTING_FRAMEWORK: ${{ matrix.env.TESTING_FRAMEWORK }}
         run: |
           composer require --dev typo3/testing-framework="${TESTING_FRAMEWORK}"
-          composer install --dev
-          composer update --dev
 
       - name: Start database server
         run: sudo /etc/init.d/mysql start
@@ -87,8 +89,6 @@ jobs:
 
       - name: Acceptance Tests
         run: |
-          cp -R Tests/Acceptance/_data/typo3conf .Build/public/
-          cp -R Tests/Acceptance/_data/config .Build/
           composer thucke:test:php:acceptance
         env:
           CODECEPTION_ENV: github-actions
