@@ -133,13 +133,10 @@
 	"require" : {
         "php" : ">=7.3 <8.2",
         "ext-intl": "*",
-        "typo3/cms-core": "^10.4 || ^11.5",
-        "psr/http-client": "*",
-        "psr/http-factory": "*",
-        "psr/http-message": "*"
+        "typo3/cms-core": "^10.4 || ^11.5"
     },
     "require-dev": {
-        "typo3/cms-base-distribution" : "^10.4 || ^11.5",
+        "typo3/cms-install": "^10.4 || ^11",
         "friendsofphp/php-cs-fixer": "*",
         "typo3/coding-standards": "*",
         "typo3/tailor": "*",
