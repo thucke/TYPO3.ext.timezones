@@ -51,10 +51,14 @@ jobs:
           composer config prefer-stable true
 
       - name: Install TYPO3 core
-        run: composer require typo3/cms-core="${matrix.env.TYPO3_VERSION}" ${PREFER_LOWEST};
+        env:
+          TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
+        run: composer require typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
 
       - name: Install testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
         if: ${{ matrix.env.TESTING_FRAMEWORK }}
+        env:
+          TESTING_FRAMEWORK: ${{ matrix.env.TESTING_FRAMEWORK }}
         run: composer require --dev typo3/testing-framework="${TESTING_FRAMEWORK}";
 
       - name: Start database server
@@ -82,11 +86,11 @@ jobs:
         run: |
           cp -R Tests/Acceptance/_data/typo3conf .Build/public/
           cp -R Tests/Acceptance/_data/config .Build/
-          [ matrix_typo3 == '^10.4' ] && typo3cms install:generatepackagestates
+          [ TYPO3_VERSION == '^10.4' ] && typo3cms install:generatepackagestates
           codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html
         env:
           CODECEPTION_ENV: github-actions
-          matrix_typo3: ${{ matrix.env.TYPO3_VERSION }}
+          TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
           IS_T3ACCEPTANCE_RUN: true
           TYPO3_CONTEXT: Development
           typo3DatabaseHost: 127.0.0.1
