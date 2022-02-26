@@ -13,56 +13,51 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        typo3: [ '^10.4', '^11.5' ]
-        php: [ '7.4' , '8.1']
-        exclude:
-          -  typo3: '^10.4'
-             php: '8.1'
+        env:
+          - { php: 7.4, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.5.0 }
+          - { php: 7.3, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.5.0 }
+          - { php: 7.4, TYPO3_VERSION: ^11.5, TESTING_FRAMEWORK: ^6.6 }
+          - { php: 8.0, TYPO3_VERSION: ^11.5, TESTING_FRAMEWORK: ^6.6 }
+          - { php: 8.1, TYPO3_VERSION: ^11.5, TESTING_FRAMEWORK: ^6.6 }
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Set up PHP version ${{ matrix.php }}
+      - name: Set up PHP version ${{ matrix.env.php }}
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: ${{ matrix.env.php }}
           tools: composer:v2, php-cs-fixer
+          extension: pdo, sqlite3
+
+      # composer
+      - name: Update Composer
+        run: |
+          sudo composer self-update
+          composer --version
+          php --version
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: dependencies-composer-${{ hashFiles('composer.json') }}
+
+      - name: Ensure stability dev
+          if: ${{ matrix.env.TYPO3_VERSION == 'dev-main' }}
+          run: |
+            composer config minimum-stability dev
+            composer config prefer-stable true
+      - name: Install TYPO3 core
+        run: composer require typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
+
+      - name: Install testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
+        if: ${{ matrix.env.TESTING_FRAMEWORK }}
+        run: composer require --dev typo3/testing-framework="${TESTING_FRAMEWORK}";
 
       - name: Start database server
         run: sudo /etc/init.d/mysql start
-
-      - name: Environment Check
-        run: |
-          php --version
-          composer --version
-
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
-      - name: Install dependencies with typo3/cms-core:${{ matrix.typo3 }}
-        run: |
-          composer require typo3/cms-core:${{ matrix.typo3 }} --no-progress
-          composer update
-
-      - name: Info
-        run: composer info
-
-      - name: Initialize TYPO3 10.4 environment
-        if: ${{ matrix.typo3 == '^10.4' }}
-        run: |
-          cp -R Tests/Acceptance/_data/typo3conf .Build/public/
-          cp -R Tests/Acceptance/_data/config .Build/
-          .Build/bin/typo3cms install:generatepackagestates
-        env:
-          TYPO3_CONTEXT: Development
-
-      - name: Initialize TYPO3 11.5 environment
-        if: ${{ matrix.typo3 == '^11.5' }}
-        run: |
-          cp -R Tests/Acceptance/_data/typo3conf .Build/public/
-          cp -R Tests/Acceptance/_data/config .Build/
-        env:
-          TYPO3_CONTEXT: Development
 
       - name: Run PHP webserver
         run: |
@@ -84,10 +79,13 @@ jobs:
 
       - name: Acceptance Tests
         run: |
-          composer thucke:test:php:acceptance
+          cp -R Tests/Acceptance/_data/typo3conf .Build/public/
+          cp -R Tests/Acceptance/_data/config .Build/
+          [ matrix_typo3 == '^10.4' ] && typo3cms install:generatepackagestates
+          codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html
         env:
           CODECEPTION_ENV: github-actions
-          matrix_typo3: ${{ matrix.typo3 }}
+          matrix_typo3: ${{ matrix.env.TYPO3_VERSION }}
           IS_T3ACCEPTANCE_RUN: true
           TYPO3_CONTEXT: Development
           typo3DatabaseHost: 127.0.0.1

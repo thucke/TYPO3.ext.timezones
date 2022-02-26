@@ -143,7 +143,6 @@
         "typo3/cms-base-distribution" : "^10.4 || ^11.5",
         "friendsofphp/php-cs-fixer": "*",
         "typo3/coding-standards": "*",
-        "typo3/testing-framework": "*",
         "typo3/tailor": "*",
         "overtrue/phplint": "*",
         "roave/security-advisories": "dev-latest",
