@@ -59,7 +59,10 @@ jobs:
         if: ${{ matrix.env.TESTING_FRAMEWORK }}
         env:
           TESTING_FRAMEWORK: ${{ matrix.env.TESTING_FRAMEWORK }}
-        run: composer require --dev typo3/testing-framework="${TESTING_FRAMEWORK}";
+        run:
+          composer require --dev typo3/testing-framework="${TESTING_FRAMEWORK}"
+          composer install --dev
+          composer update --dev
 
       - name: Start database server
         run: sudo /etc/init.d/mysql start
