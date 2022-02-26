@@ -13,8 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        typo3: [ '^10.4', '11.5' ]
-        php: [ '7.4', '8.1' ]
+        typo3: [ '^10.4', '^11.5' ]
+        php: [ '7.4' ]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -67,7 +67,7 @@ jobs:
       - name: Start Selenium standalone
         run: |
           echo $SELENIUM_JAR_PATH
-          java -Djava.awt.headless=true -jar $SELENIUM_JAR_PATH &
+          java -Djava.awt.headless=true -jar $SELENIUM_JAR_PATH standalone &
           sleep 3;
 
       - name: Acceptance Tests
