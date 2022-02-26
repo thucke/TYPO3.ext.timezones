@@ -48,7 +48,7 @@ jobs:
         run: composer info
 
       - name: Initialize TYPO3 10.4 environment
-        if: ${{ contains('10.4', matrix.typo3) }}
+        if: ${{ matrix.typo3 == '^10.4' }}
         run: |
           cp -R Tests/Acceptance/_data/typo3conf .Build/public/
           cp -R Tests/Acceptance/_data/config .Build/
@@ -57,7 +57,7 @@ jobs:
           TYPO3_CONTEXT: Development
 
       - name: Initialize TYPO3 11.5 environment
-        if: {{matrix.typo3 == '^11.5'}}
+        if: ${{ matrix.typo3 == '^11.5' }}
         run: |
           cp -R Tests/Acceptance/_data/typo3conf .Build/public/
           cp -R Tests/Acceptance/_data/config .Build/
