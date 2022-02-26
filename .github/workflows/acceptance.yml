@@ -51,7 +51,9 @@ jobs:
           composer config prefer-stable true
 
       - name: Install TYPO3 core
-        run: composer require typo3/cms-core="${matrix.env.TYPO3_VERSION}" ${PREFER_LOWEST};
+        env:
+          TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
+        run: composer require typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
 
       - name: Install testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
         if: ${{ matrix.env.TESTING_FRAMEWORK }}
