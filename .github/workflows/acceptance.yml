@@ -45,10 +45,11 @@ jobs:
           key: dependencies-composer-${{ hashFiles('composer.json') }}
 
       - name: Ensure stability dev
-          if: ${{ matrix.env.TYPO3_VERSION == 'dev-main' }}
-          run: |
-            composer config minimum-stability dev
-            composer config prefer-stable true
+        if: ${{ matrix.env.TYPO3_VERSION == 'dev-main' }}
+        run: |
+          composer config minimum-stability dev
+          composer config prefer-stable true
+
       - name: Install TYPO3 core
         run: composer require typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
 
