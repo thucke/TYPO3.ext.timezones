@@ -16,7 +16,7 @@ jobs:
       # Set PHP version
       - name: Set PHP version
         run: |
-            sed -i -e 's/^php_version:.*/php_version: ${{ matrix.php-version }}/g' .ddev/config.yaml
+            sed -i -e 's/^php_version:.*/php_version: ${{ matrix.env.php }}/g' .ddev/config.yaml
       # Start ddev
       - name: Init DDEV
         uses: jonaseberle/github-action-setup-ddev@v1
@@ -25,7 +25,7 @@ jobs:
         run: ddev composer cookieman:${{ matrix.theme }}
       # Run tests
       - name: Run tests
-        run: ddev composer test:acceptance:${{ matrix.browser }}
+        run: ddev composer thucke:test:php:acceptance
 
       # Save acceptance reports
       - name: Upload Codeception output
