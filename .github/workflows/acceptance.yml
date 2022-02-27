@@ -3,6 +3,10 @@ name: tests
 on:
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   testsuite:
     name: all tests
