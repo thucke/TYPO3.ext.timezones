@@ -1,15 +1,10 @@
-name: tests
+name: acceptance tests
 
 on:
   workflow_dispatch:
 
-defaults:
-  run:
-    shell: bash
-
 jobs:
-  testsuite:
-    name: all tests
+  acceptance-tests:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
@@ -18,37 +13,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install testing system
+      # Set PHP version
+      - name: Set PHP version
         run: |
-          chmod a+x Build/Scripts/runTests.sh
-          Build/Scripts/runTests.sh -p ${{ matrix.php }} -s composerInstall
+            sed -i -e 's/^php_version:.*/php_version: ${{ matrix.php-version }}/g' .ddev/config.yaml
+      # Start ddev
+      - name: Init DDEV
+        uses: jonaseberle/github-action-setup-ddev@v1
+      # Setup tests
+      - name: Setup Tests
+        run: ddev composer cookieman:${{ matrix.theme }}
+      # Run tests
+      - name: Run tests
+        run: ddev composer test:acceptance:${{ matrix.browser }}
 
-      - name: Composer validate
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s composerValidate
+      # Save acceptance reports
+      - name: Upload Codeception output
+        if: ${{ always() }}
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ matrix.browser }}-${{ matrix.theme }}-${{ matrix.php-version }}-ar
+          path: .Build/var/acceptance
 
-      - name: Lint PHP
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s lint
-
-      - name: CGL
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s cgl
-
-      - name: phpstan
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s phpstan
-
-      - name: Unit Tests
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s unit
-
-      - name: Functional Tests with mariadb
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d mariadb -s functional
-
-      - name: Functional Tests with mssql
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d mssql -s functional
-
-      - name: Functional Tests with postgres
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d postgres -s functional
-
-      - name: Functional Tests with sqlite
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -d sqlite -s functional
-
-      - name: Acceptance Tests
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s acceptance
+      - name: Upload PHP log
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: php-log
+          path: php.log.txt
