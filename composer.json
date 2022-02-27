@@ -120,7 +120,7 @@
             "phpstan analyze Tests"
         ],
         "post-autoload-dump": [
-            "[ -f .Build/bin/typo3cms ] && .Build/bin/typo3cms install:fixfolderstructure || find . -type f -exec ls -al {} \;",
+            "[ -f .Build/bin/typo3cms ] && .Build/bin/typo3cms install:fixfolderstructure || find . -type f -exec ls -al {} \\;",
             "mkdir -p .Build/public/typo3conf/ext/",
             "[ -L .Build/public/typo3conf/ext/timezones ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/timezones",
             "[ -f .Build/public/.htaccess ] || cp .ddev/homeadditions/.htaccess .Build/public",
