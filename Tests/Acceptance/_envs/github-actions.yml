@@ -12,4 +12,4 @@ modules:
             cleanup: false # run populator before each test
             populator: 'cat $dbcreate $dump | mysql -u$user -p$password -h$host mysql'
             dbcreate: 'Tests/Acceptance/_data/dbcreate_t3acceptance.sql'
-            dump: 'Tests/Acceptance/_data/t3acceptance_%matrix_typo3%.sql'
+            dump: 'Tests/Acceptance/_data/t3acceptance_%matrix_env_typo3%.sql'
