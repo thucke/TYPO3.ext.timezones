@@ -40,11 +40,12 @@
         "discard-changes": true,
         "optimize-autoloader": true,
         "vendor-dir": ".Build/vendor",
+        "sort-packages": true,
         "allow-plugins": {
             "typo3/class-alias-loader": true,
             "typo3/cms-composer-installers": true,
-            "phpstan/extension-installer": true
-        }
+            "phpstan/extension-installer": true,
+            "composer/package-versions-deprecated": true        }
     },
     "extra": {
         "branch-alias": {
@@ -139,15 +140,17 @@
         "typo3/cms-install": "^10.4 || ^11",
         "helhum/typo3-console": "^6.6",
         "friendsofphp/php-cs-fixer": "*",
-        "typo3/coding-standards": "*",
-        "typo3/tailor": "*",
+        "typo3/coding-standards": "^0.5.0",
+        "typo3/tailor": "^1.2",
         "overtrue/phplint": "*",
         "roave/security-advisories": "dev-latest",
         "phpunit/phpunit": "^7 || ^8",
         "phpspec/prophecy-phpunit": "*",
-        "codeception/codeception": "*",
-        "codeception/module-asserts": "*",
-        "codeception/module-webdriver": "*",
+        "phpstan/phpstan": "^1.4.3",
+        "codeception/codeception": "^4.1",
+        "codeception/module-asserts": "^1.2",
+        "codeception/module-cli": "^1.1",
+        "codeception/module-webdriver": "^1.1",
         "codeception/module-db": "*",
         "codeception/module-phpbrowser": "*",
         "rector/rector": "^0.12.16"    },

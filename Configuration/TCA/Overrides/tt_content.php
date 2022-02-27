@@ -25,6 +25,6 @@ foreach ($actions as $identifier) {
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$listType] = 'pi_flexform';
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         $listType,
-        'FILE:EXT:timezones/Configuration/FlexForms/flexform.xml'
+        'FILE:EXT:timezones/Configuration/FlexForms/flexform_pi1.xml'
     );
 }
