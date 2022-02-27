@@ -78,24 +78,24 @@
             "codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html"
         ],
         "thucke:typo3:export": [
-            "#typo3cms configuration:show DB",
-            "typo3cms cache:flush",
-            "typo3cms database:export -c Default >Tests/Acceptance/_data/ddev.sql",
-            "#typo3cms configuration:show DB",
+            "#.Build/bin/typo3cms configuration:show DB",
+            ".Build/bin/typo3cms cache:flush",
+            ".Build/bin/typo3cms database:export -c Default >Tests/Acceptance/_data/ddev.sql",
+            "#.Build/bin/typo3cms configuration:show DB",
             "echo 'Finished'"
         ],
         "thucke:typo3:recreateddevdb:10.4": [
             "cat Tests/Acceptance/_data/dbcreate_$typo3DatabaseName.sql Tests/Acceptance/_data/t3acceptance_^10.4.sql | mysql -u${typo3DatabaseUsername} -p${typo3DatabasePassword} -h${typo3DatabaseHost} mysql",
-            "typo3cms database:updateschema",
-            "typo3cms cache:flush",
-            "#typo3cms configuration:show DB",
+            ".Build/bin/typo3cms database:updateschema",
+            ".Build/bin/typo3cms cache:flush",
+            "#.Build/bin/typo3cms configuration:show DB",
             "echo 'Finished'"
         ],
         "thucke:typo3:recreateddevdb:9.5": [
             "cat Tests/Acceptance/_data/dbcreate_${typo3DatabaseName}.sql Tests/Acceptance/_data/t3acceptance_^9.5.sql | mysql -u${typo3DatabaseUsername} -p${typo3DatabasePassword} -h${typo3DatabaseHost} mysql",
-            "typo3cms database:updateschema",
-            "typo3cms cache:flush",
-            "typo3cms configuration:show DB",
+            ".Build/bin/typo3cms database:updateschema",
+            ".Build/bin/typo3cms cache:flush",
+            ".Build/bin/typo3cms configuration:show DB",
             "echo 'Finished'"
         ],
         "thucke:test:php:unit:cover": [
@@ -120,7 +120,7 @@
             "phpstan analyze Tests"
         ],
         "post-autoload-dump": [
-            "[ -f .Build/bin/typo3cms ] && .Build/bin/typo3cms install:fixfolderstructure || find . -type f -exec ls -al {} \\;",
+            ".Build/bin/typo3cms install:fixfolderstructure",
             "mkdir -p .Build/public/typo3conf/ext/",
             "[ -L .Build/public/typo3conf/ext/timezones ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/timezones",
             "[ -f .Build/public/.htaccess ] || cp .ddev/homeadditions/.htaccess .Build/public",
