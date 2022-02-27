@@ -39,6 +39,3 @@ extensions:
         - Codeception\Extension\RunFailed
         - Codeception\Extension\Recorder
         - Codeception\Extension\RunProcess
-modules:
-    enabled:
-        - Codeception\Module\Cli
