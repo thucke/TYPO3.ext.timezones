@@ -93,7 +93,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->checkIntlModule();
 
         $this->prefixId = strtolower(
-            'tx_' . $this->request->getControllerExtensionName() . '_' . $this->request->getPluginName()
+            'tx_' . $this->request->getControllerExtensionName()
         );
 
         //set expire time to 10 years in the future

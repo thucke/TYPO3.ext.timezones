@@ -82,6 +82,7 @@ plugin.tx_timezones {
 			info {
 			}
 			debug {
+        file = typo3temp/logs/Timezones.log
 			}
 		}
 	}
