@@ -20,10 +20,16 @@ jobs:
             sed -i -e 's/^php_version:.*/php_version: ${{ matrix.env.php }}/g' .ddev/config.yaml
       # Start ddev
       - name: Init DDEV
-        uses: jonaseberle/github-action-setup-ddev@v1
+        uses: jonaseberle/github-action-setup-ddev@master
+
       # Setup tests
       - name: Setup Tests
+        env:
+          TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
+          TESTING_FRAMEWORK: ${{ matrix.env.TESTING_FRAMEWORK }}
+          TYPO3_CONTEXT: Development
         run: ddev composer require typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
+
       # Run tests
       - name: Run tests
         run: ddev composer thucke:test:php:acceptance
