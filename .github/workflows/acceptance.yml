@@ -23,7 +23,7 @@ jobs:
         uses: jonaseberle/github-action-setup-ddev@v1
       # Setup tests
       - name: Setup Tests
-        run: ddev composer install --dev typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
+        run: ddev composer require typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
       # Run tests
       - name: Run tests
         run: ddev composer thucke:test:php:acceptance
