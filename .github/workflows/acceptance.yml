@@ -20,7 +20,7 @@ jobs:
 
       - name: Install testing system
         run: |
-          find Build -type f -exec ls -al {} \;
+          chmod a+x Build/Scripts/runTests.sh
           Build/Scripts/runTests.sh -p ${{ matrix.php }} -s composerUpdate
 
       - name: Composer validate
