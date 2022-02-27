@@ -25,6 +25,14 @@ jobs:
       # Setup tests
       - name: Setup Tests
         env:
+          TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
+          TESTING_FRAMEWORK: ${{ matrix.env.TESTING_FRAMEWORK }}
+          TYPO3_CONTEXT: Development
+        run: ddev composer require typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
+
+      # Run tests
+      - name: Run tests
+        env:
           CODECEPTION_ENV: github-actions
           TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
           IS_T3ACCEPTANCE_RUN: true
@@ -33,14 +41,6 @@ jobs:
           typo3DatabasePassword: root
           typo3DatabaseUsername: root
           typo3DatabaseName: t3acceptance
-        run: ddev composer require typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
-
-      # Run tests
-      - name: Run tests
-        env:
-          TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
-          TESTING_FRAMEWORK: ${{ matrix.env.TESTING_FRAMEWORK }}
-          TYPO3_CONTEXT: Development
         run: ddev composer thucke:test:php:acceptance
 
       # Save acceptance reports
