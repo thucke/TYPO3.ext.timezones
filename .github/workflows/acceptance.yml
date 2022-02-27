@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        php: [ '7.4' ]
+        env:
+          - { php: 7.4, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.5.0 }
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -22,7 +23,7 @@ jobs:
         uses: jonaseberle/github-action-setup-ddev@v1
       # Setup tests
       - name: Setup Tests
-        run: ddev composer cookieman:${{ matrix.theme }}
+        run: ddev composer install --dev typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
       # Run tests
       - name: Run tests
         run: ddev composer thucke:test:php:acceptance
@@ -32,7 +33,7 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@master
         with:
-          name: ${{ matrix.browser }}-${{ matrix.theme }}-${{ matrix.php-version }}-ar
+          name: codeception-results--${{ matrix.env.php }}
           path: .Build/var/acceptance
 
       - name: Upload PHP log
