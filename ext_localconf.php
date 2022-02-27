@@ -33,7 +33,7 @@ ExtensionUtility::configurePlugin(
 ExtensionUtility::configurePlugin(
     'Timezones',
     'select',
-    [ $moduleClass => 'select' ],
+    [ $moduleClass => 'select, tzset' ],
     [ $moduleClass => 'select' ]
 );
 
