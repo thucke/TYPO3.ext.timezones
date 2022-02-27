@@ -15,10 +15,6 @@ jobs:
       matrix:
         env:
           - { php: 7.4, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.5.0 }
-          - { php: 7.3, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.5.0 }
-          - { php: 7.4, TYPO3_VERSION: ^11.5, TESTING_FRAMEWORK: ^6.6 }
-          - { php: 8.0, TYPO3_VERSION: ^11.5, TESTING_FRAMEWORK: ^6.6 }
-          - { php: 8.1, TYPO3_VERSION: ^11.5, TESTING_FRAMEWORK: ^6.6 }
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -30,8 +26,11 @@ jobs:
           tools: composer:v2, php-cs-fixer
           extension: pdo, sqlite3
 
+      - name: Start database server
+        run: sudo /etc/init.d/mysql start
+
       # composer
-      - name: Update Composer
+      - name: Update Composer and check versions
         run: |
           sudo composer self-update
           composer --version
@@ -44,25 +43,17 @@ jobs:
           path: ~/.composer/cache
           key: dependencies-composer-${{ hashFiles('composer.json') }}
 
-      - name: Ensure stability dev
-        if: ${{ matrix.env.TYPO3_VERSION == 'dev-main' }}
-        run: |
-          composer config minimum-stability dev
-          composer config prefer-stable true
-
       - name: Install TYPO3 core
         env:
           TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
           TESTING_FRAMEWORK: ${{ matrix.env.TESTING_FRAMEWORK }}
+          TYPO3_CONTEXT: Development
         run: |
           composer require --dev typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
           cp -R Tests/Acceptance/_data/typo3conf .Build/public/
           cp -R Tests/Acceptance/_data/config .Build/
           [ ${TYPO3_VERSION} != "^11.5" ] && typo3cms install:generatepackagestates
-
-      - name: Start database server
-        run: sudo /etc/init.d/mysql start
-
+          
       - name: Run PHP webserver
         run: |
           export APP_IP=`ip addr show eth0 | grep -Po 'inet \K[\d.]+'`
