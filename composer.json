@@ -137,6 +137,7 @@
     },
     "require-dev": {
         "typo3/cms-install": "^10.4 || ^11",
+        "helhum/typo3-console": "^7.0",
         "friendsofphp/php-cs-fixer": "*",
         "typo3/coding-standards": "*",
         "typo3/tailor": "*",
