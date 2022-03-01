@@ -45,7 +45,11 @@ jobs:
           typo3DatabasePassword: root
           typo3DatabaseUsername: root
           typo3DatabaseName: t3acceptance
-        run: ddev composer thucke:test:php:acceptance
+        run: |
+          cp -R Tests/Acceptance/_data/typo3conf .Build/public/
+          cp -R Tests/Acceptance/_data/config .Build/
+          find .Build -type f -exec ls -al {} \;
+          .Build/bin/codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html
 
       # Save acceptance reports
       - name: Upload Codeception output
