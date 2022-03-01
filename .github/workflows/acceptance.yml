@@ -28,14 +28,11 @@ jobs:
           TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
           TESTING_FRAMEWORK: ${{ matrix.env.TESTING_FRAMEWORK }}
           TYPO3_CONTEXT: Development
-          typo3DatabaseHost: 127.0.0.1
-          typo3DatabasePassword: root
-          typo3DatabaseUsername: root
           typo3DatabaseName: t3acceptance
         run: |
           ddev composer require typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
-          ddev mysql --host="${typo3DatabaseHost}" --user="${typo3DatabaseUsername}" --password="${typo3DatabasePassword}" < Tests/Acceptance/_data/dbcreate_${typo3DatabaseName}.sql
-          ddev mysql --host="${typo3DatabaseHost}" --user="${typo3DatabaseUsername}" --password="${typo3DatabasePassword}" < Tests/Acceptance/_data/dbcreate_${TYPO3_VERSION}.sql
+          ddev mysql --host="127.0.0.1" --user="root" --password="root" < Tests/Acceptance/_data/dbcreate_${typo3DatabaseName}.sql
+          ddev mysql --host="127.0.0.1" --user="root" --password="root" < Tests/Acceptance/_data/t3acceptance_${TYPO3_VERSION}.sql
 
       # Run tests
       - name: Run tests
