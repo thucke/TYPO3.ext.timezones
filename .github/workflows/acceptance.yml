@@ -34,8 +34,8 @@ jobs:
           typo3DatabaseName: t3acceptance
         run: |
           ddev composer require typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
-          ddev mysql --host ${typo3DatabaseHost} --user ${typo3DatabaseUsername} --password ${typo3DatabasePassword} < Tests/Acceptance/_data/dbcreate_${typo3DatabaseName}.sql
-          ddev mysql --host ${typo3DatabaseHost} --user ${typo3DatabaseUsername} --password ${typo3DatabasePassword} < Tests/Acceptance/_data/dbcreate_${TYPO3_VERSION}.sql
+          ddev mysql --host="${typo3DatabaseHost}" --user="${typo3DatabaseUsername}" --password="${typo3DatabasePassword}" < Tests/Acceptance/_data/dbcreate_${typo3DatabaseName}.sql
+          ddev mysql --host="${typo3DatabaseHost}" --user="${typo3DatabaseUsername}" --password="${typo3DatabasePassword}" < Tests/Acceptance/_data/dbcreate_${TYPO3_VERSION}.sql
 
       # Run tests
       - name: Run tests
