@@ -7,14 +7,7 @@ suites:
             enabled:
                 - Asserts
                 - WebDriver
-                - Db:
-                    dsn: 'mysql:host=ddev-timezones-db;dbname=t3acceptance'
-                    user: 'root'
-                    password: 'root'
-                    dump: 'tests/_data/dump.sql'
-                    populate: true
-                    cleanup: true
-                    reconnect: true
+                - Db
                 - \Thucke\Timezones\Tests\Acceptance\Support\Helper\Acceptance
             config:
                 WebDriver:
