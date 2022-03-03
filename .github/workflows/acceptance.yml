@@ -29,7 +29,7 @@ jobs:
           TESTING_FRAMEWORK: ${{ matrix.env.TESTING_FRAMEWORK }}
           TYPO3_CONTEXT: Development
           typo3DatabaseName: t3acceptance
-        run: dev composer require typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
+        run: ddev composer require typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
 
       # Run tests
       - name: Run tests
