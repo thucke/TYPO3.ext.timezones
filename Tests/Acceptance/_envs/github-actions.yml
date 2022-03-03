@@ -4,7 +4,7 @@ modules:
             url: http://LOCAL_DOMAIN/
             host: 127.0.0.1
         Db:
-            dsn: 'mysql:host=127.0.0.1'
+            dsn: 'mysql:host=ddev-timezones-db'
             user: 'root'
             password: 'root'
             dbname: "t3acceptance"
