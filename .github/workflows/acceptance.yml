@@ -29,10 +29,7 @@ jobs:
           TESTING_FRAMEWORK: ${{ matrix.env.TESTING_FRAMEWORK }}
           TYPO3_CONTEXT: Development
           typo3DatabaseName: t3acceptance
-        run: |
-          ddev composer require typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
-          ddev mysql --host="127.0.0.1" --user="root" --password="root" < Tests/Acceptance/_data/dbcreate_t3acceptance.sql
-          ddev mysql --host="127.0.0.1" --user="root" --password="root" < Tests/Acceptance/_data/t3acceptance_${{ matrix.env.TYPO3_VERSION }}.sql
+        run: dev composer require typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
 
       # Run tests
       - name: Run tests
