@@ -37,7 +37,7 @@ jobs:
       # Run tests
       - name: Run tests
         env:
-          CODECEPTION_ENV: github-actions
+          CODECEPTION_ENV: ddev
           TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
           IS_T3ACCEPTANCE_RUN: true
           TYPO3_CONTEXT: Development
