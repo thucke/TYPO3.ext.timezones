@@ -31,8 +31,8 @@ jobs:
           typo3DatabaseName: t3acceptance
         run: |
           ddev composer require typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
-      - run: ddev mysql --host="127.0.0.1" --user="root" --password="root" < Tests/Acceptance/_data/dbcreate_t3acceptance.sql
-      - run: ddev mysql --host="127.0.0.1" --user="root" --password="root" < Tests/Acceptance/_data/t3acceptance_${{ matrix.env.TYPO3_VERSION }}.sql
+          ddev mysql --host="127.0.0.1" --user="root" --password="root" < Tests/Acceptance/_data/dbcreate_t3acceptance.sql
+          ddev mysql --host="127.0.0.1" --user="root" --password="root" < Tests/Acceptance/_data/t3acceptance_${{ matrix.env.TYPO3_VERSION }}.sql
 
       # Run tests
       - name: Run tests
@@ -50,7 +50,7 @@ jobs:
           cp -R Tests/Acceptance/_data/typo3conf .Build/public/
           cp -R Tests/Acceptance/_data/config .Build/
           ddev describe
-          .Build/bin/codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html
+          ddev exec .Build/bin/codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html
 
       # Save acceptance reports
       - name: Upload Codeception output
