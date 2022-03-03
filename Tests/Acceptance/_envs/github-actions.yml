@@ -10,6 +10,6 @@ modules:
             dbname: "t3acceptance"
             populate: true # run populator before all tests
             cleanup: false # run populator before each test
-            populator: 'cat $dbcreate $dump | mysql -u$user -p$password -h$host mysql'
+            populator: 'cat $dbcreate $dump | mysql -u$user -p$password -h$host'
             dbcreate: 'Tests/Acceptance/_data/dbcreate_t3acceptance.sql'
             dump: 'Tests/Acceptance/_data/t3acceptance_^10.4.sql'
