@@ -40,11 +40,12 @@
         "discard-changes": true,
         "optimize-autoloader": true,
         "vendor-dir": ".Build/vendor",
+        "sort-packages": true,
         "allow-plugins": {
             "typo3/class-alias-loader": true,
             "typo3/cms-composer-installers": true,
-            "phpstan/extension-installer": true
-        }
+            "phpstan/extension-installer": true,
+            "composer/package-versions-deprecated": true        }
     },
     "extra": {
         "branch-alias": {
@@ -72,30 +73,30 @@
             "phpunit -c Tests/Build/FunctionalTests.xml"
         ],
         "thucke:test:php:acceptance": [
-            "@putenv IS_T3ACCEPTANCE_RUN=true",
+            "export IS_T3ACCEPTANCE_RUN=true",
             "cp -R Tests/Acceptance/_data/typo3conf .Build/public/",
             "cp -R Tests/Acceptance/_data/config .Build/",
             "codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html"
         ],
         "thucke:typo3:export": [
-            "#typo3cms configuration:show DB",
-            "typo3cms cache:flush",
-            "typo3cms database:export -c Default >Tests/Acceptance/_data/ddev.sql",
-            "#typo3cms configuration:show DB",
+            "#.Build/bin/typo3cms configuration:show DB",
+            ".Build/bin/typo3cms cache:flush",
+            ".Build/bin/typo3cms database:export -c Default >Tests/Acceptance/_data/ddev.sql",
+            "#.Build/bin/typo3cms configuration:show DB",
             "echo 'Finished'"
         ],
         "thucke:typo3:recreateddevdb:10.4": [
             "cat Tests/Acceptance/_data/dbcreate_$typo3DatabaseName.sql Tests/Acceptance/_data/t3acceptance_^10.4.sql | mysql -u${typo3DatabaseUsername} -p${typo3DatabasePassword} -h${typo3DatabaseHost} mysql",
-            "typo3cms database:updateschema",
-            "typo3cms cache:flush",
-            "#typo3cms configuration:show DB",
+            ".Build/bin/typo3cms database:updateschema",
+            ".Build/bin/typo3cms cache:flush",
+            "#.Build/bin/typo3cms configuration:show DB",
             "echo 'Finished'"
         ],
         "thucke:typo3:recreateddevdb:9.5": [
             "cat Tests/Acceptance/_data/dbcreate_${typo3DatabaseName}.sql Tests/Acceptance/_data/t3acceptance_^9.5.sql | mysql -u${typo3DatabaseUsername} -p${typo3DatabasePassword} -h${typo3DatabaseHost} mysql",
-            "typo3cms database:updateschema",
-            "typo3cms cache:flush",
-            "typo3cms configuration:show DB",
+            ".Build/bin/typo3cms database:updateschema",
+            ".Build/bin/typo3cms cache:flush",
+            ".Build/bin/typo3cms configuration:show DB",
             "echo 'Finished'"
         ],
         "thucke:test:php:unit:cover": [
@@ -120,7 +121,7 @@
             "phpstan analyze Tests"
         ],
         "post-autoload-dump": [
-            "typo3cms install:fixfolderstructure",
+            ".Build/bin/typo3cms install:fixfolderstructure",
             "mkdir -p .Build/public/typo3conf/ext/",
             "[ -L .Build/public/typo3conf/ext/timezones ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/timezones",
             "[ -f .Build/public/.htaccess ] || cp .ddev/homeadditions/.htaccess .Build/public",
@@ -133,20 +134,25 @@
 	"require" : {
         "php" : ">=7.3 <8.2",
         "ext-intl": "*",
-        "typo3/cms-core": "^10.4 || ^11.5"
-    },
+        "typo3/cms-core": "^10.4 || ^11.5",
+        "typo3/cms-fluid-styled-content": "^10.4 || ^11.5"
+   },
     "require-dev": {
         "typo3/cms-install": "^10.4 || ^11",
+        "typo3/testing-framework": "^6.16.2",
+        "helhum/typo3-console": "^6.6",
         "friendsofphp/php-cs-fixer": "*",
-        "typo3/coding-standards": "*",
-        "typo3/tailor": "*",
+        "typo3/coding-standards": "^0.5.0",
+        "typo3/tailor": "^1.2",
         "overtrue/phplint": "*",
         "roave/security-advisories": "dev-latest",
         "phpunit/phpunit": "^7 || ^8",
         "phpspec/prophecy-phpunit": "*",
-        "codeception/codeception": "*",
-        "codeception/module-asserts": "*",
-        "codeception/module-webdriver": "*",
+        "phpstan/phpstan": "^1.4.3",
+        "codeception/codeception": "^4.1",
+        "codeception/module-asserts": "^1.2",
+        "codeception/module-cli": "^1.1",
+        "codeception/module-webdriver": "^1.1",
         "codeception/module-db": "*",
         "codeception/module-phpbrowser": "*",
         "rector/rector": "^0.12.16"    },

@@ -1,17 +1,22 @@
-name: acceptance tests
+name: Acceptance tests (manually)
 
 on:
   workflow_dispatch:
 
 jobs:
-  acceptance-tests:
+  run:
+    # needed because of missing auth_plugin_caching_sha2_password in PHP 7.3
+    # Ubuntu 20.04 contains Mysql 8.0 that requires this as default_authentication_plugin
+    # another option would be to put [mysqld] default_authentication_plugin=mysql_native_password into ~./.mysql.cnf
     runs-on: ubuntu-18.04
+
     strategy:
+      fail-fast: false
       matrix:
         env:
-          - { php: 7.4, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.16.2 }
+          - { php: 7.4, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.5.0 }
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v2
 
       - name: Set up PHP version ${{ matrix.env.php }}
@@ -19,10 +24,13 @@ jobs:
         with:
           php-version: ${{ matrix.env.php }}
           tools: composer:v2, php-cs-fixer
-          extension: pdo, sqlite3
+          extensions: pdo, sqlite3
+
+      - name: Start database server
+        run: sudo /etc/init.d/mysql start
 
       # composer
-      - name: Update Composer
+      - name: Update Composer and check versions
         run: |
           sudo composer self-update
           composer --version
@@ -35,30 +43,24 @@ jobs:
           path: ~/.composer/cache
           key: dependencies-composer-${{ hashFiles('composer.json') }}
 
-      - name: Ensure stability dev
-        if: ${{ matrix.env.TYPO3_VERSION == 'dev-main' }}
-        run: |
-          composer config minimum-stability dev
-          composer config prefer-stable true
       - name: Install TYPO3 core
         env:
           TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
           TESTING_FRAMEWORK: ${{ matrix.env.TESTING_FRAMEWORK }}
+          TYPO3_CONTEXT: Development
         run: |
           composer require --dev typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
           cp -R Tests/Acceptance/_data/typo3conf .Build/public/
           cp -R Tests/Acceptance/_data/config .Build/
           [ ${TYPO3_VERSION} != "^11.5" ] && .Build/bin/typo3cms install:generatepackagestates
-
-      - name: Start database server
-        run: sudo /etc/init.d/mysql start
-
+          
       - name: Run PHP webserver
         run: |
           export APP_IP=`ip addr show eth0 | grep -Po 'inet \K[\d.]+'`
           sed -i -e "s/LOCAL_DOMAIN/$APP_IP:8888/" Tests/Acceptance/_envs/github-actions.yml
           php -S 0.0.0.0:8888 -t .Build/public/ &> php.log.txt &
           sleep 2;
+
       - name: Test PHP webserver and initialize TYPO3 cache
         run: |
           export APP_IP=`ip addr show eth0 | grep -Po 'inet \K[\d.]+'`
@@ -69,7 +71,17 @@ jobs:
           echo $SELENIUM_JAR_PATH
           java -Djava.awt.headless=true -jar $SELENIUM_JAR_PATH standalone &
           sleep 3;
+
       - name: Acceptance Tests
+        run: |
+          composer thucke:test:php:acceptance
+          #mkdir -p .Build/public/typo3conf/ext/
+          #[ -L .Build/public/typo3conf/ext/timezones ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/timezones
+          #[ -f .Build/public/.htaccess ] || cp .ddev/homeadditions/.htaccess .Build/public
+          #cp -R Tests/Acceptance/_data/typo3conf .Build/public/
+          #cp -R Tests/Acceptance/_data/config .Build/
+          #.Build/bin/typo3cms install:generatepackagestates
+          #.Build/bin/codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html
         env:
           CODECEPTION_ENV: github-actions
           TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
@@ -79,18 +91,12 @@ jobs:
           typo3DatabasePassword: root
           typo3DatabaseUsername: root
           typo3DatabaseName: t3acceptance
-        run: |
-          cp -R Tests/Acceptance/_data/typo3conf .Build/public/
-          cp -R Tests/Acceptance/_data/config .Build/
-          .Build/bin/typo3cms install:generatepackagestates
-          .Build/bin/codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html
-          
-      # Save acceptance reports
+
       - name: Upload Codeception output
         if: ${{ always() }}
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v2
         with:
-          name: codeception-results-${{ matrix.env.php }}
+          name: codeception-results
           path: .Build/var/acceptance
 
       - name: Upload PHP log

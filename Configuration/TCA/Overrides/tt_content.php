@@ -23,11 +23,8 @@ foreach ($actions as $identifier) {
     $listType = 'timezones_' . strtolower($identifier);
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$listType] = 'layout,select_key,recursive,pages';
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$listType] = 'pi_flexform';
-    if ($identifier != 'Pi1') {
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($listType,
-            'FILE:EXT:timezones/Configuration/FlexForms/flexform.xml');
-    } else {
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($listType,
-            'FILE:EXT:timezones/Configuration/FlexForms/flexform_pi1.xml');
-    }
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+        $listType,
+        'FILE:EXT:timezones/Configuration/FlexForms/flexform_pi1.xml'
+    );
 }

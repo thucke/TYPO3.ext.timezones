@@ -39,7 +39,7 @@ class FrontendPagesCest
     public function selectTimezoneIsRendered(AcceptanceTester $I): void
     {
         $currentTimezone = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
-        $I->resetCookie('tx_timezones_pi1');
+        $I->resetCookie('tx_timezones');
         $I->amOnPage('/select-timezone');
         $I->see('Please select:');
         # check for default timezone abbrevation
@@ -52,20 +52,20 @@ class FrontendPagesCest
     public function submitTimezoneIsPersistent(AcceptanceTester $I): void
     {
         $currentTimezone = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
-        $I->resetCookie('tx_timezones_pi1');
+        $I->resetCookie('tx_timezones');
         $I->amOnPage('/select-timezone');
 
         $form = [
-            'tx_timezones_pi1[timezone]' => 'America/Los_Angeles'
+            'tx_timezones_select[timezone]' => 'America/Los_Angeles'
         ];
         $I->submitForm('#tzset', $form);
         # check for default timezone abbrevation
         $I->seeInFormFields('#tzset', $form);
-        $I->seeCookie('tx_timezones_pi1');
+        $I->seeCookie('tx_timezones');
 
         #check change of timezone also on other page and confirm cookie functionality
         $I->amOnPage('/');
-        $I->assertSame('America%2FLos_Angeles', $I->grabCookie('tx_timezones_pi1'));
+        $I->assertSame('America%2FLos_Angeles', $I->grabCookie('tx_timezones'));
         $I->see('Pacific');
     }
 }
