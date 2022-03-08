@@ -7,7 +7,7 @@
  */
 print('IS_DDEV_PROJECT' . getenv('IS_DDEV_PROJECT') . ' ####### ');
 print('IS_T3ACCEPTANCE_RUN' . getenv('IS_T3ACCEPTANCE_RUN') . ' ####### ');
-print_r($_ENV . ' ####### ');
+print_r($_ENV);
 
 if (getenv('IS_DDEV_PROJECT') == 'true') {
     $GLOBALS['TYPO3_CONF_VARS'] = array_replace_recursive(
