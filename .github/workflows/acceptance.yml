@@ -27,9 +27,9 @@ jobs:
         env:
           TYPO3_VERSION: ${{ matrix.env.TYPO3_VERSION }}
           TESTING_FRAMEWORK: ${{ matrix.env.TESTING_FRAMEWORK }}
-          TYPO3_CONTEXT: Development
-          typo3DatabaseName: t3acceptance
-          IS_T3ACCEPTANCE_RUN: true
+          TYPO3_CONTEXT: "Development"
+          typo3DatabaseName: "t3acceptance"
+          IS_T3ACCEPTANCE_RUN: "true"
         run: ddev composer require typo3/testing-framework="${TESTING_FRAMEWORK}" typo3/cms-core="${TYPO3_VERSION}"
 
       # Run tests
