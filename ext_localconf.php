@@ -44,7 +44,7 @@ ExtensionUtility::configurePlugin(
     [ $moduleClass => 'index' ]
 );
 
-
+//deprecated - will be removed when support for TYPO3 v10 is dropped
 ExtensionUtility::configurePlugin(
     'Timezones',	// The extension name (in UpperCamelCase) or the extension key (in lower_underscore)
     'Pi1',		// A unique name of the plugin in UpperCamelCase
