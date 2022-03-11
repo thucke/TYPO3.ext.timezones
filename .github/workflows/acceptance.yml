@@ -85,7 +85,7 @@ jobs:
           cp -R Tests/Acceptance/_data/config .Build/
           .Build/bin/typo3cms install:generatepackagestates
           .Build/bin/codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html
-
+          
       # Save acceptance reports
       - name: Upload Codeception output
         if: ${{ always() }}

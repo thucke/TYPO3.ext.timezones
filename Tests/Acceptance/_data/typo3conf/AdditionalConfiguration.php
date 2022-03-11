@@ -38,20 +38,20 @@ if (getenv('IS_DDEV_PROJECT') == 'true') {
             ],
         ]
     );
-    if (getenv('IS_T3ACCEPTANCE_RUN') == 'true') {
-        $GLOBALS['TYPO3_CONF_VARS'] = array_replace_recursive(
-            $GLOBALS['TYPO3_CONF_VARS'],
-            [
-                'DB' => [
-                    'Connections' => [
-                        'Default' => [
-                            'dbname' => 't3acceptance',
-                            'password' => 'root',
-                            'user' => 'root',
-                        ],
+}
+if (getenv('IS_T3ACCEPTANCE_RUN') == 'true') {
+    $GLOBALS['TYPO3_CONF_VARS'] = array_replace_recursive(
+        $GLOBALS['TYPO3_CONF_VARS'],
+        [
+            'DB' => [
+                'Connections' => [
+                    'Default' => [
+                        'dbname' => 't3acceptance',
+                        'password' => 'root',
+                        'user' => 'root',
                     ],
                 ],
-            ]
-        );
-    }
+            ],
+        ]
+    );
 }
