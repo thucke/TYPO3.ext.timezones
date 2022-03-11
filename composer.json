@@ -73,9 +73,10 @@
             "phpunit -c Tests/Build/FunctionalTests.xml"
         ],
         "thucke:test:php:acceptance": [
-            "export IS_T3ACCEPTANCE_RUN=true",
+            "@putenv IS_T3ACCEPTANCE_RUN=true",
             "cp -R Tests/Acceptance/_data/typo3conf .Build/public/",
             "cp -R Tests/Acceptance/_data/config .Build/",
+            ".Build/bin/typo3cms install:generatepackagestates",
             "codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html"
         ],
         "thucke:typo3:export": [

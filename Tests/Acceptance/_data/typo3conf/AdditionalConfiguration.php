@@ -5,10 +5,6 @@
  * ddev manages this file and may delete or overwrite the file unless this comment is removed.
  * It is recommended that you leave this file alone.
  */
-print('IS_DDEV_PROJECT' . getenv('IS_DDEV_PROJECT') . ' ####### ');
-print('IS_T3ACCEPTANCE_RUN' . getenv('IS_T3ACCEPTANCE_RUN') . ' ####### ');
-print_r($_ENV);
-
 if (getenv('IS_DDEV_PROJECT') == 'true') {
     $GLOBALS['TYPO3_CONF_VARS'] = array_replace_recursive(
         $GLOBALS['TYPO3_CONF_VARS'],
@@ -42,20 +38,20 @@ if (getenv('IS_DDEV_PROJECT') == 'true') {
             ],
         ]
     );
-}
-if (getenv('IS_T3ACCEPTANCE_RUN') == 'true') {
-    $GLOBALS['TYPO3_CONF_VARS'] = array_replace_recursive(
-        $GLOBALS['TYPO3_CONF_VARS'],
-        [
-            'DB' => [
-                'Connections' => [
-                    'Default' => [
-                        'dbname' => 't3acceptance',
-                        'password' => 'root',
-                        'user' => 'root',
+    if (getenv('IS_T3ACCEPTANCE_RUN') == 'true') {
+        $GLOBALS['TYPO3_CONF_VARS'] = array_replace_recursive(
+            $GLOBALS['TYPO3_CONF_VARS'],
+            [
+                'DB' => [
+                    'Connections' => [
+                        'Default' => [
+                            'dbname' => 't3acceptance',
+                            'password' => 'root',
+                            'user' => 'root',
+                        ],
                     ],
                 ],
-            ],
-        ]
-    );
+            ]
+        );
+    }
 }
