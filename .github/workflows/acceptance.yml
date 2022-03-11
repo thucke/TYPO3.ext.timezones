@@ -9,6 +9,7 @@ jobs:
     strategy:
       matrix:
         env:
+          - { php: 7.3, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.16.2 }
           - { php: 7.4, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.16.2 }
     steps:
       - name: Checkout

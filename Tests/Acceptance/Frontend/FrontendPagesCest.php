@@ -56,7 +56,8 @@ class FrontendPagesCest
         $I->amOnPage('/select-timezone');
 
         $form = [
-            'tx_timezones_select[timezone]' => 'America/Los_Angeles'
+            //'tx_timezones_select[timezone]' => 'America/Los_Angeles'
+            'tx_timezones_pi1[timezone]' => 'America/Los_Angeles'
         ];
         $I->submitForm('#tzset', $form);
         # check for default timezone abbrevation
