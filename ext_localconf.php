@@ -56,26 +56,21 @@ ExtensionUtility::configurePlugin(
     ]
 //\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
-
 /*
  * Base configuration of logging events.
  * Each loglevel could be switched off using typoscript setting
-$GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']['Timezones']['writerConfiguration'] = [
-    \TYPO3\CMS\Core\Log\LogLevel::EMERGENCY => [
-    ],
-    \TYPO3\CMS\Core\Log\LogLevel::ALERT => [
-    ],
-    \TYPO3\CMS\Core\Log\LogLevel::CRITICAL => [
-    ],
-    \TYPO3\CMS\Core\Log\LogLevel::ERROR => [
-    ],
-    \TYPO3\CMS\Core\Log\LogLevel::WARNING => [
-    ],
-    \TYPO3\CMS\Core\Log\LogLevel::NOTICE => [
-    ],
-    \TYPO3\CMS\Core\Log\LogLevel::INFO => [
-    ],
-    \TYPO3\CMS\Core\Log\LogLevel::DEBUG => [
-    ],
-];
  */
+// default setting doesn't seem to be loaded in v11 on PHP 8.x
+if ((new Typo3Version())->getMajorVersion() >= 11 && PHP_MAJOR_VERSION >= 8) {
+    $GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']['Timezones']['writerConfiguration'] = [
+        \TYPO3\CMS\Core\Log\LogLevel::EMERGENCY => [],
+        \TYPO3\CMS\Core\Log\LogLevel::ALERT => [],
+        \TYPO3\CMS\Core\Log\LogLevel::CRITICAL => [],
+        \TYPO3\CMS\Core\Log\LogLevel::ERROR => [],
+        \TYPO3\CMS\Core\Log\LogLevel::WARNING => [],
+        \TYPO3\CMS\Core\Log\LogLevel::NOTICE => [],
+        \TYPO3\CMS\Core\Log\LogLevel::INFO => [],
+        \TYPO3\CMS\Core\Log\LogLevel::DEBUG => [],
+    ];
+}
+
