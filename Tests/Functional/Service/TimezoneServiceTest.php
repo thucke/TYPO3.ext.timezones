@@ -1,4 +1,11 @@
-<?php /** @noinspection ALL */
+<?php
+
+/*
+ * This file is part of the package thucke/timezones.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 /*
  * This file is part of the package thucke/timezones.
@@ -10,7 +17,9 @@
 namespace Thucke\Timezones\Tests\Functional\Service;
 
 use Thucke\Timezones\Service\LoggingService;
+use Thucke\Timezones\Service\TimezoneService;
 use TYPO3\CMS\Core\Core\Bootstrap;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -35,14 +44,14 @@ class TimezoneServiceTest extends FunctionalTestCase
     protected $coreExtensionsToLoad = ['extbase', 'fluid'];
 
     /**
-     * @var \Thucke\Timezones\Service\TimezoneService
+     * @var TimezoneService
      */
     protected $subject;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $extAbsPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('timezones');
+        $extAbsPath = ExtensionManagementUtility::extPath('timezones');
 
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $configurationManager = $this->createPartialMock(ConfigurationManager::class, ['getConfiguration']);
@@ -59,8 +68,8 @@ class TimezoneServiceTest extends FunctionalTestCase
         );
         Bootstrap::initializeLanguageObject();
 
-        $loggingService = $objectManager->get(LoggingService::class);
-        $this->subject = new \Thucke\Timezones\Service\TimezoneService($objectManager, $loggingService);
+        $loggingService = $this->getMockBuilder(LoggingService::class)->getMock();
+        $this->subject = new TimezoneService($objectManager, $loggingService);
         $this->subject->initializeObject();
         $this->subject->setCurrentTimezone('Europe/Berlin');
     }
@@ -71,7 +80,7 @@ class TimezoneServiceTest extends FunctionalTestCase
      */
     public function timezoneArrayContainsBerlin()
     {
-        $this->assertArrayHasKey('Europe/Berlin', $this->subject->getTimezoneArray());
+        self::assertArrayHasKey('Europe/Berlin', $this->subject->getTimezoneArray());
     }
 
     /**
@@ -80,10 +89,10 @@ class TimezoneServiceTest extends FunctionalTestCase
      */
     public function checkUtc()
     {
-        $this->assertArrayHasKey('UTC', $this->subject->getTimezoneArray());
+        self::assertArrayHasKey('UTC', $this->subject->getTimezoneArray());
         $oldTz = $this->subject->getCurrentTimezone();
         $this->subject->setCurrentTimezone('UTC');
-        $this->assertSame('UTC', $this->subject->getCurrentTimezone()->getName());
+        self::assertSame('UTC', $this->subject->getCurrentTimezone()->getName());
         $this->subject->setCurrentTimezone($oldTz->getName());
     }
 
@@ -94,8 +103,8 @@ class TimezoneServiceTest extends FunctionalTestCase
     public function checkDst()
     {
         $this->subject->setCurrentTimezone('Europe/Berlin');
-        $this->assertFalse($this->subject->isDst('2020-01-01'));
-        $this->assertTrue($this->subject->isDst('2020-07-01'));
+        self::assertFalse($this->subject->isDst('2020-01-01'));
+        self::assertTrue($this->subject->isDst('2020-07-01'));
     }
 
     /**
@@ -104,7 +113,13 @@ class TimezoneServiceTest extends FunctionalTestCase
     public function checkTimezoneString()
     {
         // consider the Germany may have GMT+0100 or GMT+0200 due to DST also allowed is e.g. GMT+01:00
-        $this->assertRegExp('/GMT\+0[1|2]:?00/', $this->subject->getIcuTimezoneString());
+
+        if (version_compare(TYPO3_version, '10.0', '>'))
+        {
+            self::assertMatchesRegularExpression('/GMT\+0[1|2]:?00/', $this->subject->getIcuTimezoneString());
+        } else {
+            self::assertRegExp('/GMT\+0[1|2]:?00/', $this->subject->getIcuTimezoneString());
+        }
     }
 
     /**
@@ -113,6 +128,11 @@ class TimezoneServiceTest extends FunctionalTestCase
     public function checkTimezoneOffset()
     {
         // consider the Germany may have GMT+0100 or GMT+0200 due to DST
-        $this->assertRegExp('/[3600|7200]/', $this->subject->getOffsetInSeconds());
+        if (version_compare(TYPO3_version, '10.0', '>'))
+        {
+            self::assertMatchesRegularExpression('/[3600|7200]/', $this->subject->getOffsetInSeconds());
+        } else {
+            self::assertRegExp('/[3600|7200]/', $this->subject->getOffsetInSeconds());
+        }
     }
 }

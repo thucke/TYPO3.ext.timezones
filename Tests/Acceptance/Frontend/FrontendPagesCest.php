@@ -1,5 +1,13 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the package thucke/timezones.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 namespace Thucke\Timezones\Tests\Acceptance\Frontend;
 
@@ -15,7 +23,7 @@ class FrontendPagesCest
         $I->amOnPage('/');
         $I->see('Acceptance test first header');
         $currentTimezone = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
-        # check for default timezone abbrevation
+        // check for default timezone abbrevation
         $I->see($currentTimezone->formatObject(new \DateTime(), 'zzzz', 'en_US'));
         /**$I->click('Customize');
         $I->see('Incredible flexible'); */
@@ -29,7 +37,7 @@ class FrontendPagesCest
         $currentTimezone = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
         $I->amOnPage('/show-timezone');
         $I->see('Your current timezone is set to:');
-        # check for default timezone abbrevation
+        // check for default timezone abbrevation
         $I->see($currentTimezone->formatObject(new \DateTime(), 'zzzz', 'en_US'));
     }
 
@@ -39,10 +47,10 @@ class FrontendPagesCest
     public function selectTimezoneIsRendered(AcceptanceTester $I): void
     {
         $currentTimezone = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
-        $I->resetCookie('tx_timezones_pi1');
+        $I->resetCookie('tx_timezones');
         $I->amOnPage('/select-timezone');
         $I->see('Please select:');
-        # check for default timezone abbrevation
+        // check for default timezone abbrevation
         $I->see($currentTimezone->getTimeZoneId());
     }
 
@@ -52,20 +60,26 @@ class FrontendPagesCest
     public function submitTimezoneIsPersistent(AcceptanceTester $I): void
     {
         $currentTimezone = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
-        $I->resetCookie('tx_timezones_pi1');
-        $I->amOnPage('/select-timezone');
+        $I->resetCookie('tx_timezones');
 
+        $I->amOnPage('/select-timezone-deprecated');
         $form = [
-            'tx_timezones_pi1[timezone]' => 'America/Los_Angeles'
+            'tx_timezones_pi1[timezone]' => 'Europe/Copenhagen',
         ];
         $I->submitForm('#tzset', $form);
-        # check for default timezone abbrevation
         $I->seeInFormFields('#tzset', $form);
-        $I->seeCookie('tx_timezones_pi1');
+        $I->seeCookie('tx_timezones');
 
-        #check change of timezone also on other page and confirm cookie functionality
+        $I->amOnPage('/select-timezone');
+        $form = [
+            'tx_timezones_select[timezone]' => 'America/Los_Angeles',
+        ];
+        $I->submitForm('#tzset', $form);
+        $I->seeInFormFields('#tzset', $form);
+
+        //check change of timezone also on other page and confirm cookie functionality
         $I->amOnPage('/');
-        $I->assertSame('America%2FLos_Angeles', $I->grabCookie('tx_timezones_pi1'));
+        $I->assertSame('America%2FLos_Angeles', $I->grabCookie('tx_timezones'));
         $I->see('Pacific');
     }
 }

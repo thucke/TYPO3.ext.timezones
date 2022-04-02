@@ -7,18 +7,23 @@
  * LICENSE file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+defined('TYPO3_MODE') or die();
 
-call_user_func(static function () {
-    ExtensionUtility::registerPlugin(
-        'Thucke.Timezones',	// The extension name (in UpperCamelCase) or the extension key (in lower_underscore)
-        'Pi1',		// A unique name of the plugin in UpperCamelCase
-        'Timezones'	// A title shown in the backend dropdown field
+$actions = [ 'Show', 'Select', 'Index', 'Pi1' ];
+foreach ($actions as $identifier) {
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+        'Timezones',
+        $identifier,
+        'LLL:EXT:timezones/Resources/Private/Language/locallang_be.xlf:flexforms_general.mode.' . $identifier,
+        null,
+        'news'
     );
 
-    $pluginSignature = 'timezones_pi1';
-    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'layout,select_key,recursive,pages';
-    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-    ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:timezones/Configuration/Flexforms/flexform_pi1.xml');
-});
+    $listType = 'timezones_' . strtolower($identifier);
+    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$listType] = 'layout,select_key,recursive,pages';
+    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$listType] = 'pi_flexform';
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+        $listType,
+        'FILE:EXT:timezones/Configuration/FlexForms/flexform.xml'
+    );
+}

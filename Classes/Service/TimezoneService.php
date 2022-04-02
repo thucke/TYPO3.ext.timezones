@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 /*
  * This file is part of the package thucke/timezones.
@@ -105,7 +106,7 @@ class TimezoneService extends AbstractExtensionService
         $result = date_default_timezone_set($timezone);
         $this->logger->log(LogLevel::DEBUG, 'date_default_timezone_set', [
             'result' => $result,
-            'timezone' => $timezone ]);
+            'timezone' => $timezone, ]);
         $this->currentTimezone = new DateTimeZone($timezone);
         $this->logger->log(LogLevel::DEBUG, 'Exit setCurrentTimezone');
     }
@@ -117,10 +118,6 @@ class TimezoneService extends AbstractExtensionService
      */
     public function getCurrentTimezone(): DateTimeZone
     {
-        if (!empty($this->currentTimezone)) {
-            $this->setCurrentTimezone(date_default_timezone_get());
-        }
-
         return $this->currentTimezone;
     }
 

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 /*
  * This file is part of the package thucke/timezones.
@@ -68,6 +69,19 @@ class CookieService extends AbstractExtensionService
      * Protected function taken from t3lib_userAuth (t3 4.7.7).
      *
      * @param string $cookieName identifier for the cookie
+     *
+     * @throws Exception
+     */
+    public function clearCookie(string $cookieName): void
+    {
+        setcookie($cookieName);
+    }
+
+    /**
+     * Sets the cookie
+     * Protected function taken from t3lib_userAuth (t3 4.7.7).
+     *
+     * @param string $cookieName identifier for the cookie
      * @param string $cookieValue cookie value
      * @param int $cookieExpire expire time for the cookie
      *
@@ -87,13 +101,22 @@ class CookieService extends AbstractExtensionService
             /** @var string $cookiePath */
             $cookiePath = ($cookieDomain ? '/' : GeneralUtility::getIndpEnv('TYPO3_SITE_PATH'));
 
+            //TODO - cookieSecure and cookieHttpOnly had been removed in TYPO3 v11
+            // drop special handling when dropping support for TYPO3 <v11
+
             // Use the secure option when the current request is served by a secure connection:
-            $cookieSecure = (bool)$settings['cookieSecure'] && GeneralUtility::getIndpEnv('TYPO3_SSL');
+            $cookieSecure = false;
+            if (array_key_exists('cookieSecure', $settings)) {
+                $cookieSecure = (bool)$settings['cookieSecure'] && GeneralUtility::getIndpEnv('TYPO3_SSL');
+            }
             // Deliver cookies only via HTTP and prevent possible XSS by JavaScript:
-            $cookieHttpOnly = (bool)$settings['cookieHttpOnly'];
+            $cookieHttpOnly = true;
+            if (array_key_exists('cookieHttpOnly', $settings)) {
+                $cookieHttpOnly = (bool)$settings['cookieHttpOnly'];
+            }
 
             // Do not set cookie if cookieSecure is set to "1" (force HTTPS) and no secure channel is used:
-            if ((int)$settings['cookieSecure'] !== 1 || GeneralUtility::getIndpEnv('TYPO3_SSL')) {
+            if (!($cookieSecure xor GeneralUtility::getIndpEnv('TYPO3_SSL'))) {
                 setcookie(
                     $cookieName,
                     $cookieValue,
