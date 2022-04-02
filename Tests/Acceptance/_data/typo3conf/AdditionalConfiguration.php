@@ -1,9 +1,10 @@
 <?php
 
-/**
- * #ddev-generated: Automatically generated TYPO3 AdditionalConfiguration.php file.
- * ddev manages this file and may delete or overwrite the file unless this comment is removed.
- * It is recommended that you leave this file alone.
+/*
+ * This file is part of the package thucke/timezones.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
  */
 
 if (getenv('IS_DDEV_PROJECT') == 'true') {
@@ -39,20 +40,20 @@ if (getenv('IS_DDEV_PROJECT') == 'true') {
             ],
         ]
     );
-    if (getenv('IS_T3ACCEPTANCE_RUN') == 'true') {
-        $GLOBALS['TYPO3_CONF_VARS'] = array_replace_recursive(
-            $GLOBALS['TYPO3_CONF_VARS'],
-            [
-                'DB' => [
-                    'Connections' => [
-                        'Default' => [
-                            'dbname' => 't3acceptance',
-                            'password' => 'root',
-                            'user' => 'root',
-                        ],
+}
+if (getenv('IS_T3ACCEPTANCE_RUN') == 'true') {
+    $GLOBALS['TYPO3_CONF_VARS'] = array_replace_recursive(
+        $GLOBALS['TYPO3_CONF_VARS'],
+        [
+            'DB' => [
+                'Connections' => [
+                    'Default' => [
+                        'dbname' => 't3acceptance',
+                        'password' => 'root',
+                        'user' => 'root',
                     ],
                 ],
-            ]
-        );
-    }
+            ],
+        ]
+    );
 }

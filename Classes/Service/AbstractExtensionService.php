@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 /*
  * This file is part of the package thucke/timezones.
@@ -10,7 +11,6 @@ declare(strict_types = 1);
 
 namespace Thucke\Timezones\Service;
 
-use TYPO3\CMS\Core\Log\Logger;
 use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;

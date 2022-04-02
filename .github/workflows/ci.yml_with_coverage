@@ -52,8 +52,8 @@ jobs:
       - name: Info
         run: composer info
 
-      - name: CGL
-        run: composer thucke:cgl
+      - name: PHP-CS-Fixer TYPOIII
+        run: composer exec php-cs-fixer
 
       - name: PHPStan Classes
         run: composer thucke:phpstan:classes

@@ -40,10 +40,13 @@
         "discard-changes": true,
         "optimize-autoloader": true,
         "vendor-dir": ".Build/vendor",
+        "sort-packages": true,
         "allow-plugins": {
             "typo3/class-alias-loader": true,
             "typo3/cms-composer-installers": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "composer/package-versions-deprecated": true,
+            "helhum/typo3-console-plugin": true
         }
     },
     "extra": {
@@ -73,93 +76,105 @@
         ],
         "thucke:test:php:acceptance": [
             "@putenv IS_T3ACCEPTANCE_RUN=true",
+            "@putenv TYPO3_VERSION=^11.5",
             "cp -R Tests/Acceptance/_data/typo3conf .Build/public/",
             "cp -R Tests/Acceptance/_data/config .Build/",
-            "typo3cms install:generatepackagestates",
             "codecept run acceptance --env=${CODECEPTION_ENV} -d -c Tests/Build/AcceptanceTests.yml --html"
         ],
         "thucke:typo3:export": [
-            "typo3cms configuration:show DB",
-            "typo3cms cache:flush",
-            "typo3cms database:export -c Default >Tests/Acceptance/_data/ddev.sql",
-            "typo3cms configuration:show DB",
+            "#.Build/bin/typo3cms configuration:show DB",
+            ".Build/bin/typo3cms cache:flush",
+            ".Build/bin/typo3cms database:export -c Default >Tests/Acceptance/_data/ddev.sql",
+            "#.Build/bin/typo3cms configuration:show DB",
+            "echo 'Finished'"
+        ],
+        "thucke:typo3:recreateddevdb:11.5": [
+            "cat Tests/Acceptance/_data/dbcreate_$typo3DatabaseName.sql Tests/Acceptance/_data/t3acceptance_^11.5.sql | mysql -u${typo3DatabaseUsername} -p${typo3DatabasePassword} -h${typo3DatabaseHost} mysql",
+            ".Build/bin/typo3cms database:updateschema",
+            ".Build/bin/typo3cms cache:flush",
+            "#.Build/bin/typo3cms configuration:show DB",
             "echo 'Finished'"
         ],
         "thucke:typo3:recreateddevdb:10.4": [
-            "cat Tests/Acceptance/_data/dbcreate_${typo3DatabaseName}.sql Tests/Acceptance/_data/t3acceptance_^10.4.sql | mysql -u${typo3DatabaseUsername} -p${typo3DatabasePassword} -h${typo3DatabaseHost} mysql",
-            "typo3cms cache:flush",
-            "typo3cms configuration:show DB",
+            "cat Tests/Acceptance/_data/dbcreate_$typo3DatabaseName.sql Tests/Acceptance/_data/t3acceptance_^10.4.sql | mysql -u${typo3DatabaseUsername} -p${typo3DatabasePassword} -h${typo3DatabaseHost} mysql",
+            ".Build/bin/typo3cms database:updateschema",
+            ".Build/bin/typo3cms cache:flush",
+            "#.Build/bin/typo3cms configuration:show DB",
             "echo 'Finished'"
         ],
         "thucke:typo3:recreateddevdb:9.5": [
             "cat Tests/Acceptance/_data/dbcreate_${typo3DatabaseName}.sql Tests/Acceptance/_data/t3acceptance_^9.5.sql | mysql -u${typo3DatabaseUsername} -p${typo3DatabasePassword} -h${typo3DatabaseHost} mysql",
-            "typo3cms cache:flush",
-            "typo3cms configuration:show DB",
+            ".Build/bin/typo3cms database:updateschema",
+            ".Build/bin/typo3cms cache:flush",
+            ".Build/bin/typo3cms configuration:show DB",
             "echo 'Finished'"
         ],
         "thucke:test:php:unit:cover": [
             "Composer\\Config::disableProcessTimeout",
-            "mkdir -p var/log/junit/ && phpunit -c Tests/Build/UnitTests.xml --log-junit var/log/junit/phpunit.xml --coverage-clover var/log/junit/coverage-unit.xml"
+			"@putenv XDEBUG_MODE=coverage",
+            "mkdir -p .Build/var/log/junit/ && phpunit -c Tests/Build/UnitTests.xml --log-junit .Build/var/log/junit/phpunit.xml --coverage-html .Build/var/log/junit/coverage-unit.xml"
         ],
         "thucke:test:php:functional:cover": [
             "Composer\\Config::disableProcessTimeout",
-            "mkdir -p var/log/junit/ && .Build/bin/phpunit -c Tests/Build/FunctionalTests.xml --log-junit var/log/junit/phpunit.xml --coverage-clover var/log/junit/coverage-functional.xml"
+			"@putenv XDEBUG_MODE=coverage",
+            "mkdir -p .Build/var/log/junit/ && .Build/bin/phpunit -c Tests/Build/FunctionalTests.xml --log-junit .Build/var/log/junit/phpunit.xml --coverage-hrml .Build/var/log/junit/coverage-functional.xml"
         ],
         "thucke:test": [
             "@thucke:test:php:lint",
             "@thucke:test:php:unit"
         ],
-        "thucke:cgl": [
-            "php-cs-fixer --using-cache=yes --diff -v fix"
-        ],
-        "thucke:phpstan:classes": [
-            "TYPO3_CONTEXT=Development; phpstan analyse Classes"
-        ],
+		"thucke:csfixer": [
+			".Build/bin/php-cs-fixer fix"
+		],
+		"thucke:phpstan:classes": [
+			"TYPO3_CONTEXT=Development; phpstan analyse Classes"
+		],
         "thucke:phpstan:tests": [
-            "phpstan analyze Tests"
+			"TYPO3_CONTEXT=Development; phpstan analyze Tests"
         ],
+		"thucke:rector:dryrun": [
+			".Build/bin/rector process --dry-run Classes Tests Configuration Resources"
+		],
+		"thucke:rector:hot": [
+			".Build/bin/rector process Classes Tests Configuration Resources"
+		],
         "post-autoload-dump": [
+            "[ -f .Build/bin/typo3cms ] && .Build/bin/typo3cms install:fixfolderstructure",
             "mkdir -p .Build/public/typo3conf/ext/",
             "[ -L .Build/public/typo3conf/ext/timezones ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/timezones",
             "[ -f .Build/public/.htaccess ] || cp .ddev/homeadditions/.htaccess .Build/public",
             "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+
         ]
     },
     "suggest": {
         "typo3/cms-fluid-styled-content": "Content rendering definition based on fluid"
     },
 	"require" : {
-        "php" : ">=7.3 <7.5",
+        "php": ">=7.3 <8.2",
         "ext-intl": "*",
-        "typo3/cms-core" : ">=9.5 <11",
-        "typo3/cms-extbase": ">=9.5 <11",
-        "typo3/cms-extensionmanager": "^9.5 || ^10.4",
-        "typo3/cms-fluid" : ">=9.5 <11",
-        "typo3/cms-frontend" : ">=9.5 <11",
-        "typo3fluid/fluid": "^2.6",
-        "psr/http-client": "^1.0",
-        "psr/http-factory": "^1.0",
-        "psr/http-message": "^1.0"
+        "typo3/cms-core": "^9.5 || ^10.4 || ^11.5",
+        "typo3/cms-fluid-styled-content": "^9.5 || ^10.4  || ^11.5",
+        "typo3/cms-tstemplate": "^9.5 || ^10.4  || ^11.5"
     },
     "require-dev": {
-        "typo3/cms-base-distribution" : ">=9.5 <11",
-        "friendsofphp/php-cs-fixer": "^2.18",
-        "helhum/typo3-console": "*",
-        "typo3/coding-standards": "^0.3.0",
-        "typo3/testing-framework": "^4.15 || ^5.0 || ^6.4",
-        "typo3/tailor": "^1.4",
-        "overtrue/phplint": "^2.4",
-        "jangregor/phpstan-prophecy": "^0.8.0",
-        "phpstan/extension-installer": "^1.1",
-        "saschaegerer/phpstan-typo3": "^0.13.1",
-        "roave/security-advisories": "dev-latest",
-        "phpunit/phpunit": "^7",
-        "phpspec/prophecy-phpunit": "*",
-        "codeception/codeception": "^4.1",
-        "codeception/module-asserts": "^1.3",
-        "codeception/module-webdriver": "^1.4",
-        "codeception/module-db": "^1.1",
-        "codeception/module-phpbrowser": "^1.0"
+		"codeception/codeception": "^4.1",
+        "codeception/module-asserts": "^1.2",
+        "codeception/module-cli": "^1.1",
+        "codeception/module-db": "*",
+        "codeception/module-phpbrowser": "*",
+        "codeception/module-webdriver": "^1.1",
+        "friendsofphp/php-cs-fixer": " 3.4 || ^3.7 || ^3.8",
+        "helhum/typo3-console": "^5.8.6 || ^6.6 || ^7.0",
+        "overtrue/phplint": "^3.0 || ^4.1",
+        "phpspec/prophecy-phpunit": "^1.1 || ^2.0",
+        "phpstan/phpstan": "^1.4.3",
+        "phpunit/phpunit": "^7 || ^8 || ^9",
+        "rector/rector": "^0.12.16",
+        "typo3/cms-install": "^9.5 || ^10.4  || ^11.5",
+        "typo3/coding-standards": "^0.5.0",
+        "typo3/tailor": "^1.2",
+        "typo3/testing-framework": "^4.15.5 || ^6.16"
     },
 	"replace" : {
 		"typo3-ter/timezones" : "self.version"

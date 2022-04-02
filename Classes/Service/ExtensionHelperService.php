@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 /*
  * This file is part of the package thucke/timezones.
@@ -10,6 +11,8 @@ declare(strict_types = 1);
 
 namespace Thucke\Timezones\Service;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * Factory for model objects.
  *
@@ -17,7 +20,7 @@ namespace Thucke\Timezones\Service;
  *
  * @license http://opensource.org/licenses/gpl-license.php GNU protected License, version 2
  */
-class ExtensionHelperService extends \Thucke\Timezones\Service\AbstractExtensionService
+class ExtensionHelperService extends AbstractExtensionService
 {
     /**
      * @var LoggingService
@@ -40,7 +43,7 @@ class ExtensionHelperService extends \Thucke\Timezones\Service\AbstractExtension
      *
      * @return \Psr\Log\LoggerInterface
      */
-    public function getLogger(string $name): \Psr\Log\LoggerInterface
+    public function getLogger(string $name): LoggerInterface
     {
         return $this->loggingService->getLogger($name);
     }
