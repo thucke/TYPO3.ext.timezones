@@ -12,14 +12,12 @@ defined('TYPO3_MODE') || die('Access denied.');
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
+$moduleClass = 'Timezones';
+$extensionKey = 'Thucke.Timezones';
 if ((new Typo3Version())->getMajorVersion() >= 10) {
     $moduleClass = \Thucke\Timezones\Controller\TimezonesController::class;
     $extensionKey = 'Timezones';
-} else {
-    $moduleClass = 'Timezones';
-    $extensionKey = 'Thucke.Timezones';
 }
-
 /*
  * Configure the Plugin to call the
  * right combination of Controller and Action according to
@@ -61,8 +59,7 @@ ExtensionUtility::configurePlugin(
 
 /*
  * Base configuration of logging events.
- * Each loglevel could be swichted off using typoscript setting
- */
+ * Each loglevel could be switched off using typoscript setting
 $GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']['Timezones']['writerConfiguration'] = [
     \TYPO3\CMS\Core\Log\LogLevel::EMERGENCY => [
     ],
@@ -81,3 +78,4 @@ $GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']['Timezones']['writerConfiguration']
     \TYPO3\CMS\Core\Log\LogLevel::DEBUG => [
     ],
 ];
+ */
