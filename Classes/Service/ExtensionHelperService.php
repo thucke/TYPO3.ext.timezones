@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 /*
  * This file is part of the package thucke/timezones.
@@ -10,7 +11,7 @@ declare(strict_types = 1);
 
 namespace Thucke\Timezones\Service;
 
-use TYPO3\CMS\Core\Log\Logger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Factory for model objects.
@@ -19,17 +20,30 @@ use TYPO3\CMS\Core\Log\Logger;
  *
  * @license http://opensource.org/licenses/gpl-license.php GNU protected License, version 2
  */
-class ExtensionHelperService extends \Thucke\Timezones\Service\AbstractExtensionService
+class ExtensionHelperService extends AbstractExtensionService
 {
+    /**
+     * @var LoggingService
+     */
+    protected $loggingService;
+
+    /**
+     * @param \Thucke\Timezones\Service\LoggingService $loggingService
+     */
+    public function injectLoggingService(LoggingService $loggingService): void
+    {
+        $this->loggingService = $loggingService;
+    }
+
     /**
      * Get a logger instance
      * The configuration of the logger is modified by extension typoscript config.
      *
      * @param string $name the class name which this logger is for
      *
-     * @return Logger
+     * @return \Psr\Log\LoggerInterface
      */
-    public function getLogger($name)
+    public function getLogger(string $name): LoggerInterface
     {
         return $this->loggingService->getLogger($name);
     }

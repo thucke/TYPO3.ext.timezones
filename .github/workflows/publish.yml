@@ -14,15 +14,25 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       TYPO3_EXTENSION_KEY: ${{ secrets.TYPO3_EXTENSION_KEY }}
+      TYPO3_REPOSITORY_URL: ${{ secrets.TYPO3_REPOSITORY_URL }}
       TYPO3_API_TOKEN: ${{ secrets.TYPO3_API_TOKEN }}
+      TYPO3_API_USERNAME: ${{ secrets.TYPO3_API_USERNAME }}
+      TYPO3_API_PASSWORD: ${{ secrets.TYPO3_API_PASSWORD }}
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get version
         id: get-version
         run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
+
+      - name: Set up PHP version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          tools: composer:v2
+          extension: intl, mbstring, xml, soap, zip, curl
 
       - name: Fetch release details from ${{ github.repository }}
         id: get_latest_release
@@ -46,20 +56,11 @@ jobs:
         env:
           RELEASE_BODY: ${{ fromJson(steps.get_latest_release.outputs.data).body }}
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4
-          extensions: intl, mbstring, json, zip, curl
-
-      - name: Install tailor
-        run: composer global require typo3/tailor --prefer-dist --no-progress --no-suggest
-
       - name: Set extension version
-        run: php ~/.composer/vendor/bin/tailor set-version ${{ steps.get-version.outputs.version }}
+        run: php .Build/bin/tailor set-version ${{ steps.get-version.outputs.version }}
 
       - name: Publish to TER
-        run: php ~/.composer/vendor/bin/tailor ter:publish --comment "${{ steps.set-release-body.outputs.release_body}}" ${{ steps.get-version.outputs.version }}
+        run: php .Build/bin/tailor ter:publish ${{ steps.get-version.outputs.version }} --artefact=${{ env.TYPO3_REPOSITORY_URL }}/archive/${{ steps.get_version.outputs.VERSION }}.zip --comment "${{ steps.set-release-body.outputs.release_body}}"
 
   doxygen:
     name: Update Doxygen content on Github pages
@@ -75,7 +76,7 @@ jobs:
 
       - name: Checkout Code
         if: success()
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: source
 
@@ -84,14 +85,14 @@ jobs:
 
       - name: Generate Doxygen
         if: success()
-        uses: mattnotmitt/doxygen-action@v1
+        uses: mattnotmitt/doxygen-action@1.9.3
         with:
           working-directory: /github/workspace/target
           doxyfile-path: /github/workspace/source/Build/.doxygen
 
       - name: Deploy Doxygen
         if: success()
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: target/html

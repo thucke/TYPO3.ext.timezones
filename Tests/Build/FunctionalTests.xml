@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
 	backupGlobals="true"
-	bootstrap="../../.build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTestsBootstrap.php"
+	bootstrap="../../.Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTestsBootstrap.php"
 	colors="true"
 	convertErrorsToExceptions="true"
 	convertWarningsToExceptions="true"
@@ -27,5 +27,6 @@
 	<php>
 		<ini name="display_errors" value="1" />
 		<env name="TYPO3_CONTEXT" value="Development" />
+		<env name="typo3DatabaseName" value="t3func" />
 	</php>
 </phpunit>

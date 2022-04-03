@@ -28,7 +28,7 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     protected $cookieLifetime;
 
     /**
-     * @var \TYPO3\CMS\Core\Log\Logger
+     * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
 
@@ -93,13 +93,19 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->checkIntlModule();
 
         $this->prefixId = strtolower(
-            'tx_' . $this->request->getControllerExtensionName() . '_' . $this->request->getPluginName()
+            'tx_' . $this->request->getControllerExtensionName()
         );
 
         //set expire time to 10 years in the future
         $this->cookieLifetime = (new \DateTime())->add(new \DateInterval('P10Y'))->getTimestamp();
 
-        $this->timezoneService->setCurrentTimezone($this->cookieService->getCookie($this->prefixId));
+        // backward compatibility of changing cookie name - deprecated
+        if ($this->cookieService->hasCookie($this->prefixId . '_pi1')) {
+            $this->timezoneService->setCurrentTimezone($this->cookieService->getCookie($this->prefixId . '_pi1'));
+            $this->cookieService->clearCookie($this->prefixId . '_pi1');
+        } else {
+            $this->timezoneService->setCurrentTimezone($this->cookieService->getCookie($this->prefixId));
+        }
         $this->logger->log(LogLevel::DEBUG, 'Exit initializeAction');
     }
 
@@ -175,11 +181,11 @@ class TimezonesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @Extbase\IgnoreValidation("timezone")
      * @throws \TYPO3\CMS\Core\Exception
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      */
     public function tzsetAction($timezone = null): void
     {
         $this->logger->log(LogLevel::DEBUG, 'Entry tzsetAction', ['Timezone' => $timezone]);
+        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($signalSlotMessage,'signalSlotMessage');
 
         $this->timezoneService->setCurrentTimezone($timezone);
         $timezone = $this->timezoneService->getCurrentTimezone()->getName();

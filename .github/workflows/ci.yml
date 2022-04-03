@@ -1,40 +1,43 @@
-name: CI
+name: CI tests (on pull requests and manually)
 
-on: [ push, pull_request ]
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+  workflow_dispatch:
 
 jobs:
-  build:
-
+  unitAndFunctionalTests:
+    name: Unit and functional tests
+    # needed because of missing auth_plugin_caching_sha2_password in PHP 7.3
+    # Ubuntu 20.04 contains Mysql 8.0 that requires this as default_authentication_plugin
+    # another option would be to put [mysqld] default_authentication_plugin=mysql_native_password into ~./.mysql.cnf
     runs-on: ubuntu-18.04
 
     strategy:
       fail-fast: false
       matrix:
-        typo3: [ ^9.5, ^10.4 ]
-        php: [ '7.4' ]
-        include:
-          - typo3: ^10.4
-            php: '7.4'
-            coverage: true
-          - typo3: ^10.4
-            php: '7.3'
-          - typo3: ^9.5
-            php: '7.4'
-          - typo3: ^9.5
-            php: '7.3'
-
+        env:
+          - { php: 7.3, TYPO3_VERSION: ^9.5 }
+          - { php: 7.4, TYPO3_VERSION: ^9.5 }
+          - { php: 7.3, TYPO3_VERSION: ^10.4 }
+          - { php: 7.4, TYPO3_VERSION: ^10.4, coverage: true}
+          - { php: 7.4, TYPO3_VERSION: ^11.5 }
+          - { php: 8.0, TYPO3_VERSION: ^11.5 }
+          - { php: 8.1, TYPO3_VERSION: ^11.5 }
     steps:
-      - name: Start database server
-        run: sudo /etc/init.d/mysql start
-
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Set up PHP version ${{ matrix.php }}
+      - name: Set up PHP version ${{ matrix.env.php }}
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: ${{ matrix.env.php }}
           tools: composer:v2, php-cs-fixer
+
+      - name: Start database server
+        run: sudo /etc/init.d/mysql start
 
       - name: Environment Check
         run: |
@@ -44,25 +47,32 @@ jobs:
       - name: Validate composer.json and composer.lock
         run: composer validate
 
-      - name: Install dependencies with typo3/cms-core:${{ matrix.typo3 }}
+      - name: Install dependencies with typo3/cms-core:${{ matrix.env.TYPO3_VERSION }}
         run: |
-          composer require typo3/cms-core:${{ matrix.typo3 }} --no-progress
+          composer require typo3/cms-core:${{ matrix.env.TYPO3_VERSION }} --no-progress
           git checkout composer.json
 
       - name: Info
         run: composer info
 
-      - name: CGL
-        run: composer thucke:cgl
+      - name: PHP-CS-Fixer TYPOIII
+        run: .Build/bin/php-cs-fixer fix
 
       - name: PHPStan Classes
-        if: matrix.php > '7.2'
         run: composer thucke:phpstan:classes
 
       - name: Lint PHP
         run: composer thucke:test:php:lint
 
+      - name: Unit Tests with coverage
+        if: ${{ matrix.env.coverage == true }}
+        run: composer thucke:test:php:unit:cover
+
       - name: Unit Tests without coverage
+        run: composer thucke:test:php:unit
+
+      - name: Unit Tests with coverage
+        if: ${{ matrix.env.coverage == true }}
         run: composer thucke:test:php:unit
 
       - name: Functional Tests without coverage

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 /*
  * This file is part of the package thucke/timezones.
@@ -10,10 +11,11 @@ declare(strict_types = 1);
 
 namespace Thucke\Timezones\Service;
 
-use TYPO3\CMS\Core\Log\Logger;
-use TYPO3\CMS\Core\Log\LogManager;
+use Psr\Log\LoggerInterface;
+use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\Log\Writer\DatabaseWriter;
 use TYPO3\CMS\Core\Log\Writer\FileWriter;
+use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
@@ -24,29 +26,32 @@ use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
  *
  * @license http://opensource.org/licenses/gpl-license.php GNU protected License, version 2
  */
-class LoggingService
+class LoggingService implements SingletonInterface
 {
     /**
      * @var ObjectManagerInterface
      */
     protected $objectManager;
     /**
+     * @var LogManagerInterface
+     */
+    protected $logManager;
+    /**
+     * @param LogManagerInterface $logManager
+     */
+    public function injectLogManager(LogManagerInterface $logManager): void
+    {
+        $this->logManager = $logManager;
+    }
+    /**
      * @var ConfigurationManagerInterface
      */
     protected $configurationManager;
-
     /**
-     * Constructor
-     * Must overrule the abstract class method to avoid self referencing.
-     *
-     * @param ObjectManagerInterface               $objectManager
-     * @param ConfigurationManagerInterface $configurationManager,
+     * @param ConfigurationManagerInterface $configurationManager
      */
-    public function __construct(
-        ObjectManagerInterface $objectManager,
-        ConfigurationManagerInterface $configurationManager
-    ) {
-        $this->objectManager = $objectManager;
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager): void
+    {
         $this->configurationManager = $configurationManager;
     }
 
@@ -56,12 +61,17 @@ class LoggingService
      *
      * @param string $name the class name which this logger is for
      *
-     * @return Logger
+     * @return \Psr\Log\LoggerInterface
      */
-    public function getLogger($name)
+    public function getLogger(string $name): LoggerInterface
     {
+        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($GLOBALS['TYPO3_CONF_VARS']['LOG'], ' getLogger', 8, FALSE);
         $writerConfiguration = $GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']['Timezones']['writerConfiguration'];
-        $settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'timezones', 'pi1');
+        $settings = $this->configurationManager->getConfiguration(
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+            'timezones',
+            'pi1'
+        );
         if (is_array($settings['logging'])) {
             foreach ($settings['logging'] as $logLevel => $logConfig) {
                 $levelUppercase = strtoupper($logLevel);
@@ -76,6 +86,6 @@ class LoggingService
             }
         }
         $GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']['Timezones']['writerConfiguration'] = $writerConfiguration;
-        return $this->objectManager->get(LogManager::class)->getLogger($name);
+        return $this->logManager->getLogger($name);
     }
 }

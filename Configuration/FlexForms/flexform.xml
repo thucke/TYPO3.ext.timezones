@@ -13,6 +13,7 @@
 					<switchableControllerActions>
 						<TCEforms>
 							<label>LLL:EXT:timezones/Resources/Private/Language/locallang.xlf:flexform.general_actions</label>
+							<displayCond>FIELD:parentRec.list_type:=:timezones_pi1</displayCond>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
