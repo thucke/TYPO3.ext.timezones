@@ -28,7 +28,7 @@ Create a central function in your extension where you format dates and times, e.
       /**
        * Convert time to users timezone if avaiable
        *
-       * @param mixed $value 
+       * @param mixed $value
        * @return string The formatted string or, if an error occurred, false.
        */
       private function formatDateTime($tstamp) {
@@ -43,3 +43,25 @@ Create a central function in your extension where you format dates and times, e.
       }
 
     Use this function wherever u need to display dates and/or times. That's it. No more need to take care of anything else.
+
+
+Resources for This Guide
+========================
+
+* `Doxygen generated on Github <http://thucke.github.io/TYPO3.ext.timezones/>`_
+
+
+
+|phpstorm.png|
+
+Supported by Jetbrains PHPStorm IDE
+
+.. ==================================================
+.. Image definitions
+.. --------------------------------------------------
+
+.. |phpstorm.png| image:: ../Images/phpstorm.png
+   :target: https://www.jetbrains.com/?from=RatingAXTYPO3extension
+   :alt: Jetbrains PHPStorm IDE
+   :align: top
+   :width: 100

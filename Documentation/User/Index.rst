@@ -20,22 +20,17 @@ Users Manual
 
 Target group: **Editors**
 
-The extension provides three content elements that could be included on a page.
+The extension provides three plugins that could be included on a page.
 The following basic steps should be common for you as an editor:
 
-#. Insert a new content element choosing type *Insert plugin*
+#. Insert the content element choosing type *Insert plugin*
 
     .. figure:: ../Images/EditorBEInsertPlugin.png
         :alt: Content element type "Insert plugin"
 
         Content element type "Insert plugin"
 
-#. On the tab *Plugin* - select the plugin named "Timezones"
-
-    .. figure:: ../Images/EditorBESelectTimezones.png
-        :alt: Choose plugin "Timezones"
-
-        *Timezones* plugin selection
+#. On the tab *Plugin* - select one of the provided plugins
 
 
 Link showing current timezone
@@ -59,9 +54,10 @@ Example rendered in frontend
 How to get it from editor view in backend
 +++++++++++++++++++++++++++++++++++++++++
 
-.. figure:: ../Images/EditorBESelectIndexPlugin.png
-    :alt: Backend plugin selection
+.. figure:: ../Images/EditorBESelectNewIndexPlugin.png
+    :alt: "Index" plugin action
 
+    *Index* plugin action
 
 Show current timezone
 -----------------------------
@@ -75,8 +71,10 @@ Example rendered in frontend
 How to get it from editor view in backend
 +++++++++++++++++++++++++++++++++++++++++
 
-.. figure:: ../Images/EditorBESelectShowPlugin.png
-    :alt: Backend plugin selection
+.. figure:: ../Images/EditorBESelectNewShowPlugin.png
+    :alt: "Show" plugin action
+
+    *Show* plugin action
 
 
 Choose a new timezone
@@ -91,8 +89,10 @@ Example rendered in frontend
 How to get it from editor view in backend
 +++++++++++++++++++++++++++++++++++++++++
 
-.. figure:: ../Images/EditorBESelectSelectPlugin.png
-    :alt: Backend plugin selection
+.. figure:: ../Images/EditorBESelectNewSelectPlugin.png
+    :alt: "Select" plugin action
+
+    *Select* plugin action
 
 
 .. _user-faq:
