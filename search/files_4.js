@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['modulenotloadedexception_2ephp_88',['ModuleNotLoadedException.php',['../ModuleNotLoadedException_8php.html',1,'']]]
+  ['localconfiguration_2ephp_0',['LocalConfiguration.php',['../LocalConfiguration_8php.html',1,'']]],
+  ['loggingservice_2ephp_1',['LoggingService.php',['../LoggingService_8php.html',1,'']]]
 ];

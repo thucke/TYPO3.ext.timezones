@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['loggingservice_2ephp_87',['LoggingService.php',['../LoggingService_8php.html',1,'']]]
+  ['frontendpagescest_2ephp_0',['FrontendPagesCest.php',['../FrontendPagesCest_8php.html',1,'']]]
 ];

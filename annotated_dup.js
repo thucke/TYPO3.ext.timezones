@@ -17,9 +17,20 @@ var annotated_dup =
           [ "TimezoneService", "classThucke_1_1Timezones_1_1Service_1_1TimezoneService.html", "classThucke_1_1Timezones_1_1Service_1_1TimezoneService" ]
         ] ],
         [ "Tests", null, [
-          [ "Unit", null, [
-            [ "Service", "namespaceThucke_1_1Timezones_1_1Tests_1_1Unit_1_1Service.html", [
-              [ "TimezoneServiceTest", "classThucke_1_1Timezones_1_1Tests_1_1Unit_1_1Service_1_1TimezoneServiceTest.html", "classThucke_1_1Timezones_1_1Tests_1_1Unit_1_1Service_1_1TimezoneServiceTest" ]
+          [ "Acceptance", null, [
+            [ "Frontend", "namespaceThucke_1_1Timezones_1_1Tests_1_1Acceptance_1_1Frontend.html", [
+              [ "FrontendPagesCest", "classThucke_1_1Timezones_1_1Tests_1_1Acceptance_1_1Frontend_1_1FrontendPagesCest.html", "classThucke_1_1Timezones_1_1Tests_1_1Acceptance_1_1Frontend_1_1FrontendPagesCest" ]
+            ] ],
+            [ "Support", "namespaceThucke_1_1Timezones_1_1Tests_1_1Acceptance_1_1Support.html", [
+              [ "Helper", "namespaceThucke_1_1Timezones_1_1Tests_1_1Acceptance_1_1Support_1_1Helper.html", [
+                [ "Acceptance", "classThucke_1_1Timezones_1_1Tests_1_1Acceptance_1_1Support_1_1Helper_1_1Acceptance.html", null ]
+              ] ],
+              [ "AcceptanceTester", "classThucke_1_1Timezones_1_1Tests_1_1Acceptance_1_1Support_1_1AcceptanceTester.html", null ]
+            ] ]
+          ] ],
+          [ "Functional", null, [
+            [ "Service", "namespaceThucke_1_1Timezones_1_1Tests_1_1Functional_1_1Service.html", [
+              [ "TimezoneServiceTest", "classThucke_1_1Timezones_1_1Tests_1_1Functional_1_1Service_1_1TimezoneServiceTest.html", "classThucke_1_1Timezones_1_1Tests_1_1Functional_1_1Service_1_1TimezoneServiceTest" ]
             ] ]
           ] ]
         ] ],
