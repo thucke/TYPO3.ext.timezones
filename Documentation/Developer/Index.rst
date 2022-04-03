@@ -48,7 +48,7 @@ Create a central function in your extension where you format dates and times, e.
 Resources for This Guide
 ========================
 
-* `Doxygen generated on Github<http://thucke.github.io/TYPO3.ext.timezones/>`__
+* `Doxygen generated on Github <http://thucke.github.io/TYPO3.ext.timezones/>`_
 
 
 
@@ -60,7 +60,7 @@ Supported by Jetbrains PHPStorm IDE
 .. Image definitions
 .. --------------------------------------------------
 
-.. |phpstorm.png|                image:: phpstorm.png
+.. |phpstorm.png| image:: ../Images/phpstorm.png
    :target: https://www.jetbrains.com/?from=RatingAXTYPO3extension
    :alt: Jetbrains PHPStorm IDE
    :align: top

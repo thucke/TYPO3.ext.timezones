@@ -50,7 +50,7 @@ class TimezonesUtility
         /** @var CookieService $cookieService */
         $cookieService = GeneralUtility::makeInstance(ObjectManager::class)->get(CookieService::class);
 
-        $timezoneService->setCurrentTimezone($cookieService->getCookie('tx_timezones_pi1'));
+        $timezoneService->setCurrentTimezone($cookieService->getCookie('tx_timezones'));
         $convertedValue = $timezoneService->getIntlDateFormatter()->format($value);
 
         $logger->log(LogLevel::DEBUG, 'Exit convertToTimezone', ['originalValue' => $value, 'convertedValue' => $convertedValue]);

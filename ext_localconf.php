@@ -61,7 +61,8 @@ ExtensionUtility::configurePlugin(
  * Each loglevel could be switched off using typoscript setting
  */
 // default setting doesn't seem to be loaded in v11 on PHP 8.x
-if ((new Typo3Version())->getMajorVersion() >= 11 && PHP_MAJOR_VERSION >= 8) {
+if (!(array_key_exists('Thucke', $GLOBALS['TYPO3_CONF_VARS']['LOG']) &&
+    array_key_exists('Timezones', $GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']))) {
     $GLOBALS['TYPO3_CONF_VARS']['LOG']['Thucke']['Timezones']['writerConfiguration'] = [
         \TYPO3\CMS\Core\Log\LogLevel::EMERGENCY => [],
         \TYPO3\CMS\Core\Log\LogLevel::ALERT => [],
